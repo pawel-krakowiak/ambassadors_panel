@@ -34,7 +34,7 @@ class RegisterForm(forms.ModelForm):
             self.add_error("password_2", "Hasła różnią się od siebie :-/")
         return cleaned_data
     
-class AuserAdminCreationForm(forms.ModelForm):
+class UserAdminCreationForm(forms.ModelForm):
     """
     A form for creating new users. Includes all the required
     fields, plus a repeated password.

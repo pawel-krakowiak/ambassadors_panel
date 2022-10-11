@@ -38,4 +38,8 @@ class RewardAdmin(admin.ModelAdmin):
     list_filter = ['points_price']
     search_fields = ['name']
     
+@admin.register(Location)
+class LocationAdmin(admin.ModelAdmin):
+    list_filter = ['location']
+    
     
