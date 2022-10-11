@@ -61,6 +61,7 @@ class User(AbstractBaseUser):
     surename = models.CharField(max_length=64, blank=False)
     instagram_name = models.CharField(max_length=64, blank=False, unique=True)
     
+    objects = UserManager()
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
