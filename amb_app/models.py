@@ -17,6 +17,41 @@ class Reward(models.Model):
     def name_with_price(self):
         return f"{self.name} ({self.points_price} punktów)"
 
+class UserManager(BaseUserManager):
+    def create_user(self, email, password=None):
+        """
+        Creates and saves a User with the given email and password.
+        """
+        if not email:
+            raise ValueError("Użytkownik musi mieć adres email!")
+        
+        user = self.model(email=self.normalize_email(email))
+        user.set_password(password)
+        user.save(using=self._db)
+    
+        return user
+    
+    def create_staffuser(self, email, password):
+        """
+        Creates and saves a staff user with the given email and password.
+        """
+        user = self.create_user(email, password=password)
+        user.staff = True
+        user.save(using=self._db)
+        
+        return user
+    
+    def create_superuser(self, email, password):
+        """
+        Creates and saves a superuser with the given email and password.
+        """
+        user = self.create_user(email, password=password)
+        user.staff = True
+        user.admin = True
+        user.save(using=self._db)
+        return user
+
+
 class User(AbstractBaseUser):
     email = models.EmailField(verbose_name="email address", max_length=255, unique=True)
     is_active = models.BooleanField(default=True)
@@ -24,7 +59,7 @@ class User(AbstractBaseUser):
     admin = models.BooleanField(default=False)
     name = models.CharField(max_length=64, blank=False)
     surename = models.CharField(max_length=64, blank=False)
-    instagram_name = models.CharField(max_length=64, blank=False)
+    instagram_name = models.CharField(max_length=64, blank=False, unique=True)
     
     
     USERNAME_FIELD = 'email'
