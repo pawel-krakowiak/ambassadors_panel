@@ -63,7 +63,7 @@ class UserAdminCreationForm(forms.ModelForm):
             user.save()
         return user
     
-class UserAdminChangeForm(forms.Modelform):
+class UserAdminChangeForm(forms.ModelForm):
     """A form for updating users. Includes all the fields on
     the user, but replaces the passwd field with admin's
     password hash display field.
