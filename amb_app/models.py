@@ -8,3 +8,9 @@ class Reward(models.Model):
     reward_img = models.ImageField(upload_to="img_rewards", blank=False, default="img_rewards/not_found.png")
     points_price = models.DecimalField(max_digits=10, decimal_places=0, blank=False)
     is_available = models.BooleanField(blank=False, default=True)
+    
+    def __str__(self):
+        return self.name_with_price()
+    
+    def name_with_price(self):
+        return f"{self.name} ({self.points_price} punktów)"
