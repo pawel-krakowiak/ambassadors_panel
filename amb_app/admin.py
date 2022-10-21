@@ -6,6 +6,10 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .forms import UserAdminCreationForm, UserAdminChangeForm
 from .models import Reward, Location
 
+admin.site.site_header = "justVAPE Admin"
+admin.site.site_title = "justVAPE Ambassadors Panel"
+admin.site.index_title = "Welcome to justVAPE Ambassadors Panel"
+
 User = get_user_model()
 admin.site.unregister(Group)
 
@@ -18,17 +22,17 @@ class UserAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         ('Personal info', {'fields': ('name', 'surename', 'instagram_name')}),
-        ('Permissions', {'fields': ('admin',)}),
+        ('Permissions', {'fields': ('admin', 'staff')}),
     )
     
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'name', 'surename', 'instagram_name', 'password', 'password_2', 'location', 'admin', 'staff', 'is_active',)
+            'fields': ('email', 'name', 'surename', 'instagram_name', 'password', 'password_2', 'location', 'points', 'admin', 'staff', 'is_active',)
             }),
         )
     search_fields = ['email']
-    ordering = ['email']
+    ordering = ['admin', 'email']
     filter_horizontal = ()
     
 admin.site.register(User, UserAdmin)

@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'amb_app',
+    'jet.dashboard',
     'jet',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -108,7 +109,7 @@ AUTH_USER_MODEL = 'amb_app.User'
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pl'
 
 TIME_ZONE = 'UTC'
 

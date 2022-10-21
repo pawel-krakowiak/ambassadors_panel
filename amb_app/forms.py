@@ -9,8 +9,8 @@ class RegisterForm(forms.ModelForm):
     Default form
     """
     
-    password = forms.CharField(widget=forms.PasswordInput)
-    password_2 = forms.CharField(label='Comfirm Password', widget=forms.PasswordInput)
+    password = forms.CharField(label='Hasło', widget=forms.PasswordInput)
+    password_2 = forms.CharField(label='Potwierdź hasło', widget=forms.PasswordInput)
     
     class Meta:
         model = User
@@ -39,8 +39,8 @@ class UserAdminCreationForm(forms.ModelForm):
     A form for creating new users. Includes all the required
     fields, plus a repeated password.
     """
-    password = forms.CharField(widget=forms.PasswordInput)
-    password_2 = forms.CharField(label='Comfirm Password', widget=forms.PasswordInput)
+    password = forms.CharField(label='Hasło', widget=forms.PasswordInput)
+    password_2 = forms.CharField(label='Potwierdź hasło', widget=forms.PasswordInput)
     
     class Meta:
         model = User
