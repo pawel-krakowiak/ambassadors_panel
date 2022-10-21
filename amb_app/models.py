@@ -8,6 +8,16 @@ from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
 class Location(models.Model):
     location = models.CharField(max_length=32, unique=True)
 
+    def __str__(self):
+        return self.location
+    
+    @classmethod
+    def get_default_pk(cls):
+        location, created = cls.objects.get_or_create(
+            location = "Wrocław"
+        )
+        return location.pk
+
 class Reward(models.Model):
     """Reawrd model"""
     name = models.CharField(max_length=128, blank=False)
@@ -15,7 +25,7 @@ class Reward(models.Model):
     reward_img = models.ImageField(upload_to="img_rewards", blank=False, default="img_rewards/not_found.png")
     points_price = models.DecimalField(max_digits=10, decimal_places=0, blank=False)
     is_available = models.BooleanField(blank=False, default=True)
-    location = models.ForeignKey(Location, on_delete=models.CASCADE, null=False)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)
     
     def __str__(self):
         return self.name_with_price()
@@ -65,7 +75,7 @@ class User(AbstractBaseUser):
     name = models.CharField(max_length=64, blank=False)
     surename = models.CharField(max_length=64, blank=False)
     instagram_name = models.CharField(max_length=64, blank=False, unique=True)
-    location = models.ForeignKey(Location, on_delete=models.CASCADE, null=False)
+    location = models.ForeignKey(to=Location, on_delete=models.CASCADE, blank=True, null=True)
     
     objects = UserManager()
     
