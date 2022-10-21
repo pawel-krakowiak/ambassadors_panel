@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 from .forms import UserAdminCreationForm, UserAdminChangeForm
-from .models import Reward
+from .models import Reward, Location
 
 User = get_user_model()
 admin.site.unregister(Group)
@@ -24,14 +24,14 @@ class UserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2')}
-            ),
+            'fields': ('email', 'name', 'surename', 'instagram_name', 'password', 'password_2', 'location', 'admin', 'staff', 'is_active',)
+            }),
         )
     search_fields = ['email']
     ordering = ['email']
     filter_horizontal = ()
     
-    admin.site.register(User, BaseUserAdmin)
+admin.site.register(User, UserAdmin)
 
 @admin.register(Reward)
 class RewardAdmin(admin.ModelAdmin):
