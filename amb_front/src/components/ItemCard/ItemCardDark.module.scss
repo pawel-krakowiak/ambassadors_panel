@@ -1,0 +1,10 @@
+@use '../../variables.module.scss';
+@use './ItemCard.module.scss';
+
+.wrapper{
+    @include variables.NightDarkBg;
+}
+
+.wrapperLng{
+    @include variables.NightDarkBg;
+}

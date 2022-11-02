@@ -1,0 +1,53 @@
+@use '../../variables.module.scss';
+
+.wrapper{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    @include variables.DayMediumBg;
+    border-radius: 0;
+    .left{
+        width: 22.5%;
+        height: 100%;
+        padding: 1.5% 2.5% ;
+        @include variables.DayDarkBg;
+        border-radius: 0 25px 25px 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .right{
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        .navContainer{
+            width: 100%;
+            height: 10%;
+            padding: 1.5% 2.5%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .contentContainer{
+            width: 100%;
+            height: 90%;
+            overflow-x: hidden;
+            overflow-y: auto;
+            padding: 1.5% 2.5%;
+            &::-webkit-scrollbar {
+                width: 16px;
+              }
+            
+            &::-webkit-scrollbar-track {
+                background: transparent;
+              }
+            
+            &::-webkit-scrollbar-thumb {
+                background-color: #FAFAFA;
+                border-radius: 10px;
+              }
+        }
+    }
+}

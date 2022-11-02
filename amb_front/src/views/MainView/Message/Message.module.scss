@@ -1,0 +1,90 @@
+@use '../../../variables.module.scss';
+
+.wrapper{
+    width: 100%;
+    height: 100%;
+    @include variables.Center;
+    @include variables.DayDarkBg;
+    .content{
+        width: 40%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .btn{
+            @include variables.Center;
+            width: 40%;
+            padding: 1rem 0;
+            cursor: pointer;
+            filter: grayscale(0.3);
+            transition: .3s;
+            outline: none;
+            border: none;
+            @include variables.PrimaryBg;
+            border-radius: 25px;
+            margin-top: 5%;
+            &:hover{
+                filter: grayscale(0);
+            }
+        }
+        .errorBox{
+            width: 100%;
+            height: 30px;
+            margin: 5% 0;
+            @include variables.Center;
+        }
+        .floatLabel{
+            margin-top: 5%;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 70px;
+            position: relative;
+            @include variables.DayLightBg;
+            &:nth-of-type(2){
+                height: 250px
+            }
+            input {
+                background: transparent;
+                border: none;
+                width: 100%;
+                height: 100%;
+                padding: 24px 16px 0 10px;
+                outline: 0;
+                font-size: 20px;
+                font-weight: medium;
+              }
+              label {
+                font-size: 22px;
+                padding: 0 12px;
+                color: #999;
+                pointer-events: none;
+                position: absolute;
+                transform: translate(0, 26px) scale(1);
+                transform-origin: top left;
+                transition: all 0.2s ease-out;
+
+              }
+              textarea{
+                width: 100%;
+                height: 100%;
+                margin-top: 10%;
+                padding: 0 16px 15px 15px;
+                outline: none;
+                border: none;
+                font-size: 20px;
+                resize: none;
+                overflow: hidden;
+                background: none;
+                font-family: 'Ubuntu', sans-serif;
+              } 
+              .active {
+                transform: translate(0, 12px) scale(0.75);
+              }
+            &:focus-within{
+                label{
+                    transform: translate(0, 12px) scale(0.75);
+                }
+            }  
+        }
+    }
+}

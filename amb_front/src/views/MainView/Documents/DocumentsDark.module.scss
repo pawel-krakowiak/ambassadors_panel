@@ -1,0 +1,10 @@
+@use '../../../variables.module.scss';
+@use './Documents.module.scss';
+
+.wrapper{
+    .content{
+        .itemContainer{
+            @include variables.NightDarkBg;
+        }
+    }
+}

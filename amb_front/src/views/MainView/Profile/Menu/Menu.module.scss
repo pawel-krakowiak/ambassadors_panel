@@ -1,0 +1,20 @@
+@use '../../../../variables.module.scss';
+
+.wrapper{
+    width: 100%;
+    height: 7%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    @include variables.DayLightBg;
+    font-size: 22px;
+    span{
+        cursor: pointer;
+        filter: grayscale(0.3);
+        transition: .3;
+        &:hover{
+            filter: grayscale(0);
+        }
+    }
+}

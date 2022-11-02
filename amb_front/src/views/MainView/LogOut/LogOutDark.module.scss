@@ -1,0 +1,17 @@
+@use './LogOut.module.scss';
+@use '../../../variables.module.scss';
+
+.wrapper{
+    @include variables.NightMediumBg;
+    .content{
+        .buttonsContainer{
+            .button{
+                &:nth-child(2){
+                    @include variables.NightDarkBg;
+                    color: white;
+                }
+            }
+        }
+    }
+
+}

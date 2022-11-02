@@ -1,0 +1,38 @@
+$NightLight: #616161;
+$NightMedium: #555555;
+$NightDark: #333333;
+$DayLight: #FAFAFA;
+$DayMedium: #EBEBEB;
+$DayDark: #E3E3E3;
+$Primary: #3C83EC;
+
+
+@mixin NightLightBg {
+    background-color: $NightLight;
+}
+@mixin NightMediumBg {
+    background-color: $NightMedium;
+}
+@mixin NightDarkBg {
+    background-color: $NightDark;
+}
+@mixin DayLightBg {
+    background-color: $DayLight;
+}
+@mixin DayMediumBg {
+    background-color: $DayMedium;
+}
+@mixin DayDarkBg {
+    background-color: $DayDark;
+}
+@mixin PrimaryBg {
+    background-color: $Primary;
+}
+@mixin PrimaryColor {
+    color: $Primary;
+}
+@mixin Center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

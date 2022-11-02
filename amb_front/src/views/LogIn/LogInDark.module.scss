@@ -1,0 +1,22 @@
+@use './LogIn.module.scss';
+@use '../../variables.module.scss';
+
+
+.wrapper{
+    .left{
+        .logInForm{
+            .welcome{
+                color: white;
+            }
+            .btn{
+                color: white;
+            }
+            .floatLabel{
+                @include variables.NightDarkBg;
+                input{
+                    color: white;
+                }
+            }
+        }
+    }
+}

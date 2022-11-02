@@ -1,0 +1,15 @@
+@use './Button.module.scss';
+@use '../../variables.module.scss';
+
+.wrapperSq{
+    @include variables.NightMediumBg;
+
+}
+
+.wrapperCir{
+}
+
+.wrapperCirDis{
+    @include variables.NightMediumBg;
+    
+}

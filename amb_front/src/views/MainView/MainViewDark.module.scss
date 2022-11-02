@@ -1,0 +1,26 @@
+@use './MainView.module.scss';
+@use '../../variables.module.scss';
+
+.wrapper{
+    @include variables.NightLightBg;
+    color: white;
+    .left{
+        @include variables.NightMediumBg;
+    }
+    .right{
+        .contentContainer{
+            &::-webkit-scrollbar {
+                width: 16px;
+              }
+            
+            &::-webkit-scrollbar-track {
+                background: transparent;
+              }
+            
+            &::-webkit-scrollbar-thumb {
+                background-color: #333333;
+                border-radius: 10px;
+              }
+        }
+    }
+}

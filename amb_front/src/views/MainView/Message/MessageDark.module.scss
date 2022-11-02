@@ -1,0 +1,21 @@
+@use './Message.module.scss';
+@use '../../../variables.module.scss';
+
+.wrapper{
+    @include variables.NightMediumBg;
+    .content{
+        .btn{
+            color: white;
+        }
+        .floatLabel{
+            @include variables.NightDarkBg;
+            input{
+                color: white;
+            }
+            textarea{
+                color: white;
+            }
+        }
+    }
+
+}

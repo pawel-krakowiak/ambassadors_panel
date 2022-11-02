@@ -1,0 +1,60 @@
+@use '../../variables.module.scss';
+
+.wrapper{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 4;
+    border-radius: 0;
+    @include variables.Center;
+    .backPanel{
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        cursor: pointer;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    .contentContainer{
+        z-index: 5;
+        width: 30%;
+        height: 75%;
+        @include variables.DayMediumBg;
+        padding: 2.5%;
+        display: flex;
+        flex-direction: column;
+        .buttonContainer{
+            width: 100%;
+            height: 7.5%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+        }
+        .img{
+            height: 55%;
+        }
+        .descriptionContainer{
+            height: 45%;
+            width: 75%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: flex-start;
+            .button{
+                color: white;
+                padding: 1rem 2rem;
+                cursor: pointer;
+                filter: grayscale(0.3);
+                transition: .3s;
+                @include variables.PrimaryBg;
+                border-radius: 15px;
+                &:hover{
+                    filter: grayscale(0);
+                }
+            }
+        }
+    }
+}

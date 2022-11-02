@@ -1,0 +1,25 @@
+@use 'FaqItem.module.scss';
+@use '../../variables.module.scss';
+
+.wrapper{
+    color: white;
+    @include variables.NightDarkBg;
+    .header{
+        @include variables.NightDarkBg;
+        .buttonContainer{
+            @include variables.NightDarkBg;
+            .button{
+                color: #2D2929
+            }
+        }
+        .title{
+            @include variables.NightDarkBg;
+        }
+    }
+    .contentSpacing{
+        @include variables.PrimaryBg;
+    }
+    .contentContainer{
+        @include variables.NightDarkBg;
+    }
+}

@@ -1,0 +1,6 @@
+@use './Welcome.module.scss';
+@use '../../../../variables.module.scss';
+
+.wrapper{
+    @include variables.NightDarkBg;
+}

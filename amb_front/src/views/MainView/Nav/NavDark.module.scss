@@ -1,0 +1,18 @@
+@use './Nav.module.scss';
+@use '../../../variables.module.scss';
+
+.wrapper{
+    .menu{
+        @include variables.NightMediumBg;
+        .navContainer{
+            a{
+                color: white;
+            }
+        }
+        .roller{
+            @include variables.NightDarkBg;
+    
+        }
+    
+    }
+}
