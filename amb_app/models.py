@@ -26,7 +26,7 @@ class Reward(models.Model):
     """Reawrd model"""
     name = models.CharField(verbose_name='Nazwa', max_length=128, blank=False)
     description = models.TextField(verbose_name='Opis', default="")
-    reward_img = models.ImageField(verbose_name='Zdjęcie', upload_to="img_rewards", blank=False, default="img_rewards/not_found.png")
+    reward_img = models.ImageField(verbose_name='Zdjęcie', upload_to="rewards_img", blank=False, default="rewards_img/not_found.png")
     points_price = models.DecimalField(verbose_name='Koszt (punkty)', max_digits=10, decimal_places=0, blank=False)
     is_available = models.BooleanField(verbose_name='Dostępność', blank=False, default=True)
     location = models.ForeignKey(verbose_name='Sklep', to=Location, on_delete=models.CASCADE)
