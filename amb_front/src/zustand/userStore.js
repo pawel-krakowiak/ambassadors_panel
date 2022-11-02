@@ -3,15 +3,22 @@ import * as api from '../api/index'
 import { devtools } from 'zustand/middleware'
 
 const store = (set) => ({
-    isLogged: false,
+    isLogged: true,
     name: 'Mikołaj',
     points: 495,
-    logOut: () => {
-        set((state) => ({isLogged: false}))
+    logOut: (navigate) => {
+        set((state) => ({isLogged: false}));
+        navigate('/')
+
     },
-    logIn: ({data, setMessageError}) => {
+    logIn: ({data, setMessageError, setLoggedAnim}) => {
         console.log((data))
         setMessageError('Błędne hasło')
+        setLoggedAnim(true)
+
+        setTimeout(() => {
+            set((state) => ({isLogged: true}))
+        }, 500)
     },
 })
 

@@ -1,0 +1,6 @@
+@use '../../variables.module.scss';
+@use './InfoCard.module.scss';
+
+.itemContainer{
+    @include variables.NightDarkBg;
+}

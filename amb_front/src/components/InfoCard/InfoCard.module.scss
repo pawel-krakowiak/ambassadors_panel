@@ -1,0 +1,84 @@
+@use '../../variables.module.scss';
+
+.itemContainer{
+    @include variables.DayLightBg;
+    width: 60%;
+    height: auto;
+    margin-top: 2.5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5% 2.5%;
+    .descriptionContainer{
+        height: 100%;
+        width: 75%; 
+        p{
+            &:nth-child(2){
+                margin-top: 1rem;
+            }
+        }
+
+    }
+    &:hover{
+        .buttonContainer{
+            div{
+                animation: chevronAnim2 .4s ;
+            }
+        }
+
+    }
+    .buttonContainer{
+        height: 100%;
+        width: 10%;
+
+    }
+}
+
+
+@keyframes chevronAnim2 {
+    0%{
+        transform: scale(1);
+        transform: rotate(0deg);
+    }
+    10%{
+        transform: scale(1.1);
+        transform: rotate(-5deg);
+    }
+    20%{
+        transform: scale(1.15);
+        transform: rotate(-10deg);
+    }
+    30%{
+        transform: scale(1.2);
+        transform: rotate(-5deg);
+    }
+    40%{
+        transform: scale(1.25);
+        transform: rotate(0deg);
+    }
+    50%{
+        transform: scale(1.3);
+        transform: rotate(5deg);
+    }
+    60%{
+        transform: scale(2);
+        transform: rotate(10deg);
+    }
+    70%{
+        transform: scale(1.3);
+        transform: rotate(5deg);
+    }
+    80%{
+        transform: scale(1.25);
+        transform: rotate(0deg);
+    }
+    80%{
+        transform: scale(1.15);
+        transform: rotate(-5deg);
+    }
+    100%{
+        transform: scale(1);
+        transform: rotate(0deg);
+    }
+}

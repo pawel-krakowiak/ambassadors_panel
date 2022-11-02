@@ -8,7 +8,7 @@ import Button from "../../../components/Button/Button";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 
 const Nav = () => {
-    const [styles, setStyles] = useState(stylesLight)
+    const [styles, setStyles] = useState(false)
     const darkMode = optionsStore(state => state.darkMode)
     const isMedium = optionsStore(state => state.isMedium)
     let location = useLocation();
@@ -20,15 +20,15 @@ const Nav = () => {
         if(location.pathname === '/awards' || location.pathname === '/tasks' || location.pathname === '/documents' || location.pathname === '/profile'){
             if(location.pathname !== '/profile' || isMedium){
                 let el = document.getElementById(`${location.pathname}`)
-                setRollerWidth(el.offsetWidth)
-                setRollerPosition(el.offsetLeft)
+                setRollerWidth(el?.offsetWidth)
+                setRollerPosition(el?.offsetLeft)
                 setIsMenuOpen(false)
             }
         }else{
             setRollerWidth(0)
             setIsMenuOpen(true)
         }
-    }, [location])
+    }, [location, styles])
     useEffect(() => {
         if(darkMode){
             setStyles(stylesDark)
@@ -37,19 +37,18 @@ const Nav = () => {
         }
     }, [darkMode])
     return(
-        <div className={styles.wrapper}>
+        <>{styles &&<div className={styles.wrapper}>
             <div className={styles.menu}>
                 <div className={styles.navContainer}>
                     <NavLink id='/awards' to="/awards"><p className="mediumTxt">Nagrody</p></NavLink>
                     <NavLink id='/tasks' to="/tasks"><p className="mediumTxt">Jak zdobyć punkty</p></NavLink>
-                    <NavLink id='/documents' to="/documents"><p className="mediumTxt">Regulaminy</p></NavLink>
                 </div>
                 <motion.div animate={{width: `${rollerWidth}px`, left: `${rollerPosition}px`}} className={styles.roller}></motion.div>
             </div>
             <div className={styles.buttonsContainer}>
                 {isMenuOpen && <Button onClick={() => {navigate(-1)}} square icon={faX}/>}
             </div>
-        </div>
+        </div>}</>
         
     )
 }

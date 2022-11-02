@@ -9,12 +9,14 @@ import userStore from '../../../zustand/userStore'
 const LogOut = () => {
     const [styles, setStyles] = useState(false)
     const darkMode = optionsStore(state => state.darkMode)
+    const [isStylesLoaded, setIsStylesLoaded] = useState(false)
     useEffect(() => {
         if(darkMode){
             setStyles(stylesDark)
         }else{
             setStyles(stylesLight)
         }
+        setIsStylesLoaded(true)
     }, [darkMode])
 
     const navigate = useNavigate()
@@ -26,7 +28,7 @@ const LogOut = () => {
                 <p className='bigTxt'>Czy na pewno chcesz sie wylogować?</p>
                 <div className={styles.buttonsContainer}>
                     <div onClick={() => {navigate(-1)}} className={styles.button}><p className='bigTxt'>Nie</p></div>
-                    <div onClick={() => {logOut()}} className={styles.button}><p className='bigTxt'>Tak</p></div>
+                    <div onClick={() => {logOut(navigate)}} className={styles.button}><p className='bigTxt'>Tak</p></div>
                 </div>
             </motion.div>
         </div>

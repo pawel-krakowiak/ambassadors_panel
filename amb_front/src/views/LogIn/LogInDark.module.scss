@@ -3,6 +3,7 @@
 
 
 .wrapper{
+    color: white;
     .left{
         .logInForm{
             .welcome{
@@ -16,6 +17,11 @@
                 input{
                     color: white;
                 }
+            }
+        }
+        .forgottenPasswordContainer{
+            .btn{
+                color: white;
             }
         }
     }

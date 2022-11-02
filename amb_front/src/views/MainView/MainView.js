@@ -19,7 +19,7 @@ import Rodo from "./Documents/Rodo/Rodo";
 import { motion } from "framer-motion";
 
 const MainView = () => {
-    const [styles, setStyles] = useState(stylesLight)
+    const [styles, setStyles] = useState(false)
     const darkMode = optionsStore(state => state.darkMode)
     useEffect(() => {
         if(darkMode){
@@ -30,7 +30,7 @@ const MainView = () => {
     }, [darkMode])
     
     return(
-        <div  className={styles.wrapper}>
+        <>{styles &&<div  className={styles.wrapper}>
             <BrowserRouter>
             <motion.div initial={{x: '-100%'}} animate={{x: 0, transition: {duration: .6, delay: .2, type: 'linear'}}} className={styles.left}>
                 <Welcome />
@@ -45,16 +45,13 @@ const MainView = () => {
                             <Route path="*" element={<Navigate to={`/awards`} /> } />
                             <Route path="/awards" element={<Awards />} />
                             <Route path="/tasks" element={<Tasks />} />
-                            <Route path="/documents" element={<Documents />} />
                             <Route path="/logOut" element={<LogOut />} />
                             <Route path="/message" element={<Message />} />
-                            <Route path="/statute" element={<Statute />} />
-                            <Route path="/rodo" element={<Rodo />} />
                         </Routes>
                 </div>
             </motion.div>
             </BrowserRouter>
-        </div>
+        </div>}</>
     )
 }
 
