@@ -10,6 +10,9 @@ const ItemCard = ({long, id, item, active}) => {
     const [styles, setStyles] = useState(false)
     const darkMode = optionsStore(state => state.darkMode)
     const isMobile = optionsStore(state => state.isMobile)
+    const changeMenuType = optionsStore(state => state.changeMenuType)
+    const setGlassCaseContent = optionsStore(state => state.setGlassCaseContent)
+
     useEffect(() => {
         if(darkMode){
             setStyles(stylesDark)
@@ -19,11 +22,19 @@ const ItemCard = ({long, id, item, active}) => {
     }, [darkMode])
     const [isGlassCaseOpen, setIsGlassCaseOpen] = useState(false)
 
+    const handleClick = () => {
+        if(isMobile){
+            changeMenuType('award')
+            setGlassCaseContent(item)
 
+        }else{
+            setIsGlassCaseOpen(true)
+        }
+    }
     return(
         <>
             <motion.div initial={{x: "30px", y: "30px", opacity: 0}} animate={{x: "0px", y: "0px", opacity: 1, transition: {duration: .4, delay: id * 0.2}}} 
-            className={long ? styles.wrapperLng : styles.wrapper} style={{cursor: active && 'pointer'}} onClick={() => {active && setIsGlassCaseOpen(true)}}>
+            className={long ? styles.wrapperLng : styles.wrapper} style={{cursor: active && 'pointer'}} onClick={() => {active && handleClick()}}>
                <img src={item.img} alt={item.name} className={styles.img} />
                 <div className={styles.contentContainer}>
                     <div className={styles.descriptionContainer}>

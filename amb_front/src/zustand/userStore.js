@@ -18,7 +18,7 @@ const store = (set) => ({
 
         setTimeout(() => {
             set((state) => ({isLogged: true}))
-        }, 500)
+        }, 700)
     },
 })
 

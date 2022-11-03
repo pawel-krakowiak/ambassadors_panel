@@ -13,12 +13,13 @@ const Nav = () => {
     const darkMode = optionsStore(state => state.darkMode)
     const isMedium = optionsStore(state => state.isMedium)
     const isMobile = optionsStore(state => state.isMobile)
+    const menuType = optionsStore(state => state.menuType)
+    const changeMenuType = optionsStore(state => state.changeMenuType)
     const name = userStore(state => state.name)
     let location = useLocation();
     const navigate = useNavigate()
     const [rollerWidth, setRollerWidth] = useState(0)
     const [rollerPosition, setRollerPosition] = useState(0)
-    const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [isWindowOpen, setIsWindowOpen] = useState(false)
     
     useEffect(() => {
@@ -36,7 +37,7 @@ const Nav = () => {
     }, [location, styles])
     useEffect(() => {
         window.scroll({top: 0, left: 0, behavior: 'smooth'})
-        setIsMenuOpen(false)
+        changeMenuType('null')
     }, [location])
     useEffect(() => {
         if(darkMode){
@@ -61,17 +62,9 @@ const Nav = () => {
             </div></>}
             <div className={styles.buttonsContainer}>
                 {isWindowOpen && <Button onClick={() => {navigate(-1)}} square icon={faChevronLeft}/>}
-                {isMobile && <Button onClick={() => {setIsMenuOpen(!isMenuOpen)}} square icon={isMenuOpen ? faX : faBars}/>}
+                {menuType === 'award' && <Button onClick={() => {changeMenuType('null')}} square icon={faChevronLeft}/>}
+                {isMobile && <> {menuType !== 'award' &&<Button onClick={() => {changeMenuType(menuType !== 'menu' ? 'menu' : 'null')}} square icon={menuType === 'menu' ? faX : faBars}/>}</>}
             </div>
-            <AnimatePresence>{isMenuOpen &&
-            <motion.div initial={{bottom: '-190%', transition: {duration: .5}}} animate={{bottom: '0%', transition: {duration: .5}}} exit={{bottom: '-190%', transition: {duration: .5}}} className={styles.menuSlider}>
-                <div className={styles.MobileNavContainer}>
-                    <NavLink id='/profile' to="/profile"><p className="bigTxt">O tobie</p></NavLink>
-                    <NavLink id='/awards' to="/awards"><p className="bigTxt">Nagrody</p></NavLink>
-                    <NavLink id='/tasks' to="/tasks"><p className="bigTxt">Jak zdobyć punkty</p></NavLink>
-                </div>
-                    
-            </motion.div>}</AnimatePresence>
         </div>}</>
         
     )

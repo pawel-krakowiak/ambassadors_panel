@@ -77,30 +77,5 @@
                 margin-right: 5%
             }
         }
-        .menuSlider{
-            position: fixed;
-            height: 90%;
-            width: 100%;
-            left: 0;
-            @include variables.DayLightBg;
-            border-radius:  25px 25px 0 0;
-            @include variables.Center;
-            .MobileNavContainer{
-                width: 80%;
-                height: 80%;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: space-around;
-                a{
-                    border-radius: 25px;
-                    @include variables.Center;
-                    @include variables.DayMediumBg;
-                    padding: 1rem;
-                    width: 100%;
-                    color: inherit;
-                }
-            }
-        }
     }
 }

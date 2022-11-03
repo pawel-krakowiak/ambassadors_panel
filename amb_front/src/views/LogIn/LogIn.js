@@ -13,8 +13,7 @@ import mailboxDark from '../../assets/mailboxDark.svg'
 const Menu = () => {
     const [styles, setStyles] = useState(stylesLight)
     const darkMode = optionsStore(state => state.darkMode)
-    const isLogged = optionsStore(state => state.isLogged)
-    const changeDarkMode = optionsStore(state => state.changeDarkMode)
+    const isMobile = optionsStore(state => state.isMobile)
     useEffect(() => {
         if(darkMode){
             setStyles(stylesDark)
@@ -44,7 +43,7 @@ const Menu = () => {
 
 
     return(
-        <div className={styles.wrapper}>
+        <> {styles &&<div className={styles.wrapper}>
                 <motion.div className={styles.left} initial={{ left: 0}} animate={{ left: loggedAnim ? '-100%' : 0}}>
                 <AnimatePresence>{isResetView &&
                     <motion.div className={styles.forgottenPasswordContainer} initial={{scale: 0.6, display: 'none'}} animate={{scale: 1, display: 'flex',
@@ -87,11 +86,17 @@ const Menu = () => {
                     <p onClick={() => {setIsResetView(true)}} className='mediumTxt' style={{marginTop: '1rem', cursor: 'pointer'}}>Zapomniałeś hasła?</p>
                     </motion.form>}</AnimatePresence>
                 </motion.div>
+                {isMobile ? 
+                    <>{loggedAnim && <motion.div className={styles.right} initial={{width: '100%', left: '100%'}} 
+                    animate={{width:  '100%', left:  '0' , transition: {duration: .3}}}>
+                        <img className={styles.img} src={logo} alt="Just Vape Shop" />
+                    </motion.div>}</>
+                : 
                 <motion.div className={styles.right} initial={{width: '65%', left: '35%', borderRadius: '25px 0 0 25px'}} 
                 animate={{width: loggedAnim ?  '100%' : '65%', left: loggedAnim ? '0' : '35%', borderRadius: loggedAnim ? '0' : '25px 0 0 25px'}}>
                     <img className={styles.img} src={logo} alt="Just Vape Shop" />
-                </motion.div>
-        </div>
+                </motion.div>}
+        </div>} </>
     )
 }
 

@@ -9,6 +9,8 @@ const store = (set) => ({
     isDesktop: false,
     windowSize: 1500, 
     windowHeight: 800,
+    menuType: 'null',
+    glassCaseContent: {},
     changeDarkMode: (current) => {
         set((state) => ({darkMode: !current}))
     },
@@ -43,6 +45,12 @@ const store = (set) => ({
     },
     changeDarkMode: (current) => {
         set((state) => ({darkMode: !current}))
+    },
+    changeMenuType: (value) => {
+        set((state) => ({menuType: value}))
+    },
+    setGlassCaseContent: (value) => {
+        set((state) => ({glassCaseContent: value}))
     },
     
 })

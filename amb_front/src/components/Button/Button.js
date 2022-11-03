@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 
 const Button = ({square, icon, onClick, circle, style, active, value}) => {
-    const [styles, setStyles] = useState(stylesLight)
+    const [styles, setStyles] = useState(false)
     const darkMode = optionsStore(state => state.darkMode)
     useEffect(() => {
         if(darkMode){
@@ -16,7 +16,7 @@ const Button = ({square, icon, onClick, circle, style, active, value}) => {
         }
     }, [darkMode])
     return(
-        <>
+        <>{styles &&<>
             {square && <div style={{...style}} onClick={onClick} className={styles.wrapperSq}>
                 <FontAwesomeIcon icon={icon} />
             </div>
@@ -25,7 +25,7 @@ const Button = ({square, icon, onClick, circle, style, active, value}) => {
                 {value ? value : <FontAwesomeIcon icon={faChevronRight} />}
             </div>
             }
-        </>
+        </>}</>
     )
 }
 

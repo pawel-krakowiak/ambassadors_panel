@@ -1,0 +1,11 @@
+@use '../../variables.module.scss';
+@use './MenuSlider.module.scss';
+
+.wrapper{
+    @include variables.NightDarkBg;
+    .navContainer{
+        a{
+            @include variables.NightMediumBg;
+        }
+    }
+}

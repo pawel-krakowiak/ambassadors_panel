@@ -17,6 +17,7 @@ import Message from "./Message/Message";
 import Statute from "./Documents/Statute/Statute";
 import Rodo from "./Documents/Rodo/Rodo";
 import { motion } from "framer-motion";
+import MenuSlider from "../../components/MenuSlider/MenuSlider";
 
 const MainView = () => {
     const [styles, setStyles] = useState(false)
@@ -53,6 +54,7 @@ const MainView = () => {
                         </Routes>
                 </div>
             </motion.div>
+            <MenuSlider />
             </BrowserRouter>
         </div>}</>
     )

@@ -27,7 +27,7 @@ const GlassCase = ({item, setIsGlassCaseOpen}) => {
                 </div>
                 <img className={styles.img} src={item.img} alt={item.name} />
                 <div className={styles.descriptionContainer}>
-                    <p className="bigTxt">Firmowa czapka </p>
+                    <p className="bigTxt">{item.name} </p>
                     <p className="bigTxt"><span className="primaryColor">{item.cost} punktów</span></p>
                     <p className="smallTxt">{item.description}</p>
                     <div className={styles.button}>Wybierz</div>

@@ -157,3 +157,14 @@
         }
     }
 }
+@media (max-width: 700px) {
+    .wrapper{
+        .right{
+            border-radius: 0;
+        }
+        .left{
+            width: 100%;
+        }
+    }
+
+}
