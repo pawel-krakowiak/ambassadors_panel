@@ -21,7 +21,7 @@
     .contentContainer{
         z-index: 5;
         width: 30%;
-        height: 75%;
+        aspect-ratio: 1 / 1.25;
         @include variables.DayMediumBg;
         padding: 2.5%;
         display: flex;
@@ -45,7 +45,7 @@
             align-items: flex-start;
             .button{
                 color: white;
-                padding: 1rem 2rem;
+                padding: calc(9px + 0.390625vw) calc(22px + 0.390625vw); 
                 cursor: pointer;
                 filter: grayscale(0.3);
                 transition: .3s;
@@ -55,6 +55,61 @@
                     filter: grayscale(0);
                 }
             }
+        }
+    }
+}
+
+
+@media (max-width: 1100px) and (min-height: 600px) {
+    .wrapper{
+        .contentContainer{
+            width: 40%;
+        }
+    }
+}
+@media (max-width: 900px) {
+    .wrapper{
+        .contentContainer{
+            width: 50%;
+        }
+    }
+}
+
+@media (max-height: 600px) and (orientation: landscape){
+    .wrapper{
+        .contentContainer{
+            width: 70%;
+            aspect-ratio: 3 / 1;
+            flex-direction: row;
+            .buttonContainer{
+                order: 3;
+                width: 20%;
+            }
+            .img{
+                height: auto;
+                width: 30%;
+            }
+            .descriptionContainer{
+                width: 50%;
+                height: auto;
+            }
+        }
+    }
+}
+@media (max-height: 600px) and (orientation: landscape) and (max-width: 1100px){
+    .wrapper{
+        .contentContainer{
+
+            .descriptionContainer{
+                width: 70%;
+            }
+        }
+    }
+}
+@media (max-height: 600px) and (orientation: landscape) and (max-width: 900px){
+    .wrapper{
+        .contentContainer{
+            aspect-ratio: 2.5 / 1;
         }
     }
 }

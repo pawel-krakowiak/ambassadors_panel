@@ -5,8 +5,8 @@ import optionsStore from "../../../../zustand/optionsStore";
 import {motion} from 'framer-motion'
 import itemsStore from "../../../../zustand/itemsStore";
 
-const NextAward = () => {
-    const [styles, setStyles] = useState(stylesLight)
+const NextAward = ({style}) => {
+    const [styles, setStyles] = useState(false)
     const darkMode = optionsStore(state => state.darkMode)
     useEffect(() => {
         if(darkMode){
@@ -18,7 +18,8 @@ const NextAward = () => {
     const closestItem = itemsStore(state => state.closestItem)
 
     return(
-        <div className={styles.wrapper}>
+        <>{styles&& 
+        <div style={{...style}} className={styles.wrapper}>
             <p className="mediumTxt">Następna nagroda:</p>
             <p className="mediumTxt"><span className="primaryColor">{closestItem.name}</span></p>
             <div className={styles.svgContainer}>
@@ -49,7 +50,7 @@ const NextAward = () => {
                 </svg>
             </div>
             <p className="smallTxt">Brakuje ci {closestItem.difference} punktów</p>
-        </div>
+        </div>}</>
     )
 }
 

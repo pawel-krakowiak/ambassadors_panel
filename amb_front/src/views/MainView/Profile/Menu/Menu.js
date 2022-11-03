@@ -6,8 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLightbulb, faMoon, faRightFromBracket, faMessage } from '@fortawesome/free-solid-svg-icons'
 import { NavLink  } from "react-router-dom";
 
-const Menu = () => {
-    const [styles, setStyles] = useState(stylesLight)
+const Menu = ({style}) => {
+    const [styles, setStyles] = useState(false)
     const darkMode = optionsStore(state => state.darkMode)
     const changeDarkMode = optionsStore(state => state.changeDarkMode)
     useEffect(() => {
@@ -18,11 +18,13 @@ const Menu = () => {
         }
     }, [darkMode])
     return(
-        <div className={styles.wrapper}>
-            <span><NavLink to="/message"><FontAwesomeIcon className="primaryColor" icon={faMessage} /></NavLink></span>
-            <span onClick={() => {changeDarkMode(darkMode)}}><FontAwesomeIcon style={{color: darkMode ? '#FAFF00' : '#000000'}} icon={darkMode ? faLightbulb : faMoon} /></span>
-            <span><NavLink to="/logOut"><FontAwesomeIcon style={{color:  '#FC6363'}} icon={faRightFromBracket} /></NavLink></span>
-        </div>
+        <>{styles &&
+            <div className={styles.wrapper} style={{...style}}>
+                <span><NavLink to="/message"><FontAwesomeIcon className="primaryColor" icon={faMessage} /></NavLink></span>
+                <span onClick={() => {changeDarkMode(darkMode)}}><FontAwesomeIcon style={{color: darkMode ? '#FAFF00' : '#000000'}} icon={darkMode ? faLightbulb : faMoon} /></span>
+                <span><NavLink to="/logOut"><FontAwesomeIcon style={{color:  '#FC6363'}} icon={faRightFromBracket} /></NavLink></span>
+            </div>
+        }</>
     )
 }
 

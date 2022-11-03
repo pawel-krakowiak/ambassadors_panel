@@ -3,8 +3,8 @@ import stylesLight from './LastActivity.module.scss'
 import stylesDark from './LastActivityDark.module.scss'
 import optionsStore from "../../../../zustand/optionsStore";
 
-const LastActivity = () => {
-    const [styles, setStyles] = useState(stylesLight)
+const LastActivity = ({style}) => {
+    const [styles, setStyles] = useState(false)
     const darkMode = optionsStore(state => state.darkMode)
     useEffect(() => {
         if(darkMode){
@@ -14,11 +14,14 @@ const LastActivity = () => {
         }
     }, [darkMode])
     return(
-        <div className={styles.wrapper}>
-            <p className="mediumTxt">Twoja ostatnia aktywność:</p>
-            <p className="mediumTxt"><span className="primaryColor">Wymienienie 100 punktów</span></p>
-            <p className="smallTxt"><span className="link">Zobacz całą historie</span></p>
-        </div>
+        <>{styles &&
+            <div style={{...style}} className={styles.wrapper}>
+                <p className="mediumTxt">Twoja ostatnia aktywność:</p>
+                <p className="mediumTxt"><span className="primaryColor">Wymienienie 100 punktów</span></p>
+                <p className="smallTxt"><span className="link">Zobacz całą historie</span></p>
+            </div>
+        }</>
+
     )
 }
 

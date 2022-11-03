@@ -7,6 +7,7 @@
     overflow: hidden;
     border-radius: 0;
     position: relative;
+    min-height: 500px;
     .left{
         position: absolute;
         width: 35%;
@@ -104,6 +105,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            text-align: center;
             .svg{
                 width: 50%;
                 margin: 0 auto 5vh;
@@ -135,5 +137,23 @@
         border-radius: 25px 0 0 25px ;
         @include variables.NightDarkBg;
         @include variables.Center;
+    }
+}
+
+@media (max-width: 1400px) {
+    .wrapper{
+        .right{
+            .img{
+                width: 60%;
+            }
+        }
+        .left{
+            .forgottenPasswordContainer{
+                
+                .btn{
+                    width: 100%;
+                }
+            }
+        }
     }
 }

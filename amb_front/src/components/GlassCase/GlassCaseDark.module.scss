@@ -6,3 +6,9 @@
         @include variables.NightLightBg;
     }
 }
+
+@media (max-width: 700px) {
+    .sliderWrapper{
+        @include variables.NightDarkBg;
+    }
+}

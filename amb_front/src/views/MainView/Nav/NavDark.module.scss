@@ -16,3 +16,18 @@
     
     }
 }
+
+@media (max-width: 700px) {
+    .wrapper{
+        border-radius: 0;
+        @include variables.NightLightBg;
+        .menuSlider{
+            @include variables.NightDarkBg;
+            .MobileNavContainer{
+                a{
+                    @include variables.NightMediumBg;
+                }
+            }
+        }
+    }
+}

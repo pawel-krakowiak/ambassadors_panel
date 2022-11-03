@@ -8,6 +8,7 @@
     align-items: center;
     justify-content: space-around;
     @include variables.DayLightBg;
+    text-align: center;
     .img{
         height: 40%;
     }

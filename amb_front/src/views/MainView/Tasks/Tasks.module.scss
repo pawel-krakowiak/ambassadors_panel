@@ -16,3 +16,11 @@
         
     }
 }
+
+@media (max-width: 700px) {
+    .wrapper{
+        .content{
+            align-items: center;
+        }
+    }
+}

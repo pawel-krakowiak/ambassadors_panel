@@ -8,6 +8,7 @@ const store = (set) => ({
     isMedium: false,
     isDesktop: false,
     windowSize: 1500, 
+    windowHeight: 800,
     changeDarkMode: (current) => {
         set((state) => ({darkMode: !current}))
     },
@@ -20,6 +21,7 @@ const store = (set) => ({
     },
     checkWindowSize: () => {
         set((state) => ({windowSize: window.innerWidth}))
+        set((state) => ({windowHeight: window.innerHeight}))
         if(window.innerWidth < 700){
             set((state) => ({isMobile: true}))
             set((state) => ({isMedium: false}))
@@ -32,6 +34,11 @@ const store = (set) => ({
             set((state) => ({isMobile: false}))
             set((state) => ({isMedium: false}))
             set((state) => ({isDesktop: true}))
+        }
+        if(window.innerHeight < 500 && window.innerWidth > 700 ){
+            set((state) => ({isMobile: false}))
+            set((state) => ({isMedium: true}))
+            set((state) => ({isDesktop: false}))
         }
     },
     changeDarkMode: (current) => {

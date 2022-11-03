@@ -11,6 +11,7 @@
     .menu{
         height: 100%;
         @include variables.DayDarkBg;
+        min-height: 2.5rem;
         border-radius: 15px;
         position: relative;
         .navContainer{
@@ -40,8 +41,66 @@
     }
     .buttonsContainer{
         height: 100%;
-        min-width: 100px;
+        min-width: 50px;
         display: flex;
         justify-content: flex-end;
+    }
+}
+
+@media (max-width: 1100px) or (max-height: 500px) {
+    .wrapper{
+        .menu{
+            margin: 0 auto;
+
+        }
+    }
+}
+
+@media (max-width: 700px) {
+    .wrapper{
+        position: fixed;
+        @include variables.DayMediumBg;
+        height: 10%;
+        z-index: 7;
+        top: 0;
+        .welcomeContainer{
+            width: 70%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start
+        }
+        .buttonsContainer{
+            width: 30%;
+            div{
+                margin-right: 5%
+            }
+        }
+        .menuSlider{
+            position: fixed;
+            height: 90%;
+            width: 100%;
+            left: 0;
+            @include variables.DayLightBg;
+            border-radius:  25px 25px 0 0;
+            @include variables.Center;
+            .MobileNavContainer{
+                width: 80%;
+                height: 80%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-around;
+                a{
+                    border-radius: 25px;
+                    @include variables.Center;
+                    @include variables.DayMediumBg;
+                    padding: 1rem;
+                    width: 100%;
+                    color: inherit;
+                }
+            }
+        }
     }
 }

@@ -22,7 +22,7 @@ const Tasks = () => {
 
     return(
         <>{styles &&<div className={styles.wrapper}>
-            <div className={styles.title}><p className="bigTxt">Wiesz ze masz prawa? Konstytucja mówi że tak!</p></div>
+            <div className={styles.title}><p className="bigTxt">Wykonuj zadania i zdobywaj <span className="primaryColor">nagrody</span></p></div>
             <div className={styles.content}>
                 {data.map((item, i) => <InfoCard i={i} item={item}/>)}
             </div>

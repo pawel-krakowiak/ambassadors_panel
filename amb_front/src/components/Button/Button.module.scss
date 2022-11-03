@@ -7,11 +7,13 @@
     @include variables.DayDarkBg;
     @include variables.Center;
     cursor: pointer;
+    padding: 1rem;
+
     font-size: 22px;
 }
 .wrapperCir{
+    padding: 0.5rem;
     color: white;
-    height: 80%;
     aspect-ratio : 1 / 1;
     font-size: 22px;
     @include variables.Center;
@@ -30,5 +32,17 @@
         }
     }
 }
+
+
+@media (max-width:1400px) {
+    .wrapperCir{
+        padding: 0.5rem;
+    }
+    .wrapperSq{
+        padding: 1.2rem;
+
+    }
+}
+
 
 

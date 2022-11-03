@@ -8,6 +8,7 @@ import Button from "../Button/Button";
 const InfoCard = ({i, item}) => {
     const [styles, setStyles] = useState(false)
     const darkMode = optionsStore(state => state.darkMode)
+    const isMobile = optionsStore(state => state.isMobile)
     useEffect(() => {
         if(darkMode){
             setStyles(stylesDark)
@@ -24,7 +25,7 @@ const InfoCard = ({i, item}) => {
                 <p className="smallTxt">{item.description}</p>
              </div>
             <div className={styles.buttonContainer}>
-                <Button active circle value={item.reward} style={{fontSize: '48px', height: '30%'}} />
+                <Button active circle value={item.reward} style={{fontSize: !isMobile ? '48px' : '36px', width: !isMobile ? '75px' : '50px', height: !isMobile ? '75px' : '50px' }} />
             </div>
         </motion.div>
     )

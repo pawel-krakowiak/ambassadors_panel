@@ -19,7 +19,7 @@ const GlassCase = ({item, setIsGlassCaseOpen}) => {
 
 
     return(
-        <div className={styles.wrapper}> 
+        <> { styles && <div className={styles.wrapper}> 
             <motion.div initial={{backgroundColor: 'rgba(0, 0, 0, 0.1)'}} animate={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}} onClick={() => {setIsGlassCaseOpen(false)}} className={styles.backPanel}></motion.div>
             <motion.div initial={{opacity: 0, scale: 0.7}} animate={{opacity: 1, scale: 1}} className={styles.contentContainer}>
                 <div className={styles.buttonContainer}>
@@ -33,7 +33,7 @@ const GlassCase = ({item, setIsGlassCaseOpen}) => {
                     <div className={styles.button}>Wybierz</div>
                 </div>
             </motion.div>
-        </div>
+        </div>}</>
     )
 }
 

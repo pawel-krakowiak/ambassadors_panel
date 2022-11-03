@@ -9,6 +9,7 @@ import GlassCase from "../GlassCase/GlassCase";
 const ItemCard = ({long, id, item, active}) => {
     const [styles, setStyles] = useState(false)
     const darkMode = optionsStore(state => state.darkMode)
+    const isMobile = optionsStore(state => state.isMobile)
     useEffect(() => {
         if(darkMode){
             setStyles(stylesDark)
@@ -27,8 +28,12 @@ const ItemCard = ({long, id, item, active}) => {
                 <div className={styles.contentContainer}>
                     <div className={styles.descriptionContainer}>
                         {long ? <>
+                            {isMobile ? <>
+                            <p className="mediumTxt">{item.name}</p> 
+                            <p className="bigTxt"><span className={active ? "primaryColor" : 'disabledColor'}> {item.cost} punktów</span></p>
+                            </>: <>
                             <p className="mediumTxt">{item.name}<span className={active ? "primaryColor" : 'disabledColor'}> {item.cost} punktów</span></p> 
-                            <p className="smallTxt">{item.description}</p>
+                            <p className="smallTxt">{item.description}</p></>}
                             </> :
                             <>
                             <p  className="smallTxt">{item.name}</p>
@@ -36,7 +41,10 @@ const ItemCard = ({long, id, item, active}) => {
                             </>  
                         }
                     </div>
-                    <Button onClick={() => {active && setIsGlassCaseOpen(true)}} active={active} circle style={{fontSize: long && '42px'}}/>
+                    <div className={styles.buttonContainer}>
+                        <Button onClick={() => {active && setIsGlassCaseOpen(true)}} active={active} circle style={{fontSize: long && '42px'}}/>
+
+                    </div>
                 </div>
             </motion.div>
             {isGlassCaseOpen && <GlassCase setIsGlassCaseOpen={setIsGlassCaseOpen} item={item} />}

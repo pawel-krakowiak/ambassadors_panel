@@ -21,6 +21,8 @@ import { motion } from "framer-motion";
 const MainView = () => {
     const [styles, setStyles] = useState(false)
     const darkMode = optionsStore(state => state.darkMode)
+    const isDesktop = optionsStore(state => state.isDesktop)
+    const windowHeight = optionsStore(state => state.windowHeight)
     useEffect(() => {
         if(darkMode){
             setStyles(stylesDark)
@@ -32,13 +34,14 @@ const MainView = () => {
     return(
         <>{styles &&<div  className={styles.wrapper}>
             <BrowserRouter>
-            <motion.div initial={{x: '-100%'}} animate={{x: 0, transition: {duration: .6, delay: .2, type: 'linear'}}} className={styles.left}>
+            <motion.div initial={{left: '-100%'}} animate={{left: isDesktop ?  0 : '-100%' , transition: {duration: .6, delay: .2, type: 'linear'}}} className={styles.left}>
                 <Welcome />
-                <Menu />
-                <LastActivity />
-                <NextAward />
+                <Menu  />
+                {windowHeight > 700 && <LastActivity />}
+                <NextAward  style={{height: windowHeight < 700 && '55%'}} />
             </motion.div>
-            <motion.div initial={{width: '100%'}} animate={{width: '77.5%', transition: {duration: .6, type: 'linear'}}} className={styles.right}>
+            <motion.div initial={{width: '100%', left: 0}} animate={{width: isDesktop ?  '75%' : '100%', left: isDesktop ? '22.5%' : 0 , transition: {duration: .6, type: 'linear'}}}
+             className={styles.right}>
                 <Nav />
                 <div className={styles.contentContainer}>
                         <Routes>
