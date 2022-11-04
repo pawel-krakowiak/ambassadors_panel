@@ -18,6 +18,8 @@ import Statute from "./Documents/Statute/Statute";
 import Rodo from "./Documents/Rodo/Rodo";
 import { motion } from "framer-motion";
 import MenuSlider from "../../components/MenuSlider/MenuSlider";
+import Profile from "./Profile/Profile";
+
 
 const MainView = () => {
     const [styles, setStyles] = useState(false)
@@ -51,6 +53,7 @@ const MainView = () => {
                             <Route path="/tasks" element={<Tasks />} />
                             <Route path="/logOut" element={<LogOut />} />
                             <Route path="/message" element={<Message />} />
+                            <Route path="/profile" element={<Profile />} />
                         </Routes>
                 </div>
             </motion.div>

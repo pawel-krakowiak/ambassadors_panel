@@ -46,6 +46,16 @@ const Nav = () => {
             setStyles(stylesLight)
         }
     }, [darkMode])
+    const [showBurger, setShowBurger] = useState(true)
+
+    useEffect(() => {
+        if(menuType === 'menu' || menuType === "null"){
+            setShowBurger(true)
+        }else{
+            setShowBurger(false)
+        }
+    }, [menuType])
+
     return(
         <>{styles &&<div className={styles.wrapper}>
             {isMobile ?  
@@ -54,7 +64,7 @@ const Nav = () => {
                 </div>
             : <><div className={styles.menu}>
                 <div className={styles.navContainer}>
-                    <NavLink id='/profile' to="/profile"><p className="mediumTxt">O tobie</p></NavLink>
+                    {isMedium &&<NavLink id='/profile' to="/profile"><p className="mediumTxt">O tobie</p></NavLink>}
                     <NavLink id='/awards' to="/awards"><p className="mediumTxt">Nagrody</p></NavLink>
                     <NavLink id='/tasks' to="/tasks"><p className="mediumTxt">Jak zdobyć punkty</p></NavLink>
                 </div>
@@ -62,8 +72,8 @@ const Nav = () => {
             </div></>}
             <div className={styles.buttonsContainer}>
                 {isWindowOpen && <Button onClick={() => {navigate(-1)}} square icon={faChevronLeft}/>}
-                {menuType === 'award' && <Button onClick={() => {changeMenuType('null')}} square icon={faChevronLeft}/>}
-                {isMobile && <> {menuType !== 'award' &&<Button onClick={() => {changeMenuType(menuType !== 'menu' ? 'menu' : 'null')}} square icon={menuType === 'menu' ? faX : faBars}/>}</>}
+                {menuType !== 'null' && <> { menuType !== 'menu' && <Button onClick={() => {changeMenuType('null')}} square icon={faChevronLeft}/>}</>}
+                {isMobile && <> { showBurger && <Button onClick={() => {changeMenuType(menuType !== 'menu' ? 'menu' : 'null')}} square icon={menuType === 'menu' ? faX : faBars}/>}</>}
             </div>
         </div>}</>
         

@@ -7,6 +7,7 @@
     flex-direction: row;
     @include variables.DayMediumBg;
     border-radius: 0;
+    overflow: hidden;
     position: relative;
     .left{
         top: 0;
@@ -60,7 +61,8 @@
 @media (max-width: 700px) {
     .wrapper{
         margin-top: 10vh;
-        height: 90vh;
+        min-height: 90vh;
+        height: -webkit-fill-available;
         overflow: hidden;
         .contentContainer{
             height: 100%;

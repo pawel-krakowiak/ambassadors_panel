@@ -53,7 +53,7 @@ const ItemCard = ({long, id, item, active}) => {
                         }
                     </div>
                     <div className={styles.buttonContainer}>
-                        <Button onClick={() => {active && setIsGlassCaseOpen(true)}} active={active} circle style={{fontSize: long && '42px'}}/>
+                        <Button onClick={() => {active && handleClick()}} active={active} circle style={{fontSize: long && '42px'}}/>
 
                     </div>
                 </div>

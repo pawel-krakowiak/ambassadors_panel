@@ -20,8 +20,11 @@ const NextAward = ({style}) => {
     return(
         <>{styles&& 
         <div style={{...style}} className={styles.wrapper}>
-            <p className="mediumTxt">Następna nagroda:</p>
-            <p className="mediumTxt"><span className="primaryColor">{closestItem.name}</span></p>
+            <div className={styles.description}>
+                <p className="mediumTxt">Następna nagroda:</p>
+                <p className="mediumTxt"><span className="primaryColor">{closestItem.name}</span></p>
+            </div>
+
             <div className={styles.svgContainer}>
                 <svg width="100%" height="100%" viewBox="0 0 36 36">
                     <path

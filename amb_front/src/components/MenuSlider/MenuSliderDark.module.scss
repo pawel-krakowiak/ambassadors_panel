@@ -8,4 +8,16 @@
             @include variables.NightMediumBg;
         }
     }
+    .logOutContainer{
+        .button{
+            &:nth-of-type(2){
+                @include variables.NightMediumBg;
+            }
+        }
+    }
+    .messageContainer{
+        .floatLabel{
+            @include variables.NightMediumBg;
+        }
+    }
 }
