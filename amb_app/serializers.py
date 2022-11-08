@@ -19,8 +19,6 @@ class LoginSerializer(TokenObtainPairSerializer):
             update_last_Login(None, self.user)
 
         return data
-            
-        return data
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
