@@ -4,6 +4,7 @@
 
 .wrapper{
     color: white;
+    @include variables.NightMediumBg;
     .left{
         .logInForm{
             .welcome{
@@ -24,5 +25,8 @@
                 color: white;
             }
         }
+    }
+    .right{
+        @include variables.NightDarkBg;
     }
 }

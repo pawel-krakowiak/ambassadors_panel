@@ -41,7 +41,18 @@ const Menu = () => {
         logIn({data: contactMsg, setMessageError, setLoggedAnim})
     }
 
+    const handleClickReset = () => {
+        if(contactMsg.mail !== ""){
+            setIsResetView(true)
+            setContactMsg({
+                mail: '',
+                password: '', 
+            })
+        }else{
+            setMessageError('musisz najpierw wpisać maila')
 
+        }
+    }
     return(
         <> {styles &&<div className={styles.wrapper}>
                 <motion.div className={styles.left} initial={{ left: 0}} animate={{ left: loggedAnim ? '-100%' : 0}}>
@@ -83,7 +94,7 @@ const Menu = () => {
                         </AnimatePresence>
                     </div>
                     <button type="submit" className={styles.btn}><p className='mediumTxt'>Zaloguj się</p></button>
-                    <p onClick={() => {setIsResetView(true)}} className='mediumTxt' style={{marginTop: '1rem', cursor: 'pointer'}}>Zapomniałeś hasła?</p>
+                    <p onClick={handleClickReset} className='mediumTxt' style={{marginTop: '1rem', cursor: 'pointer'}}>Zapomniałeś hasła?</p>
                     </motion.form>}</AnimatePresence>
                 </motion.div>
                 {isMobile ? 
