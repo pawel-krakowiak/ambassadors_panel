@@ -30,6 +30,7 @@ DEBUG = True
 # ALLOWED_HOSTS = ["final-amb-env.eba-nkyt68k3.us-west-2.elasticbeanstalk.com"]
 ALLOWD_HOSTS = ["*"]
 CORS_ALLOWED_ORIGINS = [
+    "0.0.0.1",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
     "https://final-amb-env.eba-nkyt68k3.us-west-2.elasticbeanstalk.com",
