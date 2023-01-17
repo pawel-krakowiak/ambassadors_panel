@@ -28,7 +28,7 @@ SECRET_KEY = config("SECRET_KEY")
 DEBUG = True
 
 # ALLOWED_HOSTS = ["final-amb-env.eba-nkyt68k3.us-west-2.elasticbeanstalk.com"]
-ALLOWD_HOSTS = ["*"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
