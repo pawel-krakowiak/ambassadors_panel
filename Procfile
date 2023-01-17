@@ -1,0 +1,1 @@
+web: gunicorn ambassadors_panel.wsgi --log-file -
