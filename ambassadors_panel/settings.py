@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from decouple import config
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,10 +29,10 @@ DEBUG = True
 
 # ALLOWED_HOSTS = ["final-amb-env.eba-nkyt68k3.us-west-2.elasticbeanstalk.com"]
 ALLOWD_HOSTS = ["*"]
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",
+#     "http://127.0.0.1:3000",
+# ]
 
 # Application definition
 
@@ -130,6 +131,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT  =os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = 'app_media'

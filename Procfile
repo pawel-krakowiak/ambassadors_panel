@@ -1,1 +1,1 @@
-web: gunicorn ambassadors_panel.wsgi --log-file -
+web: gunicorn 'ambassadors_panel.wsgi'
