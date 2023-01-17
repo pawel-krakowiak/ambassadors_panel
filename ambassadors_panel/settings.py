@@ -29,6 +29,7 @@ DEBUG = True
 
 ALLOWD_HOSTS = [
     "web-production-f464.up.railway.app",
+    "https://web-production-f464.up.railway.app/",
     "ambassadors.justvape.pl",
 ]
 
