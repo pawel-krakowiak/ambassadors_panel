@@ -30,10 +30,6 @@ DEBUG = True
 # ALLOWED_HOSTS = ["final-amb-env.eba-nkyt68k3.us-west-2.elasticbeanstalk.com"]
 ALLOWD_HOSTS = ["*"]
 
-CORS_ALLOWED_ORIGINS = [
-    'web-production-f464.up.railway.app',
-    'https://web-production-f464.up.railway.app/',
-]
 
 # Application definition
 
@@ -42,7 +38,6 @@ INSTALLED_APPS = [
     'jet.dashboard',
     'jet',
     'rest_framework',
-    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
