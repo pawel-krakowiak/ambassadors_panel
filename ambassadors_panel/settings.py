@@ -39,6 +39,15 @@ CORS_ALLOWED_ORIGINS = [
     'http://ambassadors.justvape.pl'
 ]
 
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:8000',
+    'http://localhost:8009',
+    'http://web-production-f464.up.railway.app',
+    'https://web-production-f464.up.railway.app',
+    'https://ambassadors.justvape.pl',
+    'http://ambassadors.justvape.pl',
+)
+
 # Application definition
 
 INSTALLED_APPS = [
