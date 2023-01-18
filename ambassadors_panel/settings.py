@@ -37,7 +37,7 @@ CORS_ALLOWED_ORIGINS = [
     'https://web-production-f464.up.railway.app',
     'https://ambassadors.justvape.pl',
     'http://ambassadors.justvape.pl',
-    'https://panel.ambasador-justvape.pl/',
+    'https://panel.ambasador-justvape.pl',
 ]
 
 CORS_ORIGIN_WHITELIST = (
@@ -47,13 +47,13 @@ CORS_ORIGIN_WHITELIST = (
     'https://web-production-f464.up.railway.app',
     'https://ambassadors.justvape.pl',
     'http://ambassadors.justvape.pl',
-    'https://panel.ambasador-justvape.pl/',
+    'https://panel.ambasador-justvape.pl',
     
 )
 
 CSRF_TRUSTED_ORIGINS = [
     'https://web-production-f464.up.railway.app',
-    'https://panel.ambasador-justvape.pl/',
+    'https://panel.ambasador-justvape.pl',
 ]
 
 # Application definition
