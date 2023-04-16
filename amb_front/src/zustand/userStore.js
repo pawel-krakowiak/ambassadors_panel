@@ -11,14 +11,20 @@ const store = (set) => ({
         navigate('/')
 
     },
-    logIn: ({data, setMessageError, setLoggedAnim}) => {
+    logIn: async ({data, setMessageError, setLoggedAnim}) => {
         console.log((data))
-        setMessageError('Błędne hasło')
-        setLoggedAnim(true)
+        try{
+           let result = await api.logIn(data)
+           console.log(result)
+        }catch (err) {
+            console.log(err)
+        }
+        // setMessageError('Błędne hasło')
+        // setLoggedAnim(true)
 
-        setTimeout(() => {
-            set((state) => ({isLogged: true}))
-        }, 700)
+        // setTimeout(() => {
+        //     set((state) => ({isLogged: true}))
+        // }, 700)
     },
 })
 
