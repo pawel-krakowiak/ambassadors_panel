@@ -48,13 +48,11 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     
     def get_queryset(self):
-        if self.request.user_is_superuser:
+        if self.request.user.is_admin:
             return User.objects.all()
         
     def get_object(self):
-        lookup_field_value = self.kwargs[self.lookup_field]
-        
-        obj = User.objects.get(lookup_field_value)
+        obj = User.objects.get(pk=self.kwargs[self.lookup_field])
         self.check_object_permissions(self.request, obj)
         
         return obj
