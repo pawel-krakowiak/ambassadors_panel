@@ -26,7 +26,7 @@ const Menu = () => {
     const [messageError, setMessageError] = useState(false)
     const [loggedAnim, setLoggedAnim] = useState(false)
     const [contactMsg, setContactMsg] = useState({
-        mail: '',
+        email: '',
         password: '',
     })
 
@@ -42,10 +42,10 @@ const Menu = () => {
     }
 
     const handleClickReset = () => {
-        if(contactMsg.mail !== ""){
+        if(contactMsg.email !== ""){
             setIsResetView(true)
             setContactMsg({
-                mail: '',
+                email: '',
                 password: '', 
             })
         }else{
@@ -71,8 +71,8 @@ const Menu = () => {
                     <p className={styles.welcome}>Witaj Ponownie 🎉</p>
                     <div className={styles.floatLabel}> 
                         <div className={styles.inputContainer}>
-                            <input autoComplete="off" required type="email" name='mail'  value={contactMsg.mail}  onChange={handleChange}/>
-                            <label className={contactMsg.mail.length > 0 && styles.active} htmlFor="mail">
+                            <input autoComplete="off" required type="email" name='email'  value={contactMsg.email}  onChange={handleChange}/>
+                            <label className={contactMsg.email.length > 0 && styles.active} htmlFor="email">
                                 Email
                             </label>
                         </div>
