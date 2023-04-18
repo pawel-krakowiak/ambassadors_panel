@@ -185,3 +185,9 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
     )
 }
+
+# Generate graph
+GRAPH_MODELS = {
+    'all_applications': True,
+    'group_models': True,
+}
