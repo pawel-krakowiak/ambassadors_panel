@@ -1,7 +1,8 @@
 from .models import User, Reward, Location
 from rest_framework import serializers
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
 from rest_framework_simplejwt.settings import api_settings
+from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import update_last_login
 
 class LoginSerializer(TokenObtainPairSerializer):
@@ -13,6 +14,25 @@ class LoginSerializer(TokenObtainPairSerializer):
         data['user'] = UserSerializer(self.user).data
         update_last_login(None, self.user)
         return data
+
+class RefreshSerializer(serializers.Serializer):
+    refresh = serializers.CharField()
+    
+    def validate(self, attrs):
+        self.token = attrs['refresh']
+        
+        return super().validate(attrs)
+    
+    def save(self, **kwargs):
+        refresh = RefreshToken(self.token)
+        refresh.blacklist()
+        
+        data = {
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        }
+        
+        return data 
 
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
@@ -45,6 +65,5 @@ class LocationSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Location
         fields = ['id', 'location']
-
 
 

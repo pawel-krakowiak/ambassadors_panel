@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Location, Reward, User
-from .serializers import UserSerializer, RewardSerializer, LocationSerializer, LoginSerializer
+from .serializers import UserSerializer, RewardSerializer, LocationSerializer, LoginSerializer, RefreshSerializer
 from rest_framework import viewsets, filters, status
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -24,19 +24,23 @@ class LoginViewSet(viewsets.ModelViewSet, TokenObtainPairView):
     
         return Response(serializer.validated_data, status=status.HTTP_200_OK)
     
-class RefreshViewSet(viewsets.ViewSet, RefreshToken):
-    permission_classes = (AllowAny,)
+class RefreshViewSet(viewsets.ModelViewSet):
+    serializer_class = RefreshSerializer
     http_method_names = ['post']
+    permission_classes = (IsAuthenticated,)
     
     def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
+        refresh = request.data.get('refresh')
         
         try:
-            serializer.is_valid(raise_exception=True)
-        except TokenError as e:
-            raise InvalidToken(e.args[0])
-        
-        return Response(serializer.validated_data, status=status.HTTP_200_OK)
+            token = RefreshToken(refresh)
+            response = {
+                'access': str(token.access_token),
+                'refresh': str(token)
+            }
+            return Response(response, status=status.HTTP_200_OK)
+        except TokenError as token_error:
+            raise InvalidToken(token_error.args[0])
             
 
 class UserViewSet(viewsets.ModelViewSet):
