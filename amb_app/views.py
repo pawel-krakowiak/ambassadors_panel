@@ -57,6 +57,12 @@ class UserViewSet(viewsets.ModelViewSet):
         self.check_object_permissions(self.request, obj)
         
         return obj
+
+    @action(detail=False, methods=['get'])
+    def get_user_info(self, request):
+        user = request.user
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
     
 class RewardViewSet(viewsets.ModelViewSet):
     queryset = Reward.objects.all()
