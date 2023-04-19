@@ -41,6 +41,14 @@ class Reward(models.Model):
     def name_with_price(self):
         return f"{self.name} ({self.points_price} punktów)"
 
+    @property
+    def location_name(self):
+        return self.location.location
+    
+    @property
+    def location_id(self):
+        return self.location.id
+
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None):
         """
@@ -111,6 +119,14 @@ class User(AbstractBaseUser):
     def has_module_perms(self, app_label):
         "Does the user have permissions to view the app `app_label`?"
         return True
+    
+    @property
+    def location_name(self):
+        return self.location.location
+    
+    @property
+    def location_id(self):
+        return self.location.id
     
     @property
     def is_staff(self):

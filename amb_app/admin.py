@@ -22,15 +22,15 @@ class UserAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         ('Personal info', {'fields': ('name', 'surename', 'instagram_name')}),
-        ('Permissions', {'fields': ('admin', 'staff')}),
+        ('Permissions', {'fields': ('admin', 'staff', 'is_active')}),
     )
     
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'name', 'surename', 'instagram_name', 'password', 'password_2', 'location', 'points', 'admin', 'staff', 'is_active',)
-            }),
-        )
+            'fields': ('email', 'name', 'surename', 'instagram_name', 'password', 'password_2', 'location', 'points', 'admin', 'staff', 'is_active')}
+        ),
+    )
     search_fields = ['email']
     ordering = ['admin', 'email']
     filter_horizontal = ()

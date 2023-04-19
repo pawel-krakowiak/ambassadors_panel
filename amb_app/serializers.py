@@ -17,14 +17,15 @@ class LoginSerializer(TokenObtainPairSerializer):
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'email', 'first_name', 'last_name', 'password', 'is_staff', 'is_active', 'points', 'location']
+        fields = ['id', 'email', 'name', 'surename', 'instagram_name', 'password', 'is_staff', 'is_active', 'points', 'location']
         extra_kwargs = {'password': {'write_only': True}}
     
     def create(self, validated_data):
         user = User.objects.create_user(
             email=validated_data['email'],
-            first_name=validated_data['first_name'],
-            last_name=validated_data['last_name'],
+            name=validated_data['name'],
+            surename=validated_data['surename'],
+            instagram_name=validated_data['instagram_name'],
             password=validated_data['password'],
             location=validated_data['location'],
         )
@@ -33,12 +34,12 @@ class RegisterSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'email', 'first_name', 'last_name', 'is_staff', 'is_active', 'points', 'location']
+        fields = ['id', 'email', 'name', 'surename', 'is_staff', 'is_active', 'points', 'location_name', 'location_id']
 
 class RewardSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Reward
-        fields = ['id', 'name', 'points_price', 'description', 'reward_img', 'is_available', 'location']
+        fields = ['id', 'name', 'points_price', 'description', 'reward_img', 'is_available', 'location_name', 'location_id']
 
 class LocationSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
