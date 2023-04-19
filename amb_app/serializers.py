@@ -9,30 +9,23 @@ class LoginSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
         refresh = self.get_token(self.user)
-        data['refresh'] = str(refresh)
-        data['access'] = str(refresh.access_token)
-        data['user'] = UserSerializer(self.user).data
+        data = {
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+            'user': UserSerializer(self.user).data
+        }
         update_last_login(None, self.user)
         return data
 
-class RefreshSerializer(serializers.Serializer):
-    refresh = serializers.CharField()
-    
+class RefreshSerializer(TokenRefreshSerializer):
     def validate(self, attrs):
-        self.token = attrs['refresh']
-        
-        return super().validate(attrs)
-    
-    def save(self, **kwargs):
-        refresh = RefreshToken(self.token)
-        refresh.blacklist()
-        
+        data = super().validate(attrs)
+        refresh = RefreshToken(attrs['refresh'])
         data = {
             'refresh': str(refresh),
             'access': str(refresh.access_token),
         }
-        
-        return data 
+        return data
 
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
