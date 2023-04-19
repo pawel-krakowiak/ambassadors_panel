@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from rest_framework.decorators import action
 from .models import Location, Reward, User
 from .serializers import UserSerializer, RewardSerializer, LocationSerializer, LoginSerializer, RefreshSerializer
 from rest_framework import viewsets, filters, status
@@ -30,18 +31,14 @@ class RefreshViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     
     def create(self, request, *args, **kwargs):
-        refresh = request.data.get('refresh')
+        serializer = self.get_serializer(data=request.data)
         
         try:
-            token = RefreshToken(refresh)
-            response = {
-                'access': str(token.access_token),
-                'refresh': str(token)
-            }
-            return Response(response, status=status.HTTP_200_OK)
+            serializer.is_valid(raise_exception=True)
         except TokenError as token_error:
             raise InvalidToken(token_error.args[0])
-            
+        
+        return Response(serializer.validated_data, status=status.HTTP_200_OK)
 
 class UserViewSet(viewsets.ModelViewSet):
     http_method_names = ['get']
