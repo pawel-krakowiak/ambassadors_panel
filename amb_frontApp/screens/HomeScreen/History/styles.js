@@ -60,14 +60,14 @@ export default styles = StyleSheet.create({
    },
    showMoreBtn: {
     marginHorizontal: '15%',
-    marginTop: 20,
+    marginTop: 40,
     width: '70%',
     borderRadius: 5,
     display: 'flex',
     justifyContent: 'center',
     alignContent: 'center',
     backgroundColor: '#34A3CF',
-    paddingVertical: 5,
+    paddingVertical: 10,
   },
   showMoreBtnText: {
     textAlign: 'center',

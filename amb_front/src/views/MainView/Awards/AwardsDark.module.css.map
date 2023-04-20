@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,IAAI,CAAJ,gCAAI;AACJ,IAAI,CAAJ,sBAAI",
+    "sources": [
+        "AwardsDark.module.scss"
+    ],
+    "names": [],
+    "file": "AwardsDark.module.css"
+}

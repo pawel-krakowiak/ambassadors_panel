@@ -8,9 +8,11 @@ import Background from './Background/Background';
 import * as Icons from "react-native-heroicons/solid";
 import userStore from '../../zustand/user';
 
+
 const LoginScreen = () => {
     const navigation = useNavigation()
     const loginUser = userStore(state => state.loginUser)
+    const verifyUser = userStore(state => state.verifyUser)
 
     React.useEffect(() => {
         navigation.setOptions({
@@ -33,7 +35,7 @@ const LoginScreen = () => {
 
     const handleFormAction = () => {
         if(loginStep === 1){
-            setLoginStep(2)
+            verifyUser(setLoginStep, navigation)
         }else if(loginStep === 2){
             if(inputValues.mail.length > 0 && inputValues.password.length > 0){
                 loginUser(inputValues, setErrorMsg, navigation)
@@ -77,27 +79,21 @@ const LoginScreen = () => {
                     <MotiView style={styles.formContainer}
                     from={{marginTop: '30%'}} transition={{type: 'timing', duration: 700}}
                     animate={{marginTop: loginStep > 1 ? '0%' : '30%'}}>
-                        <Text style={styles.logInTitle}>Program partnerski 
-                        <Text style={{fontWeight: 700}}> twojego  </Text>
-                        sklepu {"\n"}vape</Text>
+                        <Text style={styles.logInTitle}>Witaj Ambasadorze!{"\n"}program
+                        <Text style={{fontWeight: 700}}> partnerski </Text>
+                         {"\n"}justVAPE</Text>
                     </MotiView>
                     {loginStep > 1 && <MotiView style={styles.inputContainer} 
                     from={{opacity: 0, translateY: 20}}
                     animate={{opacity: 1, translateY: 0}}
                     transition={{ delay: 700}}>
                         <TextInput 
-                            placeholder={loginStep > 2 ? 'Wpisz kod resetujący' : 'Wpisz swojego maila' }
+                            placeholder='Wpisz swojego maila' 
                             keyboardType='default'
                             style={styles.input}
                             placeholderTextColor="#b5b5b5"
-                            value={loginStep > 2 ? inputValues.authCode : inputValues.mail}
-                            onChangeText={(e) => {
-                                if(loginStep > 2){
-                                    setInputValues({...inputValues, authCode: e})
-                                }else{
-                                    setInputValues({...inputValues, mail: e})
-                                }
-                            }}
+                            value={inputValues.mail}
+                            onChangeText={(e) => setInputValues({...inputValues, mail: e})}
                         />
                     </MotiView>}
                     {loginStep > 1 && <MotiView style={styles.inputContainer2} 
@@ -119,6 +115,19 @@ const LoginScreen = () => {
                                 <Icons.EyeSlashIcon size={25} color="#b5b5b5" />}
                             </View>
                         </TouchableWithoutFeedback>
+                    </MotiView>}
+                    {loginStep > 2 && <MotiView style={{...styles.inputContainer, marginTop: '5%'}} 
+                    from={{opacity: 0, translateY: 20}}
+                    animate={{opacity: 1, translateY: 0}}
+                    transition={{ delay: 700}}>
+                        <TextInput 
+                            placeholder='Wpisz kod resetujący'
+                            keyboardType='default'
+                            style={styles.input}
+                            placeholderTextColor="#b5b5b5"
+                            value={inputValues.authCode}
+                            onChangeText={(e) => setInputValues({...inputValues, authCode: e})}
+                        />
                     </MotiView>}
                     <View style={styles.errorContainer}> 
                         <AnimatePresence>
@@ -146,7 +155,8 @@ const LoginScreen = () => {
                                 <MotiView  style={styles.loginBtn}
                                 from={{width: '60%', backgroundColor: '#34A3CF'}}
                                 animate={{width: loginStep === 2 ? '100%' : '60%', 
-                                backgroundColor: isPressing ? '#0cb1f2' : '#34A3CF'}}>
+                                backgroundColor: isPressing ? '#0cb1f2' : '#34A3CF'}}
+                                transition={{duration: 300}}>
                                     <Text style={styles.loginBtnText}>
                                         {loginStep === 3 ? 'Zresetuj' : 'Zaloguj'}
                                     </Text>

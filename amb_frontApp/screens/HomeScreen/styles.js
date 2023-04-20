@@ -7,5 +7,11 @@ export default styles = StyleSheet.create({
         flexDirection: 'column',
         padding: 10,
         backgroundColor: '#FCFCFC',
+    },
+    copyRight: {
+        width: '100%',
+        textAlign: 'center', 
+        color: 'gray',
+        marginTop: 20,
     }
 })

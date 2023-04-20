@@ -36,7 +36,7 @@ export default styles = StyleSheet.create({
     logInTitle: {
         color: 'white',
         textAlign: 'left',
-        fontSize: 30,
+        fontSize: 28,
         fontWeight: 400,
     },
     navContainer: {

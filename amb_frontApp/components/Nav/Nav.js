@@ -9,22 +9,20 @@ import userStore from '../../zustand/user.js';
 import productsStore from '../../zustand/products.js';
 
 
-const Nav = () => {
+const Nav = (scrollViewRef) => {
     const [isSettingsClicked, setIsSettingsClicked] = React.useState(false)
     const getUser = userStore(state => state.getUser)
     const user = userStore(state => state.user)
     const getItems = productsStore(state => state.getItems)
+    const searchValue = productsStore(state => state.searchValue)
+    const setSearch = productsStore(state => state.setSearch)
 
-
-    const handleClickSettings = () => {
+    const handleRefreshData = () => {
+        getUser()
+        getItems(user)
         setIsSettingsClicked(true)
-
         setTimeout(() => {setIsSettingsClicked(false)}, 250)
     }
-
-    React.useEffect(() => {
-        getUser()
-    }, [])
 
     React.useEffect(() => {
         getItems(user)
@@ -36,7 +34,7 @@ const Nav = () => {
                 <View style={styles.navLeft}>
                     <Text style={styles.helloText}>Hej, {user?.name}</Text>
                     <Text style={styles.PointsText}>Zebrałeś już <Text style={styles.PointsTextBlack}> 
-                        <AnimateNumber value={user?.budget} formatter={(val) => {return parseFloat(val).toFixed(0)}}/> 
+                        <AnimateNumber value={user?.points} formatter={(val) => {return parseFloat(val).toFixed(0)}}/> 
                         </Text> pkt.</Text>                    
                 </View>
                 <View style={styles.navRight}>
@@ -51,18 +49,21 @@ const Nav = () => {
                         placeholder='Wyszukaj nagrode ...'
                         keyboardType='default'
                         style={styles.searchInput}
+                        onChangeText={(e) => setSearch(e)}
+                        value={searchValue}
+                        autoCapitalize='none'
                     />
                 </View>
                 <View style={styles.bottomNavRight}>
-                    <TouchableWithoutFeedback onPress={handleClickSettings}>
+                    <TouchableWithoutFeedback onPress={handleRefreshData}>
                         <View style={styles.settingsBtnContainer}>
-                            <MotiView style={styles.settingsBtn} from={{scale: 1}} 
-                            animate={{scale: isSettingsClicked ? 0.75 : 1}}
+                            <MotiView style={styles.settingsBtn} from={{scale: 1, rotate: '0deg'}} 
+                            animate={{scale: isSettingsClicked ? 0.75 : 1, rotate: isSettingsClicked ? '-30deg' : '0deg'}}
                             transition={{
                                 type: 'timing',
                                 duration: 200,
                             }}>
-                                <Icons.AdjustmentsVerticalIcon size={30} color="gray"/>
+                                <Icons.ArrowPathIcon size={25} color="gray"/>
                             </MotiView>
                         </View>
                     </TouchableWithoutFeedback>

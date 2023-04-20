@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,IAAI,CAAJ,gCAAI;AACJ,IAAI,CAAJ,qBAAI",
+    "sources": [
+        "TasksDark.module.scss"
+    ],
+    "names": [],
+    "file": "TasksDark.module.css"
+}

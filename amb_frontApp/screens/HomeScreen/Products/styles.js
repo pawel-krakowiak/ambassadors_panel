@@ -35,7 +35,7 @@ export default styles = StyleSheet.create({
    productsContainer: {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        justifyContent: 'flex-start',
         alignItems: "flex-start",
         flexWrap: "wrap",
         width: "100%",
@@ -91,7 +91,16 @@ export default styles = StyleSheet.create({
         borderRadius: 5,
         display: 'flex',
         justifyContent: 'center',
-        alignContent: 'center',
+        alignItems: 'center',
         textAlign: 'center',
    },
+   noItems: {
+     color: '#8E8E8E',
+     fontWeight: 700,
+     fontSize: 18,
+     width: '70%',
+     marginHorizontal: '15%',
+     textAlign: 'center',
+     marginTop: 20,
+   }, 
 })

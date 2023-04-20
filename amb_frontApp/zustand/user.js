@@ -3,12 +3,15 @@ import initialData from './dataMarkups/userMockup.js'
 import * as api from '../api/index'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
 const store = (set, get) => ({
     user: {},
+    isDarkMode: false,
+    setIsDarkMode: (value) => {
+        set((state) => ({isDarkMode: value}))
+    },
     getUser: async () => {
-        let data = initialData;
-        set((state) => ({user: data}))
+        // let data = initialData;
+        // set((state) => ({user: data}))
     },
     loginUser: async (inputValues, setErrorMsg, navigation) => {
         try{
@@ -23,25 +26,78 @@ const store = (set, get) => ({
             let {access, refresh, user} = result.data
 
             if(user.is_active){
-                console.log(access)
-                console.log(user)
 
                 await AsyncStorage.setItem('accessToken', access)
                 await AsyncStorage.setItem('refreshToken', refresh)
-    
                 set((state) => ({user: user}))
 
-                navigation.navigate('Home')
+                navigation.replace('Home')
             }else{
                 setErrorMsg("Konto nie aktywne. Skontaktuj się z administratorem.")
             }
             
         }catch(err){
-            console.log(err)
-            setErrorMsg("Coś poszło nie tak. Skontaktuj się z administratorem.")
+            if(err.toJSON().status === 401){
+                setErrorMsg("Logowanie się nie powiodło")
+            }else{
+                setErrorMsg("Coś poszło nie tak. Skontaktuj się z administratorem.")
+
+            }
         }
     },
-})
+    verifyUser: async (setLoginStep, navigation) => {
+        try{    
+
+            let accesToken = await AsyncStorage.getItem('accessToken')
+            let refreshToken = await AsyncStorage.getItem('refreshToken')
+
+
+            if(refreshToken){
+                let formData = new FormData();
+
+                await formData.append('refresh', refreshToken)
+                let result = await api.verifyToken(formData, accesToken)
+
+                let {access, refresh} = result.data
+                if(access, refresh){
+                    await AsyncStorage.setItem('accessToken', access)
+                    await AsyncStorage.setItem('refreshToken', refresh)
+
+                    let userResult = await api.getUserInfo(access)
+
+                    let user = userResult.data
+                    
+                    if(user.is_active){
+                        set((state) => ({user: user}))
+                        navigation.replace('Home')
+                    }else{
+                        setLoginStep(2)
+                    }
+                    
+                }else{
+                    setLoginStep(2)
+                }
+            }else{
+                setLoginStep(2)
+            }
+            
+        }catch(err){
+            console.log(err)
+            setLoginStep(2)
+        }
+    },
+    logOut: async (navigation) => {
+        try{
+            await AsyncStorage.removeItem('accessToken')
+            await AsyncStorage.removeItem('refreshToken')
+
+            set((state) => ({user: {}}))
+            navigation.replace('Login')
+        }catch(err){
+            console.log(err)
+        }
+    }
+ })
 
 
 const userStore = create(store)

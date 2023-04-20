@@ -1,0 +1,36 @@
+@use '../../../variables.module.scss';
+.wrapper {
+  width: 100%;
+  min-height: 100%;
+  padding: 1.5% 2.5%;
+}
+
+.wrapper .title {
+  width: 100%;
+  padding: 1.5% 0;
+}
+
+.wrapper .content {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+@media (max-width: 700px) {
+  .wrapper .content {
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+}
+/*# sourceMappingURL=Awards.module.css.map */

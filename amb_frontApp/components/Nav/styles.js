@@ -12,6 +12,7 @@ export default styles = StyleSheet.create({
         borderBottomLeftRadius: 15,
     },
     topNavContainer: {
+        marginVertical: 0,
         width: '100%',
         display: 'flex',
         flexDirection: 'row',
