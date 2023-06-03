@@ -53,7 +53,7 @@ const Settings = () => {
     }
 
     const handleRefreshData = () => {
-        getUser()
+        getUser(navigation)
         getItems(user)
         setIsRefreshClicked(true)
         setTimeout(() => {setIsRefreshClicked(false)}, 250)

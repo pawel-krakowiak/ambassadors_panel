@@ -5,9 +5,48 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const store = (set, get) => ({
     user: {},
-    getUser: async () => {
-        // let data = initialData;
-        // set((state) => ({user: data}))
+    getUser: async (navigation) => {
+        try{
+            let accesToken = await AsyncStorage.getItem('accessToken')
+            let refreshToken = await AsyncStorage.getItem('refreshToken')
+    
+            if(refreshToken){
+                let formData = new FormData();
+    
+                await formData.append('refresh', refreshToken)
+                let result = await api.verifyToken(formData, accesToken)
+    
+                let {access, refresh} = result.data
+                if(access, refresh){
+                    await AsyncStorage.setItem('accessToken', access)
+                    await AsyncStorage.setItem('refreshToken', refresh)
+    
+                    let userResult = await api.getUserInfo(access)
+                   
+                    set((state) => ({user: userResult.data}))
+                }else{
+                    await AsyncStorage.removeItem('accessToken')
+                    await AsyncStorage.removeItem('refreshToken')
+        
+                    set((state) => ({user: {}}))
+                    navigation.replace('Login')
+                }
+            }else{
+                await AsyncStorage.removeItem('accessToken')
+                await AsyncStorage.removeItem('refreshToken')
+    
+                set((state) => ({user: {}}))
+                navigation.replace('Login')
+            }
+        }catch(err){
+            console.log(err)
+            await AsyncStorage.removeItem('accessToken')
+            await AsyncStorage.removeItem('refreshToken')
+
+            set((state) => ({user: {}}))
+            navigation.replace('Login')
+        }
+        
     },
     loginUser: async (inputValues, setErrorMsg, navigation) => {
         try{
