@@ -30,6 +30,7 @@ const store = (set, get) => ({
                 await AsyncStorage.setItem('accessToken', access)
                 await AsyncStorage.setItem('refreshToken', refresh)
                 set((state) => ({user: user}))
+                console.log(user)
 
                 navigation.replace('Home')
             }else{

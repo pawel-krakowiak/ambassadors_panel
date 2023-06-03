@@ -17,16 +17,18 @@ const Produsts = () => {
     const allItems = productsStore(state => state.allItems)
     const [isInView, setIsInView] = React.useState(false)
     const searchValue = productsStore(state => state.searchValue)
+    const isLoaded = productsStore(state => state.isLoaded)
     const user = userStore(state => state.user)
     const navigation = useNavigation()
     const setCurrentProduct = optionsStore(state => state.setCurrentProduct)
-
+    
     const handleOpenProductScreen = (item) => {
         if(item.points_price <= user?.points){
             setCurrentProduct(item)
             navigation.navigate('Product', item)
         }
     }
+
 
     return (
         <View style={styles.wrapper}>
@@ -50,7 +52,7 @@ const Produsts = () => {
                 </MotiView>
             </View>
             </InViewPort>
-            <View style={styles.productsContainer}>
+            {isLoaded && <View style={styles.productsContainer}>
                 {sortedItems?.filter(i => {
                     if(searchValue.length > 0){
                         if(i.name.includes(searchValue)){
@@ -134,7 +136,7 @@ const Produsts = () => {
                 from={{scale: 0.5, opacity: 0.3}}
                 animate={{scale: 1, opacity: 1}}
                 >{allItems.length > 0 ? "Brak produktów spełniających wymagania" : "Brak produktów w bazie" }</MotiText>}
-            </View>
+            </View>}
         </View>
     )
 }

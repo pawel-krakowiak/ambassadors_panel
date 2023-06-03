@@ -9,14 +9,9 @@ import InViewPort from "@coffeebeanslabs/react-native-inviewport";
 
 const History = () => {
 
-    const getItems = historyStore(state => state.getItems)
     const historyItems = historyStore(state => state.historyItems)
     const [showAll, setShowAll] = React.useState(false)
     const [isInView, setIsInView] = React.useState(false)
-
-    React.useEffect(() => {
-        getItems()
-    }, [])
 
     return (
         <View style={styles.wrapper}>

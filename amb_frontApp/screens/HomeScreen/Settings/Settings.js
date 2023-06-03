@@ -7,17 +7,24 @@ import * as Icons from "react-native-heroicons/solid";
 import * as Icons2 from "react-native-heroicons/outline";
 import InViewPort from "@coffeebeanslabs/react-native-inviewport";
 import userStore from '../../../zustand/user';
+import productsStore from '../../../zustand/products';
 import { useNavigation } from '@react-navigation/native';
 
 const Settings = () => {  
     const navigation = useNavigation()
-    const [isInView, setIsInView] = React.useState(false)
-    const [isMsgEditing, setIsMsgEditing] = React.useState(false)
-    const [isMsgSend, setIsMsgSend] = React.useState(false)
-    const [inputValue, setInputValue] = React.useState("")
     const logOut = userStore(state => state.logOut)
     const isDarkMode = userStore(state => state.isDarkMode)
     const setIsDarkMode = userStore(state => state.setIsDarkMode)
+    const getUser = userStore(state => state.getUser)
+    const user = userStore(state => state.user)
+    const getItems = productsStore(state => state.getItems)
+
+    const [isInView, setIsInView] = React.useState(false)
+    const [isMsgEditing, setIsMsgEditing] = React.useState(false)
+    const [isShowInfo, setIsShowInfo] = React.useState(false)
+    const [isMsgSend, setIsMsgSend] = React.useState(false)
+    const [inputValue, setInputValue] = React.useState("")
+    const [isRefreshlicked, setIsRefreshClicked] = React.useState(false)
 
 
     React.useEffect(() => {
@@ -42,6 +49,13 @@ const Settings = () => {
         if (supported) {
             await Linking.openURL(url);
         }
+    }
+
+    const handleRefreshData = () => {
+        getUser()
+        getItems(user)
+        setIsRefreshClicked(true)
+        setTimeout(() => {setIsRefreshClicked(false)}, 250)
     }
 
     return (
@@ -71,7 +85,7 @@ const Settings = () => {
                     value={isDarkMode}
                 />
             </MotiView>
-            <MotiView style={styles.msgContainer} 
+            {/* <MotiView style={styles.msgContainer} 
              from={{height: 60, translateY: 20, opacity: 0}} 
              animate={{translateY: isInView ? 0 : 20, opacity: isInView ? 1 : 0, 
              height: isMsgEditing ? 160 : 60}}>
@@ -121,18 +135,73 @@ const Settings = () => {
                     numberOfLines={5}
                     onChangeText={(e) => setInputValue(e)}
                 />
-            </MotiView>
-            <MotiView style={{...styles.optionContainer, marginTop: 0}}
+            </MotiView> */}
+            <MotiView style={{...styles.optionContainer}}
             from={{translateY: 20, opacity: 0}} 
             animate={{translateY: isInView ? 0 : 20, opacity: isInView ? 1 : 0}} >
-                <Text style={{fontSize: 16, fontWeight: 700}}>Więcej informacji</Text>
-                <TouchableWithoutFeedback onPress={() => navigation.navigate('Info')}>
+                <Text style={{fontSize: 16, fontWeight: 700}}>Odśwież dane</Text>
+                <TouchableWithoutFeedback  onPress={handleRefreshData}>
                     <View style={styles.btnContainer}>
-                        <Icons2.QuestionMarkCircleIcon color="#34A3CF" size={25}/>
+                        <MotiView style={styles.settingsBtn} from={{scale: 1, rotate: '0deg'}} 
+                        animate={{scale: isRefreshlicked ? 0.75 : 1, rotate: isRefreshlicked ? '-30deg' : '0deg'}}
+                        transition={{
+                            type: 'timing',
+                            duration: 200,
+                        }}>
+                            <Icons.ArrowPathIcon size={25} color="#34A3CF"/>
+                        </MotiView>
                     </View>
                 </TouchableWithoutFeedback>
             </MotiView>
-            <MotiView style={{...styles.optionContainer, marginTop: 10}}
+            <MotiView style={styles.infoContainer} 
+             from={{height: 60, translateY: 20, opacity: 0}} 
+             animate={{translateY: isInView ? 0 : 20, opacity: isInView ? 1 : 0, 
+             height: isShowInfo ? 300 : 60}}>
+                <MotiView style={{...styles.optionContainer, marginTop: 0}}>
+                    <Text style={{fontSize: 16, fontWeight: 700}}>Więcej informacji</Text>
+                    <AnimatePresence>
+                        {!isShowInfo && <TouchableWithoutFeedback onPress={() => setIsShowInfo(true)}>
+                            <MotiView style={styles.btnContainer} 
+                            from={{translateY: -20, opacity: 0}}
+                            animate={{translateY:  0, opacity:1}}
+                            exit={{translateY: -20, opacity: 0}}>
+                                <Icons2.QuestionMarkCircleIcon color="#34A3CF" size={25}/>
+                            </MotiView>
+                        </TouchableWithoutFeedback> } 
+                    </AnimatePresence>
+                    <AnimatePresence>
+                        {isShowInfo && <TouchableWithoutFeedback onPress={() => setIsShowInfo(false)}>
+                            <MotiView style={{...styles.btnContainer}} 
+                            from={{translateY: 20, opacity: 0}}
+                            animate={{translateY:  0, opacity:1}}
+                            exit={{translateY: 20, opacity: 0}}>
+                                <Icons.XMarkIcon color="#34A3CF" size={25}/>
+                            </MotiView>
+                        </TouchableWithoutFeedback> } 
+                    </AnimatePresence>
+                </MotiView>
+                <View style={styles.infoContainerContent}>
+                    <View style={styles.infoItem}>
+                        <Icons.UserIcon size={20} color="#616161"/>
+                        <Text style={styles.infoItemValue}>{user.name} {user.surename}</Text>
+                    </View>
+                    <View style={styles.infoItem}>
+                        <Icons.EnvelopeIcon size={20} color="#616161"/>
+                        <Text style={styles.infoItemValue}>{user.email}</Text>
+                    </View>
+                    <View style={styles.infoItem}>
+                        <Icons.MapPinIcon size={20} color="#616161"/>
+                        <Text style={styles.infoItemValue}>{user.location_name}</Text>
+                    </View>
+                    {user.is_staff && 
+                        <View style={styles.infoItem}>
+                            <Icons.ClipboardIcon size={20} color="#616161"/>
+                            <Text style={{...styles.infoItemValue, color: "#22ab03"}}>Obsługa sklepu</Text>
+                        </View>}
+                    <Text style={{marginVertical: 10}}>Disclaimer: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
+                </View>
+            </MotiView>
+            <MotiView style={{...styles.optionContainer}}
             from={{translateY: 20, opacity: 0}} 
             animate={{translateY: isInView ? 0 : 20, opacity: isInView ? 1 : 0}} >
                 <Text style={{fontSize: 16, fontWeight: 700}}>Wyloguj się</Text>

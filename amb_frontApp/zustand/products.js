@@ -8,6 +8,7 @@ const store = (set, get) => ({
     sortedItems: [],
     currentFilter: 'all',
     searchValue: "",
+    isLoaded: false,
     getItems: async (user) => {
         try{
             // let data = initialData;
@@ -38,8 +39,10 @@ const store = (set, get) => ({
                     set((state) => ({sortedItems: [...cantBuy]}))
                     break;
             }
+            set((state) => ({isLoaded: true}))
         }catch(err){
             console.log(err)
+            set((state) => ({isLoaded: false}))
             navigation.replace('Login')
         }
     },
@@ -85,6 +88,7 @@ const store = (set, get) => ({
             }
         }catch(err){
             console.log(err)
+            set((state) => ({isLoaded: false}))
             navigation.replace('Login')
         }    
     },

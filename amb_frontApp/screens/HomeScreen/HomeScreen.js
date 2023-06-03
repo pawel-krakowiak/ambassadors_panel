@@ -10,16 +10,20 @@ import History from './History/History.js';
 import Settings from './Settings/Settings.js';
 import GestureRecognizer from 'react-native-swipe-gestures'
 import optionsStore from '../../zustand/options.js';
+import historyStore from '../../zustand/history.js';
 
 const HomeScreen = () => {
     const navigation = useNavigation()
     const currentProduct = optionsStore(state => state.currentProduct)
     const scrollViewRef = React.useRef();
-
+    const historyItems = historyStore(state => state.historyItems)
+    const getItems = historyStore(state => state.getItems)
+    
     React.useEffect(() => {
         navigation.setOptions({
             headerShown: false,
         })
+        getItems()
     }, [])
 
     const handleSwipe = () => {
@@ -37,7 +41,7 @@ const HomeScreen = () => {
                     <Categories />
                     <GestureRecognizer style={styles.content} onSwipeLeft={handleSwipe} config={{directionalOffsetThreshold: 150, velocityThreshold: 0.6}}>
                     <Produsts />
-                    <History />
+                    {historyItems.length > 0 && <History />}
                     <Settings />
                     <Text style={styles.copyRight}>&copy; 2023 Just Vape</Text>
                     </GestureRecognizer>
