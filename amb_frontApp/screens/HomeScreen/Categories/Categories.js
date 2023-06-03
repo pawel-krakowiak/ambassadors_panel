@@ -4,6 +4,7 @@ import { MotiView, MotiText } from 'moti'
 import { View, Text, Image, TouchableWithoutFeedback, ScrollView } from 'react-native';
 import styles from './styles';
 import productsStore from '../../../zustand/products';
+import optionsStore from '../../../zustand/options';
 import userStore from '../../../zustand/user'
 import InViewPort from "@coffeebeanslabs/react-native-inviewport";
 
@@ -11,60 +12,73 @@ const Categories = () => {
 
     const currentFilter = productsStore(state => state.currentFilter)
     const setFilter = productsStore(state => state.setFilter)
+    const isDarkMode = optionsStore(state => state.isDarkMode)
     const user = userStore(state => state.user)
     const [isInView, setIsInView] = React.useState(false)
+    const [bgColor, setBgColor] = React.useState("#F1F1F1")
+    const [txtColor, setTxtColor] = React.useState("#F1F1F1")
+
+    React.useEffect(() => {
+        if(isDarkMode){
+            setBgColor("#2e2e2e")
+            setTxtColor("#fff")
+        }else{
+            setBgColor("#f1f1F1")
+            setTxtColor("#000")
+        }
+    }, [isDarkMode])
 
     return (
-        <View style={styles.wrapper}>
+        <View style={styles(isDarkMode).wrapper}>
             <InViewPort onChange={(isVisible) => isVisible && setIsInView(true)}>
             <MotiText from={{translateY: 20,  opacity: 0}} 
             animate={{translateY: isInView ? 0 : 20, opacity: isInView ? 1 : 0}} 
-            style={styles.title}>Kategorie</MotiText>
-            <ScrollView  contentContainerStyle={styles.categoriesWrapper} horizontal 
+            style={styles(isDarkMode).title}>Kategorie</MotiText>
+            <ScrollView  contentContainerStyle={styles(isDarkMode).categoriesWrapper} horizontal 
              showsHorizontalScrollIndicator={false}>
                 <TouchableWithoutFeedback onPress={() => setFilter('all', user)}>
-                    <MotiView style={styles.categoriesItem} 
-                    from={{backgroundColor: "#F1F1F1", color: "black"}} 
-                    animate={{backgroundColor: currentFilter === "all" ? "#34A3CF" : "#F1F1F1" }} >
-                        <Image style={styles.categoriesItemImg}  
+                    <MotiView style={styles(isDarkMode).categoriesItem} 
+                    from={{backgroundColor: bgColor, color: txtColor}} 
+                    animate={{backgroundColor: currentFilter === "all" ? "#34A3CF" : bgColor }} >
+                        <Image style={styles(isDarkMode).categoriesItemImg}  
                         source={require('../../../assets/icons8-electronic-cigarette-100.png')}/>
-                        <Text style={{fontSize: 16, color: currentFilter === "all" ? "white" : "black"}}>Wszystkie</Text>
+                        <Text style={{fontSize: 16, color: currentFilter === "all" ? "white" : txtColor}}>Wszystkie</Text>
                     </MotiView>
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback onPress={() => setFilter('isAvaiable', user)}>
-                    <MotiView style={styles.categoriesItem} 
-                    from={{backgroundColor: "#F1F1F1", color: "black"}} 
-                    animate={{backgroundColor: currentFilter === "isAvaiable" ? "#34A3CF" : "#F1F1F1" }} >
-                        <Image style={styles.categoriesItemImg}  
+                    <MotiView style={styles(isDarkMode).categoriesItem} 
+                    from={{backgroundColor: bgColor, color: txtColor}} 
+                    animate={{backgroundColor: currentFilter === "isAvaiable" ? "#34A3CF" : bgColor }} >
+                        <Image style={styles(isDarkMode).categoriesItemImg}  
                         source={require('../../../assets/icons8-checkmark-100.png')}/>
-                        <Text style={{fontSize: 16, color: currentFilter === "isAvaiable" ? "white" : "black"}}>Dostępne</Text>
+                        <Text style={{fontSize: 16, color: currentFilter === "isAvaiable" ? "white" : txtColor}}>Dostępne</Text>
                     </MotiView>
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback onPress={() => setFilter('isntAvaiable', user)}>
-                    <MotiView style={styles.categoriesItem} 
-                    from={{backgroundColor: "#F1F1F1", color: "black"}} 
-                    animate={{backgroundColor: currentFilter === "isntAvaiable" ? "#34A3CF" : "#F1F1F1" }} >
-                        <Image style={styles.categoriesItemImg}  
+                    <MotiView style={styles(isDarkMode).categoriesItem} 
+                    from={{backgroundColor: bgColor, color: txtColor}} 
+                    animate={{backgroundColor: currentFilter === "isntAvaiable" ? "#34A3CF" : bgColor }} >
+                        <Image style={styles(isDarkMode).categoriesItemImg}  
                         source={require('../../../assets/icons8-cancel-100.png')}/>
-                        <Text style={{fontSize: 16, color: currentFilter === "isntAvaiable" ? "white" : "black"}}>Nie Dostępne</Text>
+                        <Text style={{fontSize: 16, color: currentFilter === "isntAvaiable" ? "white" : txtColor}}>Nie Dostępne</Text>
                     </MotiView>
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback onPress={() => setFilter('canBuy', user)}>
-                    <MotiView style={styles.categoriesItem} 
-                    from={{backgroundColor: "#F1F1F1", color: "black"}} 
-                    animate={{backgroundColor: currentFilter === "canBuy" ? "#34A3CF" : "#F1F1F1" }} >
-                        <Image style={styles.categoriesItemImg}  
+                    <MotiView style={styles(isDarkMode).categoriesItem} 
+                    from={{backgroundColor: bgColor, color: txtColor}} 
+                    animate={{backgroundColor: currentFilter === "canBuy" ? "#34A3CF" : bgColor }} >
+                        <Image style={styles(isDarkMode).categoriesItemImg}  
                         source={require('../../../assets/greenDollar.png')}/>
-                        <Text style={{fontSize: 16, color: currentFilter === "canBuy" ? "white" : "black"}}>Can buy</Text>
+                        <Text style={{fontSize: 16, color: currentFilter === "canBuy" ? "white" : txtColor}}>Can buy</Text>
                     </MotiView>
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback onPress={() => setFilter('cantBuy', user)}>
-                    <MotiView style={styles.categoriesItem} 
-                    from={{backgroundColor: "#F1F1F1", color: "black"}} 
-                    animate={{backgroundColor: currentFilter === "cantBuy" ? "#34A3CF" : "#F1F1F1" }} >
-                        <Image style={styles.categoriesItemImg}  
+                    <MotiView style={styles(isDarkMode).categoriesItem} 
+                    from={{backgroundColor: bgColor, color: txtColor}} 
+                    animate={{backgroundColor: currentFilter === "cantBuy" ? "#34A3CF" : bgColor }} >
+                        <Image style={styles(isDarkMode).categoriesItemImg}  
                         source={require('../../../assets/redDollar.png')}/>
-                        <Text style={{fontSize: 16, color: currentFilter === "cantBuy" ? "white" : "black"}}>Can't buy</Text>
+                        <Text style={{fontSize: 16, color: currentFilter === "cantBuy" ? "white" : txtColor}}>Can't buy</Text>
                     </MotiView>
                 </TouchableWithoutFeedback>
                 

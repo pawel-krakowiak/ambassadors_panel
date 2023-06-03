@@ -5,10 +5,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const store = (set, get) => ({
     user: {},
-    isDarkMode: false,
-    setIsDarkMode: (value) => {
-        set((state) => ({isDarkMode: value}))
-    },
     getUser: async () => {
         // let data = initialData;
         // set((state) => ({user: data}))
@@ -30,7 +26,6 @@ const store = (set, get) => ({
                 await AsyncStorage.setItem('accessToken', access)
                 await AsyncStorage.setItem('refreshToken', refresh)
                 set((state) => ({user: user}))
-                console.log(user)
 
                 navigation.replace('Home')
             }else{

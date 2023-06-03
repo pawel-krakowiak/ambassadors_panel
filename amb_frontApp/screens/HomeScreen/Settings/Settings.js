@@ -8,13 +8,14 @@ import * as Icons2 from "react-native-heroicons/outline";
 import InViewPort from "@coffeebeanslabs/react-native-inviewport";
 import userStore from '../../../zustand/user';
 import productsStore from '../../../zustand/products';
+import optionsStore from '../../../zustand/options';
 import { useNavigation } from '@react-navigation/native';
 
 const Settings = () => {  
     const navigation = useNavigation()
     const logOut = userStore(state => state.logOut)
-    const isDarkMode = userStore(state => state.isDarkMode)
-    const setIsDarkMode = userStore(state => state.setIsDarkMode)
+    const isDarkMode = optionsStore(state => state.isDarkMode)
+    const setIsDarkMode = optionsStore(state => state.setIsDarkMode)
     const getUser = userStore(state => state.getUser)
     const user = userStore(state => state.user)
     const getItems = productsStore(state => state.getItems)
@@ -59,24 +60,24 @@ const Settings = () => {
     }
 
     return (
-        <View style={styles.wrapper}>
+        <View style={styles(isDarkMode).wrapper}>
             <InViewPort onChange={(isVisible) => isVisible && setIsInView(true)}>
-            <MotiView style={styles.optionContainer}
+            <MotiView style={styles(isDarkMode).optionContainer}
             from={{translateY: 20, opacity: 0}} 
             animate={{translateY: isInView ? 0 : 20, opacity: isInView ? 1 : 0}} >
-                <Text style={{fontSize: 16, fontWeight: 700}}>Oceń aplikacje</Text>
+                <Text style={styles(isDarkMode).optionTitle}>Oceń aplikacje</Text>
                 <TouchableWithoutFeedback onPress={handleRateApp}>
-                    <View style={styles.rateAppContainer}>
+                    <View style={styles(isDarkMode).rateAppContainer}>
                         <Icons.StarIcon color="#FFD600" size={16} />
-                        <Text style={{fontSize: 16, marginLeft: 3}}>5/5</Text>
-                        <Icons.ChevronDownIcon color="black" size={16} />
+                        <Text style={{...styles(isDarkMode).optionTxt, fontSize: 16, marginLeft: 3, }}>5/5</Text>
+                        <Icons.ChevronDownIcon color={isDarkMode ? "#fff" : "#000"} size={16} />
                     </View>
                 </TouchableWithoutFeedback>
             </MotiView>
-            <MotiView style={styles.optionContainer}
+            <MotiView style={styles(isDarkMode).optionContainer}
             from={{translateY: 20, opacity: 0}} 
             animate={{translateY: isInView ? 0 : 20, opacity: isInView ? 1 : 0}} >
-                <Text style={{fontSize: 16, fontWeight: 700}}>Tryb nocny</Text>
+                <Text style={styles(isDarkMode).optionTitle}>Tryb nocny</Text>
                 <Switch
                     trackColor='#D9D9D9'
                     thumbColor='#34A3CF'
@@ -85,15 +86,15 @@ const Settings = () => {
                     value={isDarkMode}
                 />
             </MotiView>
-            {/* <MotiView style={styles.msgContainer} 
+            {/* <MotiView style={styles(isDarkMode).msgContainer} 
              from={{height: 60, translateY: 20, opacity: 0}} 
              animate={{translateY: isInView ? 0 : 20, opacity: isInView ? 1 : 0, 
              height: isMsgEditing ? 160 : 60}}>
-                <MotiView style={{...styles.optionContainer, marginTop: 0}}>
+                <MotiView style={{...styles(isDarkMode).optionContainer, marginTop: 0}}>
                     <Text style={{fontSize: 16, fontWeight: 700}}>Zadaj pytanie</Text>
                     <AnimatePresence>
                         {!isMsgEditing && <TouchableWithoutFeedback onPress={() => setIsMsgEditing(true)}>
-                            <MotiView style={styles.btnContainer} 
+                            <MotiView style={styles(isDarkMode).btnContainer} 
                             from={{translateY: -20, opacity: 0}}
                             animate={{translateY:  0, opacity:1}}
                             exit={{translateY: -20, opacity: 0}}>
@@ -103,7 +104,7 @@ const Settings = () => {
                     </AnimatePresence>
                     <AnimatePresence>
                         {isMsgEditing && <TouchableWithoutFeedback onPress={() => setIsMsgEditing(false)}>
-                            <MotiView style={{...styles.btnContainer, right: 70}} 
+                            <MotiView style={{...styles(isDarkMode).btnContainer, right: 70}} 
                             from={{translateY: 20, opacity: 0}}
                             animate={{translateY:  0, opacity:1}}
                             exit={{translateY: 20, opacity: 0}}>
@@ -113,7 +114,7 @@ const Settings = () => {
                     </AnimatePresence>
                     <AnimatePresence>
                         {isMsgEditing && <TouchableWithoutFeedback onPress={handleSendMsg}>
-                            <MotiView style={styles.btnContainer} 
+                            <MotiView style={styles(isDarkMode).btnContainer} 
                             from={{translateY: 20, opacity: 0}}
                             animate={{translateY:  0, opacity:1}}
                             exit={{translateY: 20, opacity: 0}}>
@@ -127,7 +128,7 @@ const Settings = () => {
                 <TextInput 
                     placeholder='Wpisz treść wiadomości' 
                     keyboardType='default'
-                    style={styles.input}
+                    style={styles(isDarkMode).input}
                     placeholderTextColor="#b5b5b5"
                     value={inputValue}
                     multiline={true}
@@ -136,13 +137,13 @@ const Settings = () => {
                     onChangeText={(e) => setInputValue(e)}
                 />
             </MotiView> */}
-            <MotiView style={{...styles.optionContainer}}
+            <MotiView style={{...styles(isDarkMode).optionContainer}}
             from={{translateY: 20, opacity: 0}} 
             animate={{translateY: isInView ? 0 : 20, opacity: isInView ? 1 : 0}} >
-                <Text style={{fontSize: 16, fontWeight: 700}}>Odśwież dane</Text>
+                <Text style={styles(isDarkMode).optionTitle}>Odśwież dane</Text>
                 <TouchableWithoutFeedback  onPress={handleRefreshData}>
-                    <View style={styles.btnContainer}>
-                        <MotiView style={styles.settingsBtn} from={{scale: 1, rotate: '0deg'}} 
+                    <View style={styles(isDarkMode).btnContainer}>
+                        <MotiView style={styles(isDarkMode).settingsBtn} from={{scale: 1, rotate: '0deg'}} 
                         animate={{scale: isRefreshlicked ? 0.75 : 1, rotate: isRefreshlicked ? '-30deg' : '0deg'}}
                         transition={{
                             type: 'timing',
@@ -153,15 +154,15 @@ const Settings = () => {
                     </View>
                 </TouchableWithoutFeedback>
             </MotiView>
-            <MotiView style={styles.infoContainer} 
+            <MotiView style={styles(isDarkMode).infoContainer} 
              from={{height: 60, translateY: 20, opacity: 0}} 
              animate={{translateY: isInView ? 0 : 20, opacity: isInView ? 1 : 0, 
              height: isShowInfo ? 300 : 60}}>
-                <MotiView style={{...styles.optionContainer, marginTop: 0}}>
-                    <Text style={{fontSize: 16, fontWeight: 700}}>Więcej informacji</Text>
+                <MotiView style={{...styles(isDarkMode).optionContainer, marginTop: 0}}>
+                    <Text style={styles(isDarkMode).optionTitle}>Więcej informacji</Text>
                     <AnimatePresence>
                         {!isShowInfo && <TouchableWithoutFeedback onPress={() => setIsShowInfo(true)}>
-                            <MotiView style={styles.btnContainer} 
+                            <MotiView style={styles(isDarkMode).btnContainer} 
                             from={{translateY: -20, opacity: 0}}
                             animate={{translateY:  0, opacity:1}}
                             exit={{translateY: -20, opacity: 0}}>
@@ -171,7 +172,7 @@ const Settings = () => {
                     </AnimatePresence>
                     <AnimatePresence>
                         {isShowInfo && <TouchableWithoutFeedback onPress={() => setIsShowInfo(false)}>
-                            <MotiView style={{...styles.btnContainer}} 
+                            <MotiView style={{...styles(isDarkMode).btnContainer}} 
                             from={{translateY: 20, opacity: 0}}
                             animate={{translateY:  0, opacity:1}}
                             exit={{translateY: 20, opacity: 0}}>
@@ -180,33 +181,33 @@ const Settings = () => {
                         </TouchableWithoutFeedback> } 
                     </AnimatePresence>
                 </MotiView>
-                <View style={styles.infoContainerContent}>
-                    <View style={styles.infoItem}>
+                <View style={styles(isDarkMode).infoContainerContent}>
+                    <View style={styles(isDarkMode).infoItem}>
                         <Icons.UserIcon size={20} color="#616161"/>
-                        <Text style={styles.infoItemValue}>{user.name} {user.surename}</Text>
+                        <Text style={styles(isDarkMode).infoItemValue}>{user.name} {user.surename}</Text>
                     </View>
-                    <View style={styles.infoItem}>
+                    <View style={styles(isDarkMode).infoItem}>
                         <Icons.EnvelopeIcon size={20} color="#616161"/>
-                        <Text style={styles.infoItemValue}>{user.email}</Text>
+                        <Text style={styles(isDarkMode).infoItemValue}>{user.email}</Text>
                     </View>
-                    <View style={styles.infoItem}>
+                    <View style={styles(isDarkMode).infoItem}>
                         <Icons.MapPinIcon size={20} color="#616161"/>
-                        <Text style={styles.infoItemValue}>{user.location_name}</Text>
+                        <Text style={styles(isDarkMode).infoItemValue}>{user.location_name}</Text>
                     </View>
                     {user.is_staff && 
-                        <View style={styles.infoItem}>
+                        <View style={styles(isDarkMode).infoItem}>
                             <Icons.ClipboardIcon size={20} color="#616161"/>
-                            <Text style={{...styles.infoItemValue, color: "#22ab03"}}>Obsługa sklepu</Text>
+                            <Text style={{...styles(isDarkMode).infoItemValue, color: "#22ab03"}}>Obsługa sklepu</Text>
                         </View>}
-                    <Text style={{marginVertical: 10}}>Disclaimer: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
+                    <Text style={{...styles(isDarkMode).optionTxt, marginVertical: 10}}>Disclaimer: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
                 </View>
             </MotiView>
-            <MotiView style={{...styles.optionContainer}}
+            <MotiView style={{...styles(isDarkMode).optionContainer}}
             from={{translateY: 20, opacity: 0}} 
             animate={{translateY: isInView ? 0 : 20, opacity: isInView ? 1 : 0}} >
-                <Text style={{fontSize: 16, fontWeight: 700}}>Wyloguj się</Text>
+                <Text style={styles(isDarkMode).optionTitle}>Wyloguj się</Text>
                 <TouchableWithoutFeedback onPress={() => logOut(navigation)}>
-                    <View style={styles.btnContainer}>
+                    <View style={styles(isDarkMode).btnContainer}>
                         <Icons.ArrowRightOnRectangleIcon color="#34A3CF" size={25}/>
                     </View>
                 </TouchableWithoutFeedback>

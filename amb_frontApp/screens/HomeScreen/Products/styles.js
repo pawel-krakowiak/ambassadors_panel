@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native'
 
-export default styles = StyleSheet.create({
+export default styles = (isDarkMode) => StyleSheet.create({
     wrapper: {
         width: "100%",
         display: 'flex',
@@ -18,6 +18,7 @@ export default styles = StyleSheet.create({
     title: {
         fontSize: 24,
         fontWeight: 700,
+        color: isDarkMode ? '#ffffff' : "#000"
    },
    sortContainer: {
         display: 'flex',
@@ -30,7 +31,7 @@ export default styles = StyleSheet.create({
    },
    sortValue: {
         fontSize: 20,
-        color: 'black',
+        color: isDarkMode ? '#ffffff' : "#000"
    },
    productsContainer: {
         display: 'flex',
@@ -52,7 +53,7 @@ export default styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 6,  
-        backgroundColor: '#F1F1F1',
+        backgroundColor: isDarkMode ? "#2e2e2e" : '#F1F1F1',
         borderRadius: 15,
    },
    productItemImg: {
@@ -62,6 +63,7 @@ export default styles = StyleSheet.create({
    },
    productItemTitle: {
         fontSize: 16,
+        color: isDarkMode ? '#ffffff' : "#000",
    },
    productItemCost: {
         color: '#34A3CF',

@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native'
 
-export default styles = StyleSheet.create({
+export default styles = (isDarkMode) => StyleSheet.create({
     wrapper: {
         width: "100%",
         display: 'flex',
@@ -12,25 +12,34 @@ export default styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         borderRadius: 10,
-        backgroundColor: '#F1F1F1',
+        backgroundColor: isDarkMode ? "#2e2e2e" : '#F1F1F1',
         marginTop: 10,
         height: 60,
         paddingHorizontal: 15,
         alignItems: 'center',
         justifyContent: 'space-between',
         overflow: 'hidden',
-        position: 'relative'
+        position: 'relative',
+        color: isDarkMode ? '#ffffff' : "#000",
+    },
+    optionTitle: {
+        fontSize: 16,
+        fontWeight: 700,
+        color: isDarkMode ? "#fff" : "#000",
+    },
+    optionTxt: {
+        color: isDarkMode ? "#fff" : "#000",
     },
     btnContainer: {
         position: 'absolute',
         height: '70%',
         aspectRatio: "1 /1",
-        backgroundColor: '#D9D9D9',
+        backgroundColor: isDarkMode ? "#121212" : '#FCFCFC',
         borderRadius: 1000,
         justifyContent: 'center',
         alignItems: 'center',
         right: 20,
-        overflow: 'hidden'
+        overflow: 'hidden',
     },
     msgContainer: {
         width: '100%',
@@ -38,7 +47,7 @@ export default styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'flex-start',
         borderRadius: 10,
-        backgroundColor: '#F1F1F1',
+        backgroundColor: isDarkMode ? "#2e2e2e" : '#F1F1F1',
         marginVertical: 10,
     },
     infoContainer: {
@@ -47,7 +56,7 @@ export default styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'flex-start',
         borderRadius: 10,
-        backgroundColor: '#F1F1F1',
+        backgroundColor: isDarkMode ? "#2e2e2e" : '#F1F1F1',
         marginTop: 10,
         overflow: 'hidden',
     },
@@ -69,6 +78,7 @@ export default styles = StyleSheet.create({
     infoItemValue: {
         fontSize: 16, 
         marginLeft: 10,
+        color: isDarkMode ? "#fff" : "#000",
     },
     input: {
         flex: 1,

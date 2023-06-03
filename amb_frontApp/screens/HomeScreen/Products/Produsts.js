@@ -21,6 +21,7 @@ const Produsts = () => {
     const user = userStore(state => state.user)
     const navigation = useNavigation()
     const setCurrentProduct = optionsStore(state => state.setCurrentProduct)
+    const isDarkMode = optionsStore(state => state.isDarkMode)
     
     const handleOpenProductScreen = (item) => {
         if(item.points_price <= user?.points){
@@ -31,28 +32,28 @@ const Produsts = () => {
 
 
     return (
-        <View style={styles.wrapper}>
+        <View style={styles(isDarkMode).wrapper}>
             <InViewPort onChange={(isVisible) => isVisible && setIsInView(true)}>
-            <View style={styles.topContainer}>
+            <View style={styles(isDarkMode).topContainer}>
                 <MotiText from={{translateY: 20,  opacity: 0}} 
                 animate={{translateY: isInView ? 0 : 20, opacity: isInView ? 1 : 0}}  
-                style={styles.title}>Nagrody</MotiText>
+                style={styles(isDarkMode).title}>Nagrody</MotiText>
                 <MotiView from={{translateY: 20,  opacity: 0,}} 
-                animate={{translateY: 0,  opacity: 1}} style={styles.sortContainer}>
-                    <Text style={styles.sortTitle}>Sortuj:</Text>
+                animate={{translateY: 0,  opacity: 1}} style={styles(isDarkMode).sortContainer}>
+                    <Text style={styles(isDarkMode).sortTitle}>Sortuj:</Text>
                     <TouchableWithoutFeedback onPress={() => setSortByHighest(!sortByHighest)}>
-                        <View style={styles.sortContainer}> 
-                            <Text style={styles.sortValue}> Punkty</Text>
+                        <View style={styles(isDarkMode).sortContainer}> 
+                            <Text style={styles(isDarkMode).sortValue}> Punkty</Text>
                             <MotiView from={{rotate: '0deg'}} 
                             animate={{rotate: sortByHighest ? '0deg' : '180deg'}}>
-                                <Icons.ChevronDownIcon height={30} color="black"/>
+                                <Icons.ChevronDownIcon height={30} color={isDarkMode ? '#ffffff' : "#000"}/>
                             </MotiView>
                         </View>
                     </TouchableWithoutFeedback>
                 </MotiView>
             </View>
             </InViewPort>
-            {isLoaded && <View style={styles.productsContainer}>
+            {isLoaded && <View style={styles(isDarkMode).productsContainer}>
                 {sortedItems?.filter(i => {
                     if(searchValue.length > 0){
                         if(i.name.includes(searchValue)){
@@ -79,24 +80,24 @@ const Produsts = () => {
                 })?.map((item, index) => {
                     if(index % 2 !== 0 ){
                         return(
-                            <TouchableWithoutFeedback key={`Product${index}`} onPress={() => handleOpenProductScreen(item)}>
+                            <TouchableWithoutFeedback key={`Product${item._id}`} onPress={() => handleOpenProductScreen(item)}>
                                 <MotiView from={{translateY: 20, translateX: 20, opacity: 0}}
                                 animate={{translateY: 0, translateX: 0, opacity: 1}}   transition={{
                                     type: 'timing',
                                     duration: 350,
                                     delay: index * 100,
                                 }}
-                                style={{...styles.productItem, marginTop: index % 2 === 0 ? 12 : 48, marginLeft: '5%'}}>
-                                    <View style={styles.productItemImgContainer}>
-                                        <Image resizeMode="contain" style={styles.productItemImg} source={{uri: item.reward_img}}/>
+                                style={{...styles(isDarkMode).productItem, marginTop: index % 2 === 0 ? 12 : 48, marginLeft: '5%'}}>
+                                    <View style={styles(isDarkMode).productItemImgContainer}>
+                                        <Image resizeMode="contain" style={styles(isDarkMode).productItemImg} source={{uri: item.reward_img}}/>
                                     </View>
-                                    <View style={styles.productItemDescriptionContainer}>
-                                        <View style={styles.productItemDescriptionLeft}>
-                                            <Text style={{...styles.productItemCost, 
+                                    <View style={styles(isDarkMode).productItemDescriptionContainer}>
+                                        <View style={styles(isDarkMode).productItemDescriptionLeft}>
+                                            <Text style={{...styles(isDarkMode).productItemCost, 
                                             color: item.points_price <= user?.points ? "#34A3CF" : "#8E8E8E"}}>{item.points_price}pkt.</Text>
-                                            <Text style={styles.productItemTitle}>{item.name}</Text>
+                                            <Text style={styles(isDarkMode).productItemTitle}>{item.name}</Text>
                                         </View>
-                                        <Text style={{...styles.productItemBtn, backgroundColor: item.points_price <= user?.points ? "#34A3CF" : "#8E8E8E"}}>
+                                        <Text style={{...styles(isDarkMode).productItemBtn, backgroundColor: item.points_price <= user?.points ? "#34A3CF" : "#8E8E8E"}}>
                                             <Icons.PlusIcon height={30} color="white"/>
                                         </Text>
                                     </View>
@@ -112,17 +113,17 @@ const Produsts = () => {
                                     duration: 350,
                                     delay: index * 200,
                                 }}
-                                style={{...styles.productItem, marginTop: index % 2 === 0 ? 12 : 48, marginLeft: '2.55%'}}>
-                                    <View style={styles.productItemImgContainer}>
-                                        <Image resizeMode="contain" style={styles.productItemImg} source={{uri: item.reward_img}}/>
+                                style={{...styles(isDarkMode).productItem, marginTop: index % 2 === 0 ? 12 : 48, marginLeft: '2.55%'}}>
+                                    <View style={styles(isDarkMode).productItemImgContainer}>
+                                        <Image resizeMode="contain" style={styles(isDarkMode).productItemImg} source={{uri: item.reward_img}}/>
                                     </View>
-                                    <View style={styles.productItemDescriptionContainer}>
-                                        <View style={styles.productItemDescriptionLeft}>
-                                            <Text style={{...styles.productItemCost, 
+                                    <View style={styles(isDarkMode).productItemDescriptionContainer}>
+                                        <View style={styles(isDarkMode).productItemDescriptionLeft}>
+                                            <Text style={{...styles(isDarkMode).productItemCost, 
                                             color: item.points_price <= user?.points ? "#34A3CF" : "#8E8E8E"}}>{item.points_price}pkt.</Text>
-                                            <Text style={styles.productItemTitle}>{item.name}</Text>
+                                            <Text style={styles(isDarkMode).productItemTitle}>{item.name}</Text>
                                         </View>
-                                        <Text style={{...styles.productItemBtn, backgroundColor: item.points_price <= user?.points ? "#34A3CF" : "#8E8E8E"}}>
+                                        <Text style={{...styles(isDarkMode).productItemBtn, backgroundColor: item.points_price <= user?.points ? "#34A3CF" : "#8E8E8E"}}>
                                             <Icons.PlusIcon height={30} color="white"/>
                                         </Text>
                                     </View>
@@ -132,7 +133,7 @@ const Produsts = () => {
                     }
                 }) : 
                 <MotiText 
-                style={styles.noItems}
+                style={styles(isDarkMode).noItems}
                 from={{scale: 0.5, opacity: 0.3}}
                 animate={{scale: 1, opacity: 1}}
                 >{allItems.length > 0 ? "Brak produktów spełniających wymagania" : "Brak produktów w bazie" }</MotiText>}

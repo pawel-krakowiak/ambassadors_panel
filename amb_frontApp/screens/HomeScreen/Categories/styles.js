@@ -1,15 +1,17 @@
 import {StyleSheet} from 'react-native'
 
-export default styles = StyleSheet.create({
+export default styles = (isDarkMode) => StyleSheet.create({
     wrapper: {
         width: "100%",
         display: 'flex',
         flexDirection: 'column',
+        
     },
     title: {
          marginVertical: 20,
          fontSize: 24,
          fontWeight: 700,
+         color: isDarkMode ? '#ffffff' : "#000"
     },
     categoriesWrapper: {
         display: 'flex',

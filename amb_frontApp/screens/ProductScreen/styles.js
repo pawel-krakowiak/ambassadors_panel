@@ -1,15 +1,15 @@
 import {StyleSheet} from 'react-native'
 
-export default styles = StyleSheet.create({
+export default styles = (isDarkMode) => StyleSheet.create({
     wrapper: {
         flex: 1,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-start',
-        backgroundColor: '#FCFCFC',
+        backgroundColor: isDarkMode ? "#3b3b3b" : '#FCFCFC',
     },
     backBtnContainer: {
-        backgroundColor: '#F1F1F1',
+        backgroundColor: isDarkMode ? "#2e2e2e" : '#F1F1F1',
         width: '100%',
         height: '10%',
         flexDirection: 'row',
@@ -24,12 +24,12 @@ export default styles = StyleSheet.create({
         borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#B4B4B4',
+        backgroundColor:  isDarkMode ? "#3b3b3b" : '#B4B4B4',
     },
     imgContainer: {
         width: '100%',
         height: '45%',
-        backgroundColor: '#F1F1F1',
+        backgroundColor: isDarkMode ? "#2e2e2e" : '#F1F1F1',
         justifyContent: 'center',
         alignItems: 'center',
         padding: 6,  
@@ -58,6 +58,7 @@ export default styles = StyleSheet.create({
     title: {
         fontWeight: 700,
         fontSize: 24,
+        color: isDarkMode ? "#fff" : "#000",
     },
     description: {
         fontSize: 16,
@@ -97,6 +98,7 @@ export default styles = StyleSheet.create({
     amount: {
         fontWeight: 700,
         fontSize: 24,
+        color: isDarkMode ? "#fff" : "#000",
     },
     buyContainer: {
         width: '80%',

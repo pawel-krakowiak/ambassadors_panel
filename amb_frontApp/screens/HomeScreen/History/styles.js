@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native'
 
-export default styles = StyleSheet.create({
+export default styles = (isDarkMode) => StyleSheet.create({
     wrapper: {
         width: "100%",
         display: 'flex',
@@ -11,11 +11,14 @@ export default styles = StyleSheet.create({
         marginVertical: 20,
         fontSize: 24,
         fontWeight: 700,
+        color: isDarkMode ? "#fff" : "#000",
+
    },
    historyItemsContainer: {
         display: 'flex',
         flexDirection: 'column',
         width: '100%',
+
    },
    historyItem: {
         display: 'flex',
@@ -23,14 +26,14 @@ export default styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        marginTop: 10,
+        marginTop: 10,        
    },
    historyItemImgContainer: {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 5,
-        backgroundColor: '#F1F1F1',
+        backgroundColor: isDarkMode ? "#2e2e2e" : '#F1F1F1',
         padding: 5,
         height: 60,
         width: 50,
@@ -47,6 +50,7 @@ export default styles = StyleSheet.create({
         marginLeft: 10,
    },
    historyItemTitle: {
+        color: isDarkMode ? "#fff" : "#000",
         fontWeight: 700,
         fontSize: 18,
    },
@@ -55,7 +59,7 @@ export default styles = StyleSheet.create({
         fontSize: 14,
    },
    historyItemDate: {
-        color: "gray",
+     color: isDarkMode ? "#fff" : "#000",
         fontSize: 10,
    },
    showMoreBtn: {

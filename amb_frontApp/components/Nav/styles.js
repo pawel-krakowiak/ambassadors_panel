@@ -1,6 +1,6 @@
 import {StyleSheet, StatusBar} from 'react-native'
 
-export default styles = StyleSheet.create({
+export default styles = (isDarkMode) => StyleSheet.create({
     wrapper: {
         width: '100%',
         display: 'flex',
