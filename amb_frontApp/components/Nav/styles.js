@@ -6,8 +6,9 @@ export default styles = (isDarkMode) => StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         backgroundColor: "#34A3CF",
-        padding: 15,
-        paddingTop: StatusBar.currentHeight + 5,
+        paddingBottom: 20,
+        paddingHorizontal: 10,
+        paddingTop: StatusBar.currentHeight + 10,
         borderBottomEndRadius: 15,
         borderBottomLeftRadius: 15,
     },
@@ -46,8 +47,8 @@ export default styles = (isDarkMode) => StyleSheet.create({
         alignItems: 'center',
     },
     navLogo: {
-        height: 50,
-        width: 50,
+        height: 60,
+        width: 60,
     },
     bottomNavContainer: {
         marginTop: 20,

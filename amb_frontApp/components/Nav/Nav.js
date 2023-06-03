@@ -19,12 +19,6 @@ const Nav = (scrollViewRef) => {
     const setSearch = productsStore(state => state.setSearch)
     const isDarkMode = optionsStore(state => state.isDarkMode)
 
-    const handleRefreshData = () => {
-        getUser()
-        getItems(user)
-        setIsSettingsClicked(true)
-        setTimeout(() => {setIsSettingsClicked(false)}, 250)
-    }
 
     React.useEffect(() => {
         getItems(user)
@@ -41,10 +35,11 @@ const Nav = (scrollViewRef) => {
                 </View>
                 <View style={styles(isDarkMode).navRight}>
                     <Image style={styles(isDarkMode).navLogo} 
+                    // source={require('../../assets/logotyp.png')} />
                     source={{uri: 'https://justvape.pl/skins/user/rwd_clickshop-blue_1/images/logo.png'}} />
                 </View>
             </View>
-            <View style={styles(isDarkMode).bottomNavContainer}>
+            {/* <View style={styles(isDarkMode).bottomNavContainer}>
                 <View style={styles(isDarkMode).searchContainer}>
                     <Icons.MagnifyingGlassIcon size={20} color="gray" />
                     <TextInput 
@@ -70,7 +65,7 @@ const Nav = (scrollViewRef) => {
                         </View>
                     </TouchableWithoutFeedback>
                 </View>
-            </View>
+            </View> */}
         </View>
     )
 }
