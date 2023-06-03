@@ -125,6 +125,16 @@ const Settings = () => {
             <MotiView style={{...styles.optionContainer, marginTop: 0}}
             from={{translateY: 20, opacity: 0}} 
             animate={{translateY: isInView ? 0 : 20, opacity: isInView ? 1 : 0}} >
+                <Text style={{fontSize: 16, fontWeight: 700}}>Więcej informacji</Text>
+                <TouchableWithoutFeedback onPress={() => navigation.navigate('Info')}>
+                    <View style={styles.btnContainer}>
+                        <Icons2.QuestionMarkCircleIcon color="#34A3CF" size={25}/>
+                    </View>
+                </TouchableWithoutFeedback>
+            </MotiView>
+            <MotiView style={{...styles.optionContainer, marginTop: 10}}
+            from={{translateY: 20, opacity: 0}} 
+            animate={{translateY: isInView ? 0 : 20, opacity: isInView ? 1 : 0}} >
                 <Text style={{fontSize: 16, fontWeight: 700}}>Wyloguj się</Text>
                 <TouchableWithoutFeedback onPress={() => logOut(navigation)}>
                     <View style={styles.btnContainer}>

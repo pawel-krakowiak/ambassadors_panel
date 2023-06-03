@@ -6,6 +6,8 @@ import styles from './styles';
 import * as Icons from "react-native-heroicons/solid";
 import userStore from '../../zustand/user';
 import AnimateNumber from 'react-native-countup'
+import GestureRecognizer from 'react-native-swipe-gestures';
+
 
 const ProductScreen = ({navigation, route}) => {
 
@@ -22,12 +24,19 @@ const ProductScreen = ({navigation, route}) => {
 
     const handleBuy = () => {
         if(amount <= 9 && amount >= 1){
-            console.log(item)
+            if((amount * item.points_price) <= user?.points){
+             //buy product
+             console.log('buy')
+            }
         }
     }
 
+    const handleSwipe = () => {
+        navigation.goBack()
+    }
+
     return (
-        <View style={styles.wrapper}> 
+        <GestureRecognizer style={styles.wrapper} onSwipeRight={handleSwipe} config={{directionalOffsetThreshold: 150, velocityThreshold: 0.6}}>
             <View style={styles.backBtnContainer}>
                 <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
                     <MotiView style={styles.backBtn}
@@ -96,7 +105,7 @@ const ProductScreen = ({navigation, route}) => {
                     </TouchableWithoutFeedback>
                 </MotiView>
             </View>
-        </View>
+        </GestureRecognizer>
     )
 
 

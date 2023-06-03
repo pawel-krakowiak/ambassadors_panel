@@ -8,6 +8,7 @@ import userStore from '../../../zustand/user.js';
 import * as Icons from "react-native-heroicons/solid";
 import InViewPort from "@coffeebeanslabs/react-native-inviewport";
 import { useNavigation } from '@react-navigation/native';
+import optionsStore from '../../../zustand/options';
 
 const Produsts = () => {
 
@@ -18,9 +19,11 @@ const Produsts = () => {
     const searchValue = productsStore(state => state.searchValue)
     const user = userStore(state => state.user)
     const navigation = useNavigation()
+    const setCurrentProduct = optionsStore(state => state.setCurrentProduct)
 
     const handleOpenProductScreen = (item) => {
         if(item.points_price <= user?.points){
+            setCurrentProduct(item)
             navigation.navigate('Product', item)
         }
     }
