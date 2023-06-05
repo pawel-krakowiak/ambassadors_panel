@@ -9,6 +9,7 @@ export default styles = (isDarkMode) => StyleSheet.create({
     },
     title: {
         marginVertical: 20,
+        
         fontSize: 24,
         fontWeight: 700,
         color: isDarkMode ? "#fff" : "#000",

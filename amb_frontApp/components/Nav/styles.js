@@ -9,8 +9,8 @@ export default styles = (isDarkMode) => StyleSheet.create({
         paddingBottom: 20,
         paddingHorizontal: 10,
         paddingTop: StatusBar.currentHeight + 10,
-        borderBottomEndRadius: 15,
-        borderBottomLeftRadius: 15,
+        // borderBottomEndRadius: 15,
+        // borderBottomLeftRadius: 15,
     },
     topNavContainer: {
         marginVertical: 0,

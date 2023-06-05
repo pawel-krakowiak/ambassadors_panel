@@ -5,6 +5,7 @@ export default styles = (isDarkMode) => StyleSheet.create({
         width: "100%",
         display: 'flex',
         flexDirection: 'column',
+        paddingLeft: 10,
         
     },
     title: {

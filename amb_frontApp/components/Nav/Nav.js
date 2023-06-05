@@ -1,8 +1,8 @@
 import * as React from 'react';
 import 'react-native-reanimated'
-import { MotiView } from 'moti'
-import { View, Text, Image, TextInput, TouchableWithoutFeedback } from 'react-native';
-import styles from './styles';
+import { MotiView, MotiText } from 'moti'
+import { View, Text, Image, TextInput, TouchableWithoutFeedback, StatusBar } from 'react-native';
+import styles from './styles2';
 import AnimateNumber from 'react-native-countup'
 import * as Icons from "react-native-heroicons/solid";
 import userStore from '../../zustand/user.js';
@@ -10,7 +10,7 @@ import productsStore from '../../zustand/products.js';
 import optionsStore from '../../zustand/options.js';
 
 
-const Nav = (scrollViewRef) => {
+const Nav = ({scrollViewRef, isOnTop, belowPoints}) => {
     const [isSettingsClicked, setIsSettingsClicked] = React.useState(false)
     const getUser = userStore(state => state.getUser)
     const user = userStore(state => state.user)
@@ -24,49 +24,16 @@ const Nav = (scrollViewRef) => {
         getItems(user)
     }, [user])
 
+
     return (
-        <View  style={styles(isDarkMode).wrapper} >
-            <View style={styles(isDarkMode).topNavContainer}>
-                <View style={styles(isDarkMode).navLeft}>
-                    <Text style={styles(isDarkMode).helloText}>Hej, {user?.name}</Text>
-                    <Text style={styles(isDarkMode).PointsText}>Zebrałeś już <Text style={styles(isDarkMode).PointsTextBlack}> 
-                        <AnimateNumber value={user?.points} formatter={(val) => {return parseFloat(val).toFixed(0)}}/> 
-                        </Text> pkt.</Text>                    
-                </View>
-                <View style={styles(isDarkMode).navRight}>
-                    <Image style={styles(isDarkMode).navLogo} 
-                    // source={require('../../assets/logotyp.png')} />
-                    source={{uri: 'https://justvape.pl/skins/user/rwd_clickshop-blue_1/images/logo.png'}} />
-                </View>
-            </View>
-            {/* <View style={styles(isDarkMode).bottomNavContainer}>
-                <View style={styles(isDarkMode).searchContainer}>
-                    <Icons.MagnifyingGlassIcon size={20} color="gray" />
-                    <TextInput 
-                        placeholder='Wyszukaj nagrode ...'
-                        keyboardType='default'
-                        style={styles(isDarkMode).searchInput}
-                        onChangeText={(e) => setSearch(e)}
-                        value={searchValue}
-                        autoCapitalize='none'
-                    />
-                </View>
-                <View style={styles(isDarkMode).bottomNavRight}>
-                    <TouchableWithoutFeedback onPress={handleRefreshData}>
-                        <View style={styles(isDarkMode).settingsBtnContainer}>
-                            <MotiView style={styles(isDarkMode).settingsBtn} from={{scale: 1, rotate: '0deg'}} 
-                            animate={{scale: isSettingsClicked ? 0.75 : 1, rotate: isSettingsClicked ? '-30deg' : '0deg'}}
-                            transition={{
-                                type: 'timing',
-                                duration: 200,
-                            }}>
-                                <Icons.ArrowPathIcon size={25} color="gray"/>
-                            </MotiView>
-                        </View>
-                    </TouchableWithoutFeedback>
-                </View>
-            </View> */}
-        </View>
+        <MotiView style={styles(isDarkMode).wrapper} animate={{paddingTop: StatusBar.currentHeight + (isOnTop ? 20 : 10)}}>
+            <MotiText style={{fontWeight: 700, color: "#fff"}} animate={{fontSize: isOnTop ? 24 : 16}} >Hej, Mikołaj  </MotiText>
+            <MotiView style={styles(isDarkMode).descWrapper} animate={{height: isOnTop ? 45 : 30}}>
+                <MotiText style={{fontWeight: 700, color: "#fff"}} animate={{fontSize: isOnTop ? 24 : 16, translateY: belowPoints ? -60 : 0}} >Dzięki za polecenia! </MotiText>
+                <MotiText style={{fontWeight: 700, color: "#fff"}} animate={{fontSize: isOnTop ? 24 : 16, translateY: belowPoints ? -20 : 30}} >Zebrałeś 
+                <Text style={{color: "black"}}> {user.points}</Text> punktów</MotiText>
+            </MotiView>
+        </MotiView>
     )
 }
 

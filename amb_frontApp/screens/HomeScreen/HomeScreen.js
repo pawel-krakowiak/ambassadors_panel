@@ -11,6 +11,7 @@ import Settings from './Settings/Settings.js';
 import GestureRecognizer from 'react-native-swipe-gestures'
 import optionsStore from '../../zustand/options.js';
 import historyStore from '../../zustand/history.js';
+import Points from './Points/Points.js';
 
 const HomeScreen = () => {
     const navigation = useNavigation()
@@ -21,6 +22,10 @@ const HomeScreen = () => {
     const historyItems = historyStore(state => state.historyItems)
     const getItems = historyStore(state => state.getItems)
     const theme = useColorScheme();
+
+    const [isOnTop, setIsOnTop] = React.useState(true)
+    const [pointsPosition, setPointsPosition] = React.useState(0)
+    const [belowPoints, setBelowPoints] = React.useState(false)
     
     React.useEffect(() => {
         navigation.setOptions({
@@ -35,12 +40,26 @@ const HomeScreen = () => {
             navigation.navigate('Product', currentProduct)
         }
     }
+    
+    const handleScroll = (e) => {
+            if(e.nativeEvent.contentOffset.y > 35){
+                setIsOnTop(false)
+            }else{
+                setIsOnTop(true)
+            }
+            if(e.nativeEvent.contentOffset.y > pointsPosition){
+                setBelowPoints(true)
+            }else{
+                setBelowPoints(false)
+            }
+    }
 
     return (
         <View style={{flex: 1, backgroundColor: isDarkMode ? "#3b3b3b" : '#FCFCFC'}} >
             <ScrollView showsVerticalScrollIndicator={false}
-             stickyHeaderIndices={[0]} ref={scrollViewRef}>
-                <Nav scrollViewRef={scrollViewRef} />
+             stickyHeaderIndices={[0]} ref={scrollViewRef} onScroll={handleScroll}>
+                <Nav scrollViewRef={scrollViewRef} isOnTop={isOnTop} belowPoints={belowPoints}/>
+                <Points setPointsPosition={setPointsPosition}/>
                 <View style={styles(isDarkMode).content}>
                     <Categories />
                     <GestureRecognizer style={styles(isDarkMode).content} onSwipeLeft={handleSwipe} config={{directionalOffsetThreshold: 150, velocityThreshold: 0.6}}>
