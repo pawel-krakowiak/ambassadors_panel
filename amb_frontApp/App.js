@@ -4,8 +4,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './screens/HomeScreen/HomeScreen';
 import LoginScreen from './screens/LoginScreen/LoginScreen'
 import ProductScreen from './screens/ProductScreen/ProductScreen';
-import InfoScreen from './screens/InfoScreen/InfoScreen';
-import PointsScreen from './screens/PointsScreen/PointsScreen';
+import TermsScreen from './screens/TermsScreen/TermsScreen';
+import UpdateScreen from './screens/UpdateScreen/UpdateScreen';
 
 export default function App() {
   const Stack = createNativeStackNavigator()
@@ -18,12 +18,10 @@ export default function App() {
         <Stack.Screen name="Product" component={ProductScreen} options={{
           animation: 'slide_from_right',
         }}/>
-        {/* <Stack.Screen name="Info" component={InfoScreen} options={{
-          animation: 'slide_from_right',
-        }}/> */}
-        <Stack.Screen name="Points" component={PointsScreen} options={{
+        <Stack.Screen name="Terms" component={TermsScreen} options={{
           animation: 'slide_from_right',
         }}/>
+        <Stack.Screen name="Update" component={UpdateScreen} />
       </Stack.Navigator>
 
     </NavigationContainer>

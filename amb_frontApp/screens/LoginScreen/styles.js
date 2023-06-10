@@ -84,10 +84,16 @@ export default styles = StyleSheet.create({
         alignItems: 'center',
         overflow: 'hidden',
     },
+    termsBtn: {
+        position: 'absolute',
+        top: '7.5%',
+        right: '5%',
+    },
     backBtn: {
         position: 'absolute',
         top: '7.5%',
         right: '5%',
+        // right: '15%',
     },
     inputContainer: {
         width: '80%',

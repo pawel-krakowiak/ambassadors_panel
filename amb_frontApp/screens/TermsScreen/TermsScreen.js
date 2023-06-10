@@ -7,7 +7,7 @@ import * as Icons from "react-native-heroicons/solid";
 import GestureRecognizer from 'react-native-swipe-gestures';
 import optionsStore from '../../zustand/options';
 
-const PointsScreen = ({navigation, route}) => {
+const TermsScreen = ({navigation, route}) => {
 
     const isDarkMode = optionsStore(state => state.isDarkMode)
     const handleSwipe = () => {
@@ -22,9 +22,7 @@ const PointsScreen = ({navigation, route}) => {
 
     return (
         <GestureRecognizer style={styles(isDarkMode).wrapper} onSwipeRight={handleSwipe} config={{directionalOffsetThreshold: 150, velocityThreshold: 0.6}}>
-            <View style={styles(isDarkMode).top}>
-
-            </View>
+            <Text>Terms</Text>
         </GestureRecognizer>
     )
 
@@ -32,4 +30,4 @@ const PointsScreen = ({navigation, route}) => {
 }
 
 
-export default PointsScreen
+export default TermsScreen

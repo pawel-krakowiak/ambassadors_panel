@@ -6,8 +6,9 @@ import { MotiImage, MotiView, MotiText, AnimatePresence } from 'moti';
 import styles from './styles';
 import Background from './Background/Background';
 import * as Icons from "react-native-heroicons/solid";
+import * as Icons2 from "react-native-heroicons/outline";
 import userStore from '../../zustand/user';
-
+import BottomSheet, { useBottomSheetTimingConfigs } from '@gorhom/bottom-sheet';
 
 const LoginScreen = () => {
     const navigation = useNavigation()
@@ -24,6 +25,7 @@ const LoginScreen = () => {
     const [isPressing, setIsPressing] = React.useState(false)
     const [isPressing2, setIsPressing2] = React.useState(false)
     const [isPassViewable, setIsPassViewable] = React.useState(false)
+    const [isBottomSheetOpen, setIsBottomSheetOpen] = React.useState(false)
     const [errorMsg, setErrorMsg] = React.useState("")
 
     const [inputValues, setInputValues] = React.useState({
@@ -32,6 +34,11 @@ const LoginScreen = () => {
         authCode: "",
     })
 
+    const animationConfigs = useBottomSheetTimingConfigs({
+        duration: 500,
+      });
+
+    const bottomSheetRef = React.useRef()
 
     const handleFormAction = () => {
         if(loginStep === 1){
@@ -59,6 +66,15 @@ const LoginScreen = () => {
         setErrorMsg("")
     }, [inputValues])
 
+    const handleSwitchBottomSheet = (value) => {
+        setIsBottomSheetOpen(value)
+        if(value){
+            bottomSheetRef.current.snapToIndex(0)
+        }else{
+            bottomSheetRef.current.close()
+        }
+    }
+
     return (
         <View style={{flex: 1}}>
             <Background />
@@ -71,6 +87,20 @@ const LoginScreen = () => {
                             <Icons.ArrowUturnLeftIcon size={30} color="white" />
                         </MotiView>
                     </TouchableWithoutFeedback>
+                    {/* <TouchableWithoutFeedback onPress={() => handleSwitchBottomSheet(!isBottomSheetOpen)} >
+                        <MotiView style={styles.termsBtn} 
+                        from={{opacity: 0}} 
+                        animate={{opacity: isBottomSheetOpen ? 0 : 1}}>
+                            <Icons2.InformationCircleIcon size={35} color="white" />
+                        </MotiView>
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={() => handleSwitchBottomSheet(!isBottomSheetOpen)} >
+                        <MotiView style={styles.termsBtn} 
+                        from={{opacity: 0}} 
+                        animate={{opacity: isBottomSheetOpen ? 1 : 0}}>
+                            <Icons2.XMarkIcon size={35} color="white" />
+                        </MotiView>
+                    </TouchableWithoutFeedback> */}
                     <MotiImage resizeMode="contain" style={styles.logoImg}
                     from={{height: '20%'}} 
                     animate={{height: loginStep > 1 ? '0%' : '40%'}}
@@ -176,6 +206,17 @@ const LoginScreen = () => {
                     </View>
                 </View>
             </View>
+            {/* <BottomSheet
+            ref={bottomSheetRef}
+            index={-1}
+            snapPoints={['40%', '66%']}
+            enablePanDownToClose={true}
+            animationConfigs={animationConfigs}
+            >
+                <View>
+                    <Text>dfadgfas</Text>
+                </View>
+            </BottomSheet>       */}
         </View>
     )
 

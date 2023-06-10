@@ -51,9 +51,11 @@ const PointsInstruction = ({handleSwitchBottomSheet}) => {
                     </Text>
                 </View>
             </View>
-            <View style={styles(isDarkMode).btn}>
-                <Text style={styles(isDarkMode).btnTxt}>Regulamin</Text> 
-            </View>
+            <TouchableWithoutFeedback onPress={() => {navigation.navigate('Terms'); handleSwitchBottomSheet(false)}}>
+                <View style={styles(isDarkMode).btn}>
+                    <Text style={styles(isDarkMode).btnTxt}>Regulamin</Text> 
+                </View>
+            </TouchableWithoutFeedback>
         </GestureRecognizer>
     )
 

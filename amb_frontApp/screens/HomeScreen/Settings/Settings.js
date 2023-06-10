@@ -157,7 +157,7 @@ const Settings = () => {
             <MotiView style={styles(isDarkMode).infoContainer} 
              from={{height: 60, translateY: 20, opacity: 0}} 
              animate={{translateY: isInView ? 0 : 20, opacity: isInView ? 1 : 0, 
-             height: isShowInfo ? 300 : 60}}>
+             height: isShowInfo ? 200 : 60}}>
                 <MotiView style={{...styles(isDarkMode).optionContainer, marginTop: 0}}>
                     <Text style={styles(isDarkMode).optionTitle}>Więcej informacji</Text>
                     <AnimatePresence>
@@ -194,12 +194,17 @@ const Settings = () => {
                         <Icons.MapPinIcon size={20} color="#616161"/>
                         <Text style={styles(isDarkMode).infoItemValue}>{user.location_name}</Text>
                     </View>
+                    <TouchableWithoutFeedback onPress={() => navigation.navigate('Terms')}>
+                        <View style={styles(isDarkMode).infoItem}>
+                                <Icons.ClipboardIcon size={20} color="#616161"/>
+                                <Text style={{...styles(isDarkMode).infoItemValue, textDecorationLine: "underline"}}>Regulamin oraz klauzula RODO</Text>
+                        </View>
+                    </TouchableWithoutFeedback>
                     {user.is_staff && 
                         <View style={styles(isDarkMode).infoItem}>
                             <Icons.ClipboardIcon size={20} color="#616161"/>
                             <Text style={{...styles(isDarkMode).infoItemValue, color: "#22ab03"}}>Obsługa sklepu</Text>
                         </View>}
-                    <Text style={{...styles(isDarkMode).optionTxt, marginVertical: 10}}>Disclaimer: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
                 </View>
             </MotiView>
             <MotiView style={{...styles(isDarkMode).optionContainer}}

@@ -51,6 +51,8 @@ const store = (set, get) => ({
     loginUser: async (inputValues, setErrorMsg, navigation) => {
         try{
 
+            
+
             let formData = new FormData();
 
             await formData.append('email', inputValues.mail)
