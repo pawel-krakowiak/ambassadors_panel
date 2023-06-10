@@ -5,6 +5,7 @@ import HomeScreen from './screens/HomeScreen/HomeScreen';
 import LoginScreen from './screens/LoginScreen/LoginScreen'
 import ProductScreen from './screens/ProductScreen/ProductScreen';
 import InfoScreen from './screens/InfoScreen/InfoScreen';
+import PointsScreen from './screens/PointsScreen/PointsScreen';
 
 export default function App() {
   const Stack = createNativeStackNavigator()
@@ -17,7 +18,10 @@ export default function App() {
         <Stack.Screen name="Product" component={ProductScreen} options={{
           animation: 'slide_from_right',
         }}/>
-        <Stack.Screen name="Info" component={InfoScreen} options={{
+        {/* <Stack.Screen name="Info" component={InfoScreen} options={{
+          animation: 'slide_from_right',
+        }}/> */}
+        <Stack.Screen name="Points" component={PointsScreen} options={{
           animation: 'slide_from_right',
         }}/>
       </Stack.Navigator>

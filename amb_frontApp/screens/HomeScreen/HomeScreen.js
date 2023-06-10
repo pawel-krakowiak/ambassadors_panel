@@ -12,6 +12,8 @@ import GestureRecognizer from 'react-native-swipe-gestures'
 import optionsStore from '../../zustand/options.js';
 import historyStore from '../../zustand/history.js';
 import Points from './Points/Points.js';
+import PointsInstruction from './PointsInstruction/PointsInstruction.js'
+import BottomSheet, { useBottomSheetTimingConfigs } from '@gorhom/bottom-sheet';
 
 const HomeScreen = () => {
     const navigation = useNavigation()
@@ -26,6 +28,11 @@ const HomeScreen = () => {
     const [isOnTop, setIsOnTop] = React.useState(true)
     const [pointsPosition, setPointsPosition] = React.useState(0)
     const [belowPoints, setBelowPoints] = React.useState(false)
+    const [isPointsSheetOpen, setIsPoinsSheetOpen] = React.useState(false)
+
+    const animationConfigs = useBottomSheetTimingConfigs({
+        duration: 500,
+      });
     
     React.useEffect(() => {
         navigation.setOptions({
@@ -40,8 +47,17 @@ const HomeScreen = () => {
             navigation.navigate('Product', currentProduct)
         }
     }
+
+    const handleSwitchBottomSheet = (value) => {
+        if(value){
+            bottomSheetRef.current.snapToIndex(0)
+        }else{
+            bottomSheetRef.current.close()
+        }
+    }
     
     const handleScroll = (e) => {
+            handleSwitchBottomSheet(false)
             if(e.nativeEvent.contentOffset.y > 35){
                 setIsOnTop(false)
             }else{
@@ -54,12 +70,16 @@ const HomeScreen = () => {
             }
     }
 
+    const bottomSheetRef = React.useRef()
+
+
+ 
     return (
         <View style={{flex: 1, backgroundColor: isDarkMode ? "#3b3b3b" : '#FCFCFC'}} >
             <ScrollView showsVerticalScrollIndicator={false}
              stickyHeaderIndices={[0]} ref={scrollViewRef} onScroll={handleScroll}>
                 <Nav scrollViewRef={scrollViewRef} isOnTop={isOnTop} belowPoints={belowPoints}/>
-                <Points setPointsPosition={setPointsPosition}/>
+                <Points setPointsPosition={setPointsPosition} handleSwitchBottomSheet={handleSwitchBottomSheet}/>
                 <View style={styles(isDarkMode).content}>
                     <Categories />
                     <GestureRecognizer style={styles(isDarkMode).content} onSwipeLeft={handleSwipe} config={{directionalOffsetThreshold: 150, velocityThreshold: 0.6}}>
@@ -69,7 +89,17 @@ const HomeScreen = () => {
                     <Text style={styles(isDarkMode).copyRight}>&copy; 2023 Just Vape</Text>
                     </GestureRecognizer>
                 </View>
-            </ScrollView>         
+            </ScrollView>  
+            <BottomSheet
+            ref={bottomSheetRef}
+            index={-1}
+            snapPoints={['40%', '66%']}
+            enablePanDownToClose={true}
+            animationConfigs={animationConfigs}
+            backgroundStyle={{backgroundColor: isDarkMode ? "#2e2e2e" : '#F1F1F1',}}
+            >
+              <PointsInstruction handleSwitchBottomSheet={handleSwitchBottomSheet}/>
+            </BottomSheet>      
         </View>
     )
 

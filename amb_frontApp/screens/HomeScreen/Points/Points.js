@@ -5,11 +5,13 @@ import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
 import styles from './styles';
 import * as Icons from "react-native-heroicons/solid";
 import optionsStore from '../../../zustand/options';
+import { useNavigation } from '@react-navigation/native';
 
 
-const Points = ({setPointsPosition}) => {
+const Points = ({setPointsPosition, handleSwitchBottomSheet}) => {
     const isDarkMode = optionsStore(state => state.isDarkMode)
-    
+    const navigation = useNavigation()
+
     return (
         <View style={styles(isDarkMode).wrapper}>
             <View style={styles(isDarkMode).topContainer}>
@@ -19,16 +21,19 @@ const Points = ({setPointsPosition}) => {
                     <Text style={styles(isDarkMode).pointsAmount}>2137</Text>
                     <Text style={styles(isDarkMode).pointsDesc} onLayout={(e) => setPointsPosition(e.nativeEvent.layout.y)}>🎉 Polecając nasz sklep zebrałeś:</Text>
                 </View>
-                <View style={styles(isDarkMode).bottomBtn} >
-                    <View style={styles(isDarkMode).bottomBtnDescContainer}>
-                        <Text style={styles(isDarkMode).bottomBtnTitle}>Brakuje ci punktów?</Text>
-                        <Text style={styles(isDarkMode).bottomBtnDesc}>Sprawdź jak je zdobyć </Text>
+                <TouchableWithoutFeedback onPress={() => handleSwitchBottomSheet(true)}>
+                    <View style={styles(isDarkMode).bottomBtn} >
+                        <View style={styles(isDarkMode).bottomBtnDescContainer}>
+                            <Text style={styles(isDarkMode).bottomBtnTitle}>Brakuje ci punktów?</Text>
+                            <Text style={styles(isDarkMode).bottomBtnDesc}>Sprawdź jak je zdobyć </Text>
+                        </View>
+                        <View style={styles(isDarkMode).bottomBtnIconContainer}>
+                            <Icons.ChevronRightIcon size={20} color="#616161"/>
+                        </View>
                     </View>
-                    <View style={styles(isDarkMode).bottomBtnIconContainer}>
-                        <Icons.ChevronRightIcon size={20} color="#616161"/>
-                    </View>
-                </View>
+                </TouchableWithoutFeedback>
             </View>
+
         </View>
     )
 }
