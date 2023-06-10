@@ -51,8 +51,6 @@ const store = (set, get) => ({
     loginUser: async (inputValues, setErrorMsg, navigation) => {
         try{
 
-            
-
             let formData = new FormData();
 
             await formData.append('email', inputValues.mail)
@@ -68,7 +66,14 @@ const store = (set, get) => ({
                 await AsyncStorage.setItem('refreshToken', refresh)
                 set((state) => ({user: user}))
 
-                navigation.replace('Home')
+                ///check is update needed
+                let updateNeeded = false
+                
+                if(updateNeeded){
+                    navigation.replace('Update')
+                }else{
+                    navigation.replace('Home')
+                }
             }else{
                 setErrorMsg("Konto nie aktywne. Skontaktuj się z administratorem.")
             }
@@ -106,7 +111,15 @@ const store = (set, get) => ({
                     
                     if(user.is_active){
                         set((state) => ({user: user}))
-                        navigation.replace('Home')
+
+                        ///check is update needed
+                        let updateNeeded = false
+                        
+                        if(updateNeeded){
+                            navigation.replace('Update')
+                        }else{
+                            navigation.replace('Home')
+                        }
                     }else{
                         setLoginStep(2)
                     }

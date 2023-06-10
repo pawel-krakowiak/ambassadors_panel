@@ -1,7 +1,7 @@
 import * as React from 'react';
 import 'react-native-reanimated'
 import { useNavigation } from '@react-navigation/native';
-import { View, Text, TouchableWithoutFeedback, TextInput } from 'react-native';
+import { View, Text, TouchableWithoutFeedback, TextInput, useColorScheme } from 'react-native';
 import { MotiImage, MotiView, MotiText, AnimatePresence } from 'moti';
 import styles from './styles';
 import Background from './Background/Background';
@@ -9,16 +9,20 @@ import * as Icons from "react-native-heroicons/solid";
 import * as Icons2 from "react-native-heroicons/outline";
 import userStore from '../../zustand/user';
 import BottomSheet, { useBottomSheetTimingConfigs } from '@gorhom/bottom-sheet';
+import optionsStore from '../../zustand/options.js';
 
 const LoginScreen = () => {
     const navigation = useNavigation()
     const loginUser = userStore(state => state.loginUser)
     const verifyUser = userStore(state => state.verifyUser)
+    const checkDarkMode = optionsStore(state => state.checkDarkMode)
+    const theme = useColorScheme();
 
     React.useEffect(() => {
         navigation.setOptions({
             headerShown: false,
         })
+        checkDarkMode(theme)
     }, [])
 
     const [loginStep, setLoginStep] = React.useState(1)

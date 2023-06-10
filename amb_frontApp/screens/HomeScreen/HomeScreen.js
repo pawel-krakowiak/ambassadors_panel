@@ -1,7 +1,7 @@
 import * as React from 'react';
 import 'react-native-reanimated'
 import { useNavigation } from '@react-navigation/native';
-import { View, ScrollView, Text, useColorScheme } from 'react-native';
+import { View, ScrollView, Text,  } from 'react-native';
 import Nav from '../../components/Nav/Nav.js';
 import styles from './styles';
 import Categories from './Categories/Categories.js';
@@ -18,12 +18,10 @@ import BottomSheet, { useBottomSheetTimingConfigs } from '@gorhom/bottom-sheet';
 const HomeScreen = () => {
     const navigation = useNavigation()
     const currentProduct = optionsStore(state => state.currentProduct)
-    const checkDarkMode = optionsStore(state => state.checkDarkMode)
     const isDarkMode = optionsStore(state => state.isDarkMode)
     const scrollViewRef = React.useRef();
     const historyItems = historyStore(state => state.historyItems)
     const getItems = historyStore(state => state.getItems)
-    const theme = useColorScheme();
 
     const [isOnTop, setIsOnTop] = React.useState(true)
     const [pointsPosition, setPointsPosition] = React.useState(0)
@@ -39,7 +37,6 @@ const HomeScreen = () => {
             headerShown: false,
         })
         getItems()
-        checkDarkMode(theme)
     }, [])
 
     const handleSwipe = () => {
