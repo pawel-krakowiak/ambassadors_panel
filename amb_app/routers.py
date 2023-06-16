@@ -1,5 +1,5 @@
 from rest_framework.routers import SimpleRouter
-from amb_app.views import UserViewSet, LoginViewSet, RefreshViewSet, LocationViewSet, RewardViewSet
+from amb_app.views import UserViewSet, LoginViewSet, RefreshViewSet, LocationViewSet, RewardViewSet, UserActionHistoryViewSet
 
 routes = SimpleRouter()
 
@@ -10,6 +10,7 @@ routes.register(r'auth/refresh', RefreshViewSet, basename='auth-refresh')
 routes.register(r'users', UserViewSet, basename='users')
 routes.register(r'locations', LocationViewSet, basename='locations')
 routes.register(r'rewards', RewardViewSet, basename='rewards')
+routes.register(r'user-history', UserActionHistoryViewSet, basename='user-history')
 
 
 urlpatterns = [
