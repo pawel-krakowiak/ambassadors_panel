@@ -59,7 +59,6 @@ class LocationSerializer(serializers.HyperlinkedModelSerializer):
         model = Location
         fields = ['id', 'location']
         
-
 class UserActionHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = UserActionHistory

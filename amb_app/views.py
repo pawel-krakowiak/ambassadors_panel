@@ -75,5 +75,19 @@ class LocationViewSet(viewsets.ModelViewSet):
 class UserActionHistoryViewSet(viewsets.ModelViewSet):
     queryset = UserActionHistory.objects.all()
     serializer_class = UserActionHistorySerializer
+    
+    @action(detail=False, methods=['get'])
+    def get_user_history(self, request, user_id=None):
+        if user_id is not None:
+            user_actions = UserActionHistory.objects.filter(user_id=user_id)
+        else:
+            user_actions = UserActionHistory.objects.none()
+        
+        serializer = UserActionHistorySerializer(user_actions, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        return self.get_user_history(request, user_id=pk)
+
 # Create your views here.
 
