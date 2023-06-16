@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 from .forms import UserAdminCreationForm, UserAdminChangeForm
-from .models import Reward, Location
+from .models import Reward, Location, UserActionHistory
 
 admin.site.site_header = "justVAPE Admin"
 admin.site.site_title = "justVAPE Ambassadors Panel"
@@ -45,5 +45,8 @@ class RewardAdmin(admin.ModelAdmin):
 @admin.register(Location)
 class LocationAdmin(admin.ModelAdmin):
     list_filter = ['location']
-    
+
+@admin.register(UserActionHistory)
+class UserActionHistoryAdmin(admin.ModelAdmin):
+    list_filter = ['user']
     
