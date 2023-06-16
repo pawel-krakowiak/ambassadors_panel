@@ -145,6 +145,7 @@ class UserActionHistory(models.Model):
         verbose_name = ("Historia Użytkownika")
         
     ACTION_CHOICES = (
+        ('USER_NOTE', 'User note'),
         ('POINTS_ADDED', 'Points added'),
         ('POINTS_REMOVED', 'Points removed'),
         ('REWARD_ORDERED', 'Reward ordered'),
