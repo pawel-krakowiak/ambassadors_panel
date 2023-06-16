@@ -1,4 +1,4 @@
-from .models import User, Reward, Location
+from .models import User, Reward, Location, UserActionHistory
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
 from rest_framework_simplejwt.settings import api_settings
@@ -58,5 +58,11 @@ class LocationSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Location
         fields = ['id', 'location']
+        
+
+class UserActionHistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserActionHistory
+        fields = '__all__'
 
 
