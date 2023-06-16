@@ -137,3 +137,29 @@ class User(AbstractBaseUser):
     def is_admin(self):
         "Is the user a admin member?"
         return self.admin
+    
+class UserActionHistory(models.Model):
+    
+    class Meta:
+        verbose_name_plural = ("Historia Użytkowników")
+        verbose_name = ("Historia Użytkownika")
+        
+    ACTION_CHOICES = (
+        ('POINTS_ADDED', 'Points added'),
+        ('POINTS_REMOVED', 'Points removed'),
+        ('REWARD_ORDERED', 'Reward ordered'),
+        ('REWARD_CANCELED', 'Reward canceled'),
+        ('REWARD_GRANTED', 'Reward granted'),
+        ('LOCATION_CHANGED', 'User location has been changed'),
+        ('PERMISSION_CHANGED', 'User permission has been changed'),
+        ('USER_CREATED', 'User has been created'),
+        ('USER_DELETED', 'User has been deleted'),
+        ('USER_EDITED', 'User property has been edited'),
+        ('USER_PASSWORD_CHANGED', 'User password has been changed'),
+    )
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    action_type = models.CharField(max_length=100, choices=ACTION_CHOICES)
+    action_desc = models.CharField(max_length=400) 
+    timestamp = models.DateTimeField(auto_now_add=True)
+    
