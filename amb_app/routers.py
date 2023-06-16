@@ -10,8 +10,7 @@ routes.register(r'auth/refresh', RefreshViewSet, basename='auth-refresh')
 routes.register(r'users', UserViewSet, basename='users')
 routes.register(r'locations', LocationViewSet, basename='locations')
 routes.register(r'rewards', RewardViewSet, basename='rewards')
-routes.register(r'user-history', UserActionHistoryViewSet, basename='user-history')
-
+routes.register(r'users-history', UserActionHistoryViewSet, basename='user-history')
 
 urlpatterns = [
     *routes.urls
