@@ -1,7 +1,8 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
-
+from django.db.models.signals import post_save, pre_save
+from django.dispatch import receiver
 # TODO: Reward for cities and users
 
 
@@ -103,6 +104,16 @@ class User(AbstractBaseUser):
         verbose_name_plural = ("Użytkownicy")
         verbose_name = ("Użytkownik")
 
+    def add_points(self, amount):
+        self.points += amount
+        self.save()
+
+        UserActionHistory.objects.create(
+            user=self,
+            action_type='POINTS_ADDED',
+            action_desc=f"Points added: {amount}",
+        )
+        
     def get_full_name(self):
         return f"{self.name} {self.surename} ({self.email})"
 
@@ -145,22 +156,82 @@ class UserActionHistory(models.Model):
         verbose_name = ("Historia Użytkownika")
         
     ACTION_CHOICES = (
+        # User related
         ('USER_NOTE', 'User note'),
         ('POINTS_ADDED', 'Points added'),
         ('POINTS_REMOVED', 'Points removed'),
-        ('REWARD_ORDERED', 'Reward ordered'),
-        ('REWARD_CANCELED', 'Reward canceled'),
-        ('REWARD_GRANTED', 'Reward granted'),
-        ('LOCATION_CHANGED', 'User location has been changed'),
-        ('PERMISSION_CHANGED', 'User permission has been changed'),
-        ('USER_CREATED', 'User has been created'),
-        ('USER_DELETED', 'User has been deleted'),
-        ('USER_EDITED', 'User property has been edited'),
+        ('USER_LOCATION_CHANGED', 'User location has been changed'),
+        ('USER_PERMISSION_CHANGED', 'User permission has been changed'),
+        ('USER_STATUS_CHANGED', 'User is active/inactive'),
+        ('USER_INSTAGRAM_CHANGED', 'User instagram name changed'),
         ('USER_PASSWORD_CHANGED', 'User password has been changed'),
+        
+        # Reward related
+        ('REWARD_CHANGED', 'Reward changed (ordered/canceled/granted)'),
     )
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     action_type = models.CharField(max_length=100, choices=ACTION_CHOICES)
     action_desc = models.CharField(max_length=400) 
     timestamp = models.DateTimeField(auto_now_add=True)
-    
+    def __str__(self):
+        return f"[{self.action_type}] {self.action_desc}"
+
+@receiver(pre_save, sender=User)
+def create_user_action_history(sender, instance, **kwargs):
+    if instance.pk:
+        original_user = User.objects.get(pk=instance.pk)
+        # POINTS CHECK
+        if original_user.points != instance.points:
+            if original_user.points < instance.points:
+                points_diff = instance.points - original_user.points
+                UserActionHistory.objects.create(
+                    user=instance,
+                    action_type='POINTS_ADDED',
+                    action_desc=f"{f'{original_user.name} {original_user.surename}'} + {points_diff} points added: {original_user.points} -> {instance.points}",
+                )
+            elif original_user.points > instance.points:
+                points_diff = original_user.points - instance.points
+                UserActionHistory.objects.create(
+                    user=instance,
+                    action_type='POINTS_REMOVED',
+                    action_desc=f"{f'{original_user.name} {original_user.surename}'} - {points_diff} points removed: - {points_diff} {original_user.points} -> {instance.points}",
+                )
+        # LOCATION CHECK
+        if original_user.location != instance.location:
+            UserActionHistory.objects.create(
+                    user=instance,
+                    action_type='USER_LOCATION_CHANGED',
+                    action_desc=f"{f'{original_user.name} {original_user.surename}'} location changed: {original_user.location.location} -> {instance.location.location}",
+                )
+        # PERMISSION CHECK
+        if original_user.is_active != instance.is_active:
+            show_status = "active" if instance.is_active else "inactive"
+            UserActionHistory.objects.create(
+                user=instance,
+                action_type='USER_STATUS_CHANGED',
+                action_desc=f"{f'{original_user.name} {original_user.surename}'} status changed: Account is {show_status.capitalize()}",
+            )
+        if original_user.staff != instance.staff:
+            show_status = "a staff member" if instance.staff else "not a staff member"
+            UserActionHistory.objects.create(
+                user=instance,
+                action_type='USER_PERMISSION_CHANGED',
+                action_desc=f"{f'{original_user.name} {original_user.surename}'} status changed: User is {show_status} now"
+            )
+            
+        if original_user.admin != instance.admin:
+            show_status = "an admin" if instance.admin else "not an admin"
+            UserActionHistory.objects.create(
+                user=instance,
+                action_type='USER_PERMISSION_CHANGED',
+                action_desc=f"{f'{original_user.name} {original_user.surename}'} status changed: User is {show_status} now"
+            )
+        # INSTAGRAM CHECK
+        if original_user.instagram_name != instance.instagram_name:
+            UserActionHistory.objects.create(
+                user=instance,
+                action_type='USER_INSTAGRAM_CHANGED',
+                action_desc=f"{f'{original_user.name} {original_user.surename}'} instagram name changed: \"{original_user.instagram_name}\" -> \"{instance.instagram_name}\""
+            )
+        
