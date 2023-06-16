@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.decorators import action
-from .models import Location, Reward, User
-from .serializers import UserSerializer, RewardSerializer, LocationSerializer, LoginSerializer, RefreshSerializer
+from .models import Location, Reward, User, UserActionHistory
+from .serializers import UserSerializer, RewardSerializer, LocationSerializer, LoginSerializer, RefreshSerializer, UserActionHistorySerializer
 from rest_framework import viewsets, filters, status
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -72,5 +72,8 @@ class LocationViewSet(viewsets.ModelViewSet):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
     
+class UserActionHistoryViewSet(viewsets.ModelViewSet):
+    queryset = UserActionHistory.objects.all()
+    serializer_class = UserActionHistorySerializer
 # Create your views here.
 
