@@ -191,3 +191,12 @@ GRAPH_MODELS = {
     'all_applications': True,
     'group_models': True,
 }
+
+# Email sending
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'serwer2203875.home.pl'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True 
+EMAIL_HOST_USER = 'sklep@justvape.pl'
+EMAIL_HOST_PASSWORD = config('EMAIL_PASSWORD')
+DEFAULT_FROM_EMAIL = 'sklep@justvape.pl'
