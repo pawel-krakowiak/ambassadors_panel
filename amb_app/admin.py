@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 from .forms import UserAdminCreationForm, UserAdminChangeForm
-from .models import Reward, Location, UserActionHistory
+from .models import Reward, Location, UserActionHistory, Order
 
 admin.site.site_header = "justVAPE Admin"
 admin.site.site_title = "justVAPE Ambassadors Panel"
@@ -48,9 +48,17 @@ class RewardAdmin(admin.ModelAdmin):
 
 @admin.register(Location)
 class LocationAdmin(admin.ModelAdmin):
+    ordering = ['location_code']
     list_filter = ['location']
 
 
 @admin.register(UserActionHistory)
 class UserActionHistoryAdmin(admin.ModelAdmin):
+    ordering = ['timestamp']
     list_filter = ['user']
+
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    ordering = ['timestamp']
+    list_filter = ['timestamp', 'owner', 'status']

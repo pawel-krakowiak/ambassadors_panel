@@ -159,6 +159,11 @@ class UserActionHistory(models.Model):
 
 
 class Order(models.Model):
+
+    class Meta:
+        verbose_name_plural = "Zamówienia nagród"
+        verbose_name = "Zamówienie nagrody"
+
     ORDER_STATUS_CHOICES = (
         ("ORDER_CREATED", "Order created and awaiting fulfillment"),
         ("ORDER_APPROVED", "Order approved, reward retrieved"),
@@ -169,3 +174,6 @@ class Order(models.Model):
     reward = models.ForeignKey(verbose_name="Nagroda", to=Reward, on_delete=models.CASCADE, blank=False, null=False)
     status = models.CharField(max_length=100, choices=ORDER_STATUS_CHOICES)
     timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"({self.owner} {self.reward} ({self.reward.points_price} points) - {self.timestamp}"

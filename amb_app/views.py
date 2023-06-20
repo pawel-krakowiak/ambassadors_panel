@@ -1,12 +1,13 @@
 from rest_framework.decorators import action
-from .models import Location, Reward, User, UserActionHistory
+from .models import Location, Reward, User, UserActionHistory, Order
 from .serializers import (
     UserSerializer,
     RewardSerializer,
     LocationSerializer,
     LoginSerializer,
     RefreshSerializer,
-    UserActionHistorySerializer
+    UserActionHistorySerializer,
+    OrderSerializer,
 )
 from rest_framework import viewsets, filters, status
 from rest_framework.response import Response
@@ -86,3 +87,8 @@ class UserActionHistoryViewSet(viewsets.ModelViewSet):
 
     def retrieve(self, request, pk=None):
         return self.get_user_history(request)
+
+
+class OrderViewSet(viewsets.ModelViewSet):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer

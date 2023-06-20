@@ -6,6 +6,7 @@ from amb_app.views import (
     LocationViewSet,
     RewardViewSet,
     UserActionHistoryViewSet,
+    OrderViewSet,
 )
 
 routes = SimpleRouter()
@@ -18,5 +19,6 @@ routes.register(r'users', UserViewSet, basename='users')
 routes.register(r'locations', LocationViewSet, basename='locations')
 routes.register(r'rewards', RewardViewSet, basename='rewards')
 routes.register(r'user-history', UserActionHistoryViewSet, basename='user-history')
+routes.register(r'orders', OrderViewSet, basename='orders')
 
 urlpatterns = routes.urls
