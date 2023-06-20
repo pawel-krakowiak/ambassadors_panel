@@ -4,6 +4,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, Toke
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import update_last_login
 
+
 class LoginSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
@@ -16,6 +17,7 @@ class LoginSerializer(TokenObtainPairSerializer):
         update_last_login(None, self.user)
         return data
 
+
 class RefreshSerializer(TokenRefreshSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
@@ -26,12 +28,16 @@ class RefreshSerializer(TokenRefreshSerializer):
         }
         return data
 
+
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'email', 'name', 'surname', 'instagram_name', 'password', 'is_staff', 'is_active', 'points', 'location']
+        fields = [
+            'id', 'email', 'name', 'surname', 'instagram_name',
+            'password', 'is_staff', 'is_active', 'points', 'location'
+        ]
         extra_kwargs = {'password': {'write_only': True}}
-    
+
     def create(self, validated_data):
         user = User.objects.create_user(
             email=validated_data['email'],
@@ -43,26 +49,41 @@ class RegisterSerializer(serializers.ModelSerializer):
         )
         return user
 
+
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     location_name = serializers.CharField(source='location.location', read_only=True)
-    location_id = serializers.PrimaryKeyRelatedField(source='location', queryset=Location.objects.all(), write_only=True)
+    location_id = serializers.PrimaryKeyRelatedField(
+        source='location',
+        queryset=Location.objects.all(),
+        write_only=True
+    )
 
     class Meta:
         model = User
         fields = ['id', 'email', 'name', 'surname', 'is_staff', 'is_active', 'points', 'location_name', 'location_id']
 
+
 class RewardSerializer(serializers.HyperlinkedModelSerializer):
     location_name = serializers.CharField(source='location.location', read_only=True)
-    location_id = serializers.PrimaryKeyRelatedField(source='location', queryset=Location.objects.all(), write_only=True)
+    location_id = serializers.PrimaryKeyRelatedField(
+        source='location',
+        queryset=Location.objects.all(),
+        write_only=True
+    )
 
     class Meta:
         model = Reward
-        fields = ['id', 'name', 'points_price', 'description', 'reward_img', 'is_available', 'location_name', 'location_id']
+        fields = [
+            'id', 'name', 'points_price', 'description', 'reward_img',
+            'is_available', 'location_name', 'location_id'
+        ]
+
 
 class LocationSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Location
         fields = ['id', 'location']
+
 
 class UserActionHistorySerializer(serializers.ModelSerializer):
     class Meta:

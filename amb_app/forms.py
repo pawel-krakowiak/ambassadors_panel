@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+
 class RegisterForm(forms.ModelForm):
     password = forms.CharField(label='Hasło', widget=forms.PasswordInput)
     password_2 = forms.CharField(label='Potwierdź hasło', widget=forms.PasswordInput)
@@ -25,6 +26,7 @@ class RegisterForm(forms.ModelForm):
         if password is not None and password != password_2:
             self.add_error("password_2", "Hasła różnią się od siebie :-/")
         return cleaned_data
+
 
 class UserAdminCreationForm(forms.ModelForm):
     password = forms.CharField(label='Hasło', widget=forms.PasswordInput)
@@ -48,6 +50,7 @@ class UserAdminCreationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
 
 class UserAdminChangeForm(forms.ModelForm):
     password = ReadOnlyPasswordHashField()

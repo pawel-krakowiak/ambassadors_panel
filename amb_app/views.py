@@ -1,12 +1,19 @@
-from django.shortcuts import render
 from rest_framework.decorators import action
 from .models import Location, Reward, User, UserActionHistory
-from .serializers import UserSerializer, RewardSerializer, LocationSerializer, LoginSerializer, RefreshSerializer, UserActionHistorySerializer
+from .serializers import (
+    UserSerializer,
+    RewardSerializer,
+    LocationSerializer,
+    LoginSerializer,
+    RefreshSerializer,
+    UserActionHistorySerializer
+)
 from rest_framework import viewsets, filters, status
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.exceptions import TokenError, InvalidToken
+
 
 class LoginViewSet(TokenObtainPairView, viewsets.ModelViewSet):
     serializer_class = LoginSerializer
@@ -21,6 +28,7 @@ class LoginViewSet(TokenObtainPairView, viewsets.ModelViewSet):
             raise InvalidToken(token_error.args[0])
         return Response(serializer.validated_data, status=status.HTTP_200_OK)
 
+
 class RefreshViewSet(viewsets.ModelViewSet):
     serializer_class = RefreshSerializer
     http_method_names = ['post']
@@ -33,6 +41,7 @@ class RefreshViewSet(viewsets.ModelViewSet):
         except TokenError as token_error:
             raise InvalidToken(token_error.args[0])
         return Response(serializer.validated_data, status=status.HTTP_200_OK)
+
 
 class UserViewSet(viewsets.ModelViewSet):
     http_method_names = ['get']
@@ -53,13 +62,16 @@ class UserViewSet(viewsets.ModelViewSet):
         serializer = UserSerializer(user)
         return Response(serializer.data)
 
+
 class RewardViewSet(viewsets.ModelViewSet):
     queryset = Reward.objects.all()
     serializer_class = RewardSerializer
 
+
 class LocationViewSet(viewsets.ModelViewSet):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
+
 
 class UserActionHistoryViewSet(viewsets.ModelViewSet):
     queryset = UserActionHistory.objects.all()

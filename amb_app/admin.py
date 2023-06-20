@@ -30,12 +30,15 @@ class UserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'name', 'surname', 'instagram_name', 'password', 'password_2', 'location', 'points', 'admin', 'staff', 'is_active')}
-        ),
+            'fields': (
+                'email', 'name', 'surname', 'instagram_name', 'password',
+                'password_2', 'location', 'points', 'admin', 'staff', 'is_active'
+            )}),
     )
     search_fields = ['email']
     ordering = ['admin', 'email']
     filter_horizontal = ()
+
 
 @admin.register(Reward)
 class RewardAdmin(admin.ModelAdmin):
