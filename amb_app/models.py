@@ -4,13 +4,14 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
 class Location(models.Model):
     location = models.CharField(verbose_name='Miasto', max_length=32, unique=True)
+    location_code = models.CharField(verbose_name='Kod lokacji', max_length=7)
 
     class Meta:
         verbose_name_plural = "Lokacje"
         verbose_name = "Lokacja"
 
     def __str__(self):
-        return self.location
+        return f"({self.location_code}) {self.location}"
 
     @classmethod
     def get_default_pk(cls):
