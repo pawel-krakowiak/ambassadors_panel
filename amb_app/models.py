@@ -1,7 +1,6 @@
 from django.db import models
-from django.conf import settings
-from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
-from django.db.models.signals import post_save, pre_save
+from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
+from django.db.models.signals import pre_save
 from django.dispatch import receiver
 
 
@@ -24,7 +23,8 @@ class Location(models.Model):
 class Reward(models.Model):
     name = models.CharField(verbose_name='Nazwa', max_length=128, blank=False)
     description = models.TextField(verbose_name='Opis', default="")
-    reward_img = models.ImageField(verbose_name='Zdjęcie', upload_to="rewards_img", blank=False, default="rewards_img/not_found.png")
+    reward_img = models.ImageField(verbose_name='Zdjęcie', upload_to="rewards_img", blank=False,
+                                   default="rewards_img/not_found.png")
     points_price = models.DecimalField(verbose_name='Koszt (punkty)', max_digits=10, decimal_places=0, blank=False)
     is_available = models.BooleanField(verbose_name='Dostępność', blank=False, default=True)
     location = models.ForeignKey(verbose_name='Sklep', to=Location, on_delete=models.CASCADE)
@@ -52,18 +52,18 @@ class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
             raise ValueError("Użytkownik musi mieć adres email!")
-        
+
         user = self.model(email=self.normalize_email(email), **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
-    
+
     def create_staffuser(self, email, password, **extra_fields):
         user = self.create_user(email, password=password, **extra_fields)
         user.staff = True
         user.save(using=self._db)
         return user
-    
+
     def create_superuser(self, email, password, **extra_fields):
         user = self.create_user(email, password=password, **extra_fields)
         user.staff = True
@@ -75,16 +75,16 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser):
     email = models.EmailField(verbose_name="E-mail", max_length=255, unique=True)
     is_active = models.BooleanField(verbose_name="Aktywny", default=True)
-    staff = models.BooleanField(verbose_name="Pracownik", default=False) 
+    staff = models.BooleanField(verbose_name="Pracownik", default=False)
     admin = models.BooleanField(verbose_name="Admin", default=False)
     name = models.CharField(verbose_name="Imię", max_length=64, blank=False)
     surname = models.CharField(verbose_name="Nazwisko", max_length=64, blank=False)
     instagram_name = models.CharField(verbose_name="Instagram", max_length=64, blank=False, unique=True)
     location = models.ForeignKey(verbose_name="Miasto", to=Location, on_delete=models.CASCADE, blank=True, null=True)
     points = models.IntegerField(verbose_name="Punkty", null=True, default=0)
-    
+
     objects = UserManager()
-    
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['name', 'surname', 'instagram_name']
 
@@ -106,28 +106,28 @@ class User(AbstractBaseUser):
 
     def get_short_name(self):
         return self.email
-    
+
     def __str__(self):
         return self.get_full_name()
 
     def has_perm(self, perm, obj=None):
         return True
-    
+
     def has_module_perms(self, app_label):
         return True
 
     @property
     def location_name(self):
         return self.location.location
-    
+
     @property
     def location_id(self):
         return self.location.id
-    
+
     @property
     def is_staff(self):
         return self.staff
-    
+
     @property
     def is_admin(self):
         return self.admin
@@ -154,7 +154,7 @@ class UserActionHistory(models.Model):
     class Meta:
         verbose_name_plural = "Historia Użytkowników"
         verbose_name = "Historia Użytkownika"
-        
+
     def __str__(self):
         return f"[{self.action_type}] {self.action_desc}"
 
@@ -170,21 +170,30 @@ def create_user_action_history(sender, instance, **kwargs):
                 UserActionHistory.objects.create(
                     user=instance,
                     action_type='POINTS_ADDED',
-                    action_desc=f"{original_user.get_full_name()} + {points_diff} points added: {original_user.points} -> {instance.points}",
+                    action_desc=(
+                        f"{original_user.get_full_name()} + {points_diff} points added: "
+                        f"{original_user.points} -> {instance.points}"
+                    )
                 )
             elif original_user.points > instance.points:
                 points_diff = original_user.points - instance.points
                 UserActionHistory.objects.create(
                     user=instance,
                     action_type='POINTS_REMOVED',
-                    action_desc=f"{original_user.get_full_name()} - {points_diff} points removed: {original_user.points} -> {instance.points}",
+                    action_desc=(
+                        f"{original_user.get_full_name()} - {points_diff} points removed: "
+                        f"{original_user.points} -> {instance.points}"
+                    )
                 )
 
         if original_user.location != instance.location:
             UserActionHistory.objects.create(
                 user=instance,
                 action_type='USER_LOCATION_CHANGED',
-                action_desc=f"{original_user.get_full_name()} location changed: {original_user.location.location} -> {instance.location.location}",
+                action_desc=(
+                    f"{original_user.get_full_name()} location changed: "
+                    f"{original_user.location.location} -> {instance.location.location}"
+                )
             )
 
         if original_user.is_active != instance.is_active:
@@ -192,7 +201,10 @@ def create_user_action_history(sender, instance, **kwargs):
             UserActionHistory.objects.create(
                 user=instance,
                 action_type='USER_STATUS_CHANGED',
-                action_desc=f"{original_user.get_full_name()} status changed: Account is {show_status.capitalize()}",
+                action_desc=(
+                    f"{original_user.get_full_name()} status changed: "
+                    f"Account is {show_status.capitalize()}"
+                )
             )
 
         if original_user.staff != instance.staff:
@@ -200,7 +212,10 @@ def create_user_action_history(sender, instance, **kwargs):
             UserActionHistory.objects.create(
                 user=instance,
                 action_type='USER_PERMISSION_CHANGED',
-                action_desc=f"{original_user.get_full_name()} status changed: User is {show_status} now",
+                action_desc=(
+                    f"{original_user.get_full_name()} status changed: "
+                    f"User is {show_status} now",
+                )
             )
 
         if original_user.admin != instance.admin:
@@ -208,12 +223,18 @@ def create_user_action_history(sender, instance, **kwargs):
             UserActionHistory.objects.create(
                 user=instance,
                 action_type='USER_PERMISSION_CHANGED',
-                action_desc=f"{original_user.get_full_name()} status changed: User is {show_status} now",
+                action_desc=(
+                    f"{original_user.get_full_name()} status changed: "
+                    f"User is {show_status} now",
+                )
             )
 
         if original_user.instagram_name != instance.instagram_name:
             UserActionHistory.objects.create(
                 user=instance,
                 action_type='USER_INSTAGRAM_CHANGED',
-                action_desc=f"{original_user.get_full_name()} Instagram name changed: \"{original_user.instagram_name}\" -> \"{instance.instagram_name}\"",
+                action_desc=(
+                    f"{original_user.get_full_name()} Instagram name changed: "
+                    f"\"{original_user.instagram_name}\" -> \"{instance.instagram_name}\""
+                )
             )
