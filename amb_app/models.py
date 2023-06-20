@@ -238,3 +238,16 @@ def create_user_action_history(sender, instance, **kwargs):
                     f"\"{original_user.instagram_name}\" -> \"{instance.instagram_name}\""
                 )
             )
+
+
+class Order(models.Model):
+    ORDER_STATUS_CHOICES = (
+        ("ORDER_CREATED", "Order created and awaiting fulfillment"),
+        ("ORDER_APPROVED", "Order approved, reward retrieved"),
+        ("ORDER_DECLINED", "Order rejected, user points revoked"),
+    )
+
+    owner = models.ForeignKey(verbose_name="Zamawiający", to=User, on_delete=models.CASCADE, blank=False, null=False)
+    reward = models.ForeignKey(verbose_name="Nagroda", to=Reward, on_delete=models.CASCADE, blank=False, null=False)
+    status = models.CharField(max_length=100, choices=ORDER_STATUS_CHOICES)
+    timestamp = models.DateTimeField(auto_now_add=True)
