@@ -161,8 +161,8 @@ class UserActionHistory(models.Model):
 class Order(models.Model):
 
     class Meta:
-        verbose_name_plural = "Zamówienia nagród"
-        verbose_name = "Zamówienie nagrody"
+        verbose_name_plural = "Zamówienia Nagród"
+        verbose_name = "Zamówienie Nagrody"
 
     ORDER_STATUS_CHOICES = (
         ("ORDER_CREATED", "Order created and awaiting fulfillment"),
@@ -176,4 +176,4 @@ class Order(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"({self.owner} {self.reward} ({self.reward.points_price} points) - {self.timestamp}"
+        return f"[{self.status}] {self.owner.get_full_name()} | {self.reward} - {self.timestamp}"
