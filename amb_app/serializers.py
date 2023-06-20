@@ -1,7 +1,6 @@
 from .models import User, Reward, Location, UserActionHistory
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
-from rest_framework_simplejwt.settings import api_settings
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import update_last_login
 
@@ -45,11 +44,17 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
+    location_name = serializers.CharField(source='location.location', read_only=True)
+    location_id = serializers.PrimaryKeyRelatedField(source='location', queryset=Location.objects.all(), write_only=True)
+
     class Meta:
         model = User
         fields = ['id', 'email', 'name', 'surname', 'is_staff', 'is_active', 'points', 'location_name', 'location_id']
 
 class RewardSerializer(serializers.HyperlinkedModelSerializer):
+    location_name = serializers.CharField(source='location.location', read_only=True)
+    location_id = serializers.PrimaryKeyRelatedField(source='location', queryset=Location.objects.all(), write_only=True)
+
     class Meta:
         model = Reward
         fields = ['id', 'name', 'points_price', 'description', 'reward_img', 'is_available', 'location_name', 'location_id']
@@ -58,10 +63,8 @@ class LocationSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Location
         fields = ['id', 'location']
-        
+
 class UserActionHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = UserActionHistory
         fields = '__all__'
-
-
