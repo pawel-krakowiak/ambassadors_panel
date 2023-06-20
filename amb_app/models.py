@@ -90,7 +90,7 @@ class User(AbstractBaseUser):
     staff = models.BooleanField(verbose_name="Pracownik", default=False) 
     admin = models.BooleanField(verbose_name="Admin", default=False)
     name = models.CharField(verbose_name="Imię", max_length=64, blank=False)
-    surename = models.CharField(verbose_name="Nazwisko", max_length=64, blank=False)
+    surname = models.CharField(verbose_name="Nazwisko", max_length=64, blank=False)
     instagram_name = models.CharField(verbose_name="Instagram", max_length=64, blank=False, unique=True)
     location = models.ForeignKey(verbose_name="Miasto", to=Location, on_delete=models.CASCADE, blank=True, null=True)
     points = models.IntegerField(verbose_name="Punkty", null=True, default=0)
@@ -115,7 +115,7 @@ class User(AbstractBaseUser):
         )
         
     def get_full_name(self):
-        return f"{self.name} {self.surename} ({self.email})"
+        return f"{self.name} {self.surname} ({self.email})"
 
     def get_short_name(self):
         return self.email
@@ -188,21 +188,21 @@ def create_user_action_history(sender, instance, **kwargs):
                 UserActionHistory.objects.create(
                     user=instance,
                     action_type='POINTS_ADDED',
-                    action_desc=f"{f'{original_user.name} {original_user.surename}'} + {points_diff} points added: {original_user.points} -> {instance.points}",
+                    action_desc=f"{f'{original_user.name} {original_user.surname}'} + {points_diff} points added: {original_user.points} -> {instance.points}",
                 )
             elif original_user.points > instance.points:
                 points_diff = original_user.points - instance.points
                 UserActionHistory.objects.create(
                     user=instance,
                     action_type='POINTS_REMOVED',
-                    action_desc=f"{f'{original_user.name} {original_user.surename}'} - {points_diff} points removed: - {points_diff} {original_user.points} -> {instance.points}",
+                    action_desc=f"{f'{original_user.name} {original_user.surname}'} - {points_diff} points removed: {original_user.points} -> {instance.points}",
                 )
         # LOCATION CHECK
         if original_user.location != instance.location:
             UserActionHistory.objects.create(
                     user=instance,
                     action_type='USER_LOCATION_CHANGED',
-                    action_desc=f"{f'{original_user.name} {original_user.surename}'} location changed: {original_user.location.location} -> {instance.location.location}",
+                    action_desc=f"{f'{original_user.name} {original_user.surname}'} location changed: {original_user.location.location} -> {instance.location.location}",
                 )
         # PERMISSION CHECK
         if original_user.is_active != instance.is_active:
@@ -210,14 +210,14 @@ def create_user_action_history(sender, instance, **kwargs):
             UserActionHistory.objects.create(
                 user=instance,
                 action_type='USER_STATUS_CHANGED',
-                action_desc=f"{f'{original_user.name} {original_user.surename}'} status changed: Account is {show_status.capitalize()}",
+                action_desc=f"{f'{original_user.name} {original_user.surname}'} status changed: Account is {show_status.capitalize()}",
             )
         if original_user.staff != instance.staff:
             show_status = "a staff member" if instance.staff else "not a staff member"
             UserActionHistory.objects.create(
                 user=instance,
                 action_type='USER_PERMISSION_CHANGED',
-                action_desc=f"{f'{original_user.name} {original_user.surename}'} status changed: User is {show_status} now"
+                action_desc=f"{f'{original_user.name} {original_user.surname}'} status changed: User is {show_status} now"
             )
             
         if original_user.admin != instance.admin:
@@ -225,13 +225,13 @@ def create_user_action_history(sender, instance, **kwargs):
             UserActionHistory.objects.create(
                 user=instance,
                 action_type='USER_PERMISSION_CHANGED',
-                action_desc=f"{f'{original_user.name} {original_user.surename}'} status changed: User is {show_status} now"
+                action_desc=f"{f'{original_user.name} {original_user.surname}'} status changed: User is {show_status} now"
             )
         # INSTAGRAM CHECK
         if original_user.instagram_name != instance.instagram_name:
             UserActionHistory.objects.create(
                 user=instance,
                 action_type='USER_INSTAGRAM_CHANGED',
-                action_desc=f"{f'{original_user.name} {original_user.surename}'} instagram name changed: \"{original_user.instagram_name}\" -> \"{instance.instagram_name}\""
+                action_desc=f"{f'{original_user.name} {original_user.surname}'} instagram name changed: \"{original_user.instagram_name}\" -> \"{instance.instagram_name}\""
             )
         

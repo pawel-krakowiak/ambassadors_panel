@@ -30,14 +30,14 @@ class RefreshSerializer(TokenRefreshSerializer):
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'email', 'name', 'surename', 'instagram_name', 'password', 'is_staff', 'is_active', 'points', 'location']
+        fields = ['id', 'email', 'name', 'surname', 'instagram_name', 'password', 'is_staff', 'is_active', 'points', 'location']
         extra_kwargs = {'password': {'write_only': True}}
     
     def create(self, validated_data):
         user = User.objects.create_user(
             email=validated_data['email'],
             name=validated_data['name'],
-            surename=validated_data['surename'],
+            surname=validated_data['surname'],
             instagram_name=validated_data['instagram_name'],
             password=validated_data['password'],
             location=validated_data['location'],
@@ -47,7 +47,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'email', 'name', 'surename', 'is_staff', 'is_active', 'points', 'location_name', 'location_id']
+        fields = ['id', 'email', 'name', 'surname', 'is_staff', 'is_active', 'points', 'location_name', 'location_id']
 
 class RewardSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
