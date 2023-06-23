@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.core.exceptions import ValidationError
+import qrcode
 
 
 class Location(models.Model):
@@ -174,6 +175,7 @@ class Order(models.Model):
     owner = models.ForeignKey(verbose_name="Zamawiający", to=User, on_delete=models.CASCADE, blank=False, null=False)
     reward = models.ForeignKey(verbose_name="Nagroda", to=Reward, on_delete=models.CASCADE, blank=False, null=False)
     status = models.CharField(max_length=100, choices=ORDER_STATUS_CHOICES)
+    qr_code = models.ImageField(verbose_name="Kod QR", upload_to="order_qr_codes", blank=True, null=True)
     is_completed = models.BooleanField(verbose_name="Zamówienie zakończone", default=False)
     timestamp = models.DateTimeField(auto_now_add=True)
 
@@ -185,7 +187,29 @@ class Order(models.Model):
             self.status = "ORDER_CREATED"
             if not self.deduct_points_from_user():
                 raise ValidationError("Zamówienie nie zostało utworzone")
+            self.generate_qr_code()  # Generuje kod QR dla nowego zamówienia
         super().save(*args, **kwargs)
+
+    def generate_qr_code(self):
+        qr_data = f"ORDER-ID{self.pk}-{self.timestamp}"
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_L,
+            box_size=10,
+            border=4,
+        )
+        qr.add_data(qr_data)
+        qr.make(fit=True)
+        image = qr.make_image(fill_color="black", back_color="white")
+        image_path = f"order_qr_codes/order_{self.pk}.png"
+        image.save(image_path)
+        self.qr_code = image_path
+        self.save()
+
+    def open_qr_code(self, user):
+        if user.is_staff and self.qr_code:
+            self.completed = True
+            self.save()
 
     def clean(self):
         self.validate_order_status_change()
