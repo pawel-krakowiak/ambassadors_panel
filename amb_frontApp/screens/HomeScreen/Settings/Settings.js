@@ -184,7 +184,7 @@ const Settings = () => {
                 <View style={styles(isDarkMode).infoContainerContent}>
                     <View style={styles(isDarkMode).infoItem}>
                         <Icons.UserIcon size={20} color="#616161"/>
-                        <Text style={styles(isDarkMode).infoItemValue}>{user.name} {user.surename}</Text>
+                        <Text style={styles(isDarkMode).infoItemValue}>{user.name} {user.surname}</Text>
                     </View>
                     <View style={styles(isDarkMode).infoItem}>
                         <Icons.EnvelopeIcon size={20} color="#616161"/>
