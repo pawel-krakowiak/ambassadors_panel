@@ -184,11 +184,15 @@ class Order(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.pk:  # Sprawdza, czy to jest nowe zamówienie
-            self.status = "ORDER_CREATED"
             if not self.deduct_points_from_user():
                 raise ValidationError("Zamówienie nie zostało utworzone")
-            self.generate_qr_code()  # Generuje kod QR dla nowego zamówienia
+            self.status = "ORDER_CREATED"
         super().save(*args, **kwargs)
+
+        if not self.qr_code_generated:
+            self.generate_qr_code()  # Generuje kod QR dla nowego zamówienia
+            self.qr_code_generated = True
+            self.save()
 
     def generate_qr_code(self):
         qr_data = f"ORDER-ID{self.pk}-{self.timestamp}"
