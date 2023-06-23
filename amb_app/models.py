@@ -177,6 +177,7 @@ class Order(models.Model):
     status = models.CharField(max_length=100, choices=ORDER_STATUS_CHOICES)
     qr_code = models.ImageField(verbose_name="Kod QR", upload_to="order_qr_codes", blank=True, null=True)
     is_completed = models.BooleanField(verbose_name="Zamówienie zakończone", default=False)
+    is_qr_code_generated = models.BooleanField(verbose_name="Czy QR został utworzony", default=False)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -189,9 +190,9 @@ class Order(models.Model):
             self.status = "ORDER_CREATED"
         super().save(*args, **kwargs)
 
-        if not self.qr_code_generated:
+        if not self.is_qr_code_generated:
             self.generate_qr_code()  # Generuje kod QR dla nowego zamówienia
-            self.qr_code_generated = True
+            self.is_qr_code_generated = True
             self.save()
 
     def generate_qr_code(self):
