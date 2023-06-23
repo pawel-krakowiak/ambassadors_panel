@@ -5,19 +5,26 @@ from .models import Order, Reward, Location
 User = get_user_model()
 
 
-class LocationModelTestCase(TestCase):
+class LocationModelTest(TestCase):
     def setUp(self):
         self.location = Location.objects.create(
-            location='Location A',
-            location_code='A'
+            location='Wrocław',
+            location_code='WRO'
         )
 
-    def test_location_str(self):
-        self.assertEqual(str(self.location), "(A) Location A")
+    def test_location_str_representation(self):
+        self.assertEqual(str(self.location), "(WRO) Wrocław")
 
-    def test_get_default_pk(self):
-        default_pk = Location.get_default_pk()
-        self.assertEqual(default_pk, self.location.pk)
+    def test_location_get_default_pk(self):
+        default_location_pk = Location.get_default_pk()
+        self.assertEqual(default_location_pk, self.location.pk)
+
+    def test_location_unique_constraint(self):
+        with self.assertRaises(Exception):
+            Location.objects.create(
+                location='Wrocław',
+                location_code='WRO2'
+            )
 
 
 class RewardModelTestCase(TestCase):
@@ -109,12 +116,31 @@ class OrderModelTestCase(TestCase):
             password='staffpassword',
             name='Staff',
             surname='User',
+            staff=True,
             instagram_name='staffuser',
             location=self.location,
             points=0
         )
-        self.order.open_qr_code(staff_user)
+
+        self.order.qr_code = 'example_qr_code.png'
+        self.order.open_qrs_code(staff_user)
         self.assertTrue(self.order.is_completed)
+
+    def test_open_qr_code_non_staff_user(self):
+        self.assertFalse(self.order.is_completed)
+        staff_user = User.objects.create_user(
+            email='nonstaffuser@example.com',
+            password='nonstaffpassword',
+            name='NOTStaff',
+            surname='User',
+            instagram_name='staffuser',
+            location=self.location,
+            points=0
+        )
+
+        self.order.qr_code = 'example_qr_code.png'
+        self.order.open_qr_code(staff_user)
+        self.assertFalse(self.order.is_completed)
 
     def test_approve_order(self):
         self.order.approve_order()
@@ -123,16 +149,6 @@ class OrderModelTestCase(TestCase):
     def test_complete_order(self):
         self.order.complete_order()
         self.assertTrue(self.order.completed)
-
-    def test_get_total_price(self):
-        reward2 = Reward.objects.create(
-            name='Test Reward 2',
-            location=self.location,
-            points_price=30
-        )
-        self.order.reward_set.add(reward2)
-        total_price = self.order.get_total_price()
-        self.assertEqual(total_price, 80)
 
     def test_get_status_display(self):
         status_display = self.order.get_status_display()
@@ -145,7 +161,3 @@ class OrderModelTestCase(TestCase):
     def test_get_reward_name(self):
         reward_name = self.order.get_reward_name()
         self.assertEqual(reward_name, str(self.reward))
-
-    def test_get_ordered_rewards(self):
-        ordered_rewards = self.order.get_ordered_rewards()
-        self.assertIn(self.reward, ordered_rewards)

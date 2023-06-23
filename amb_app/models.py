@@ -209,12 +209,13 @@ class Order(models.Model):
         image_path = f"order_qr_codes/order_{self.pk}.png"
         image.save(image_path)
         self.qr_code = image_path
-        self.save()
 
     def open_qr_code(self, user):
-        if user.is_staff and self.qr_code:
-            self.completed = True
+        if user.staff and self.qr_code:
+            self.is_completed = True
             self.save()
+            return True
+        return False
 
     def clean(self):
         self.validate_order_status_change()
@@ -268,11 +269,6 @@ class Order(models.Model):
         self.completed = True
         self.save()
 
-    def get_total_price(self):
-        ordered_rewards = self.reward_set.all()
-        total_price = sum(reward.points_price for reward in ordered_rewards)
-        return total_price
-
     def get_status_display(self):
         return dict(self.ORDER_STATUS_CHOICES).get(self.status)
 
@@ -281,6 +277,3 @@ class Order(models.Model):
 
     def get_reward_name(self):
         return str(self.reward)
-
-    def get_ordered_rewards(self):
-        return self.reward_set.all()
