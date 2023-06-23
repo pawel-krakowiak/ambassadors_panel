@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
+from django.core.exceptions import ValidationError
 
 
 class Location(models.Model):
@@ -173,7 +174,84 @@ class Order(models.Model):
     owner = models.ForeignKey(verbose_name="Zamawiający", to=User, on_delete=models.CASCADE, blank=False, null=False)
     reward = models.ForeignKey(verbose_name="Nagroda", to=Reward, on_delete=models.CASCADE, blank=False, null=False)
     status = models.CharField(max_length=100, choices=ORDER_STATUS_CHOICES)
+    is_completed = models.BooleanField(verbose_name="Zamówienie zakończone", default=False)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"[{self.status}] {self.owner.get_full_name()} | {self.reward} - {self.timestamp}"
+
+    def save(self, *args, **kwargs):
+        if not self.pk:  # Sprawdza, czy to jest nowe zamówienie
+            self.status = "ORDER_CREATED"
+            if not self.deduct_points_from_user():
+                raise ValidationError("Zamówienie nie zostało utworzone")
+        super().save(*args, **kwargs)
+
+    def clean(self):
+        self.validate_order_status_change()
+
+    def validate_order_status_change(self):
+        if self.pk:
+            old_order = Order.objects.get(pk=self.pk)
+            if old_order.status != self.status:
+                raise ValidationError("Nie można zmienić statusu zamówienia.")
+
+    def deduct_points_from_user(self):
+        try:
+            self.check_order_conditions()
+            user = self.owner
+            reward = self.reward
+            user.points -= reward.points_price
+            user.save()
+            return True
+        except ValidationError:
+            return False
+
+    def check_order_conditions(self):
+        user = self.owner
+        reward = self.reward
+        if not user.is_active:
+            raise ValidationError("Użytkownik jest nieaktywny.")
+        elif user.location != reward.location:
+            raise ValidationError(
+                "Sklep do którego przypisana jest nagroda nie jest zgodny z wybranym sklepem użytkownika."
+            )
+        elif not reward.is_available:
+            raise ValidationError("Wybrana nagroda jest niedostępna.")
+        elif reward.points_price > user.points:
+            raise ValidationError("Nie masz wystarczającej liczby punktów.")
+
+    def refund_points_to_user(self):
+        user = self.owner
+        user.points += self.reward.points_price
+        user.save()
+
+    def decline_order(self):
+        self.status = "ORDER_DECLINED"
+        self.refund_points_to_user()
+        self.save()
+
+    def approve_order(self):
+        self.status = "ORDER_APPROVED"
+        self.save()
+
+    def complete_order(self):
+        self.completed = True
+        self.save()
+
+    def get_total_price(self):
+        ordered_rewards = self.reward_set.all()
+        total_price = sum(reward.points_price for reward in ordered_rewards)
+        return total_price
+
+    def get_status_display(self):
+        return dict(self.ORDER_STATUS_CHOICES).get(self.status)
+
+    def get_owner_name(self):
+        return self.owner.get_full_name()
+
+    def get_reward_name(self):
+        return str(self.reward)
+
+    def get_ordered_rewards(self):
+        return self.reward_set.all()
