@@ -1,7 +1,7 @@
 import * as React from 'react';
 import 'react-native-reanimated'
 import { useNavigation } from '@react-navigation/native';
-import { View, Text, TouchableWithoutFeedback, TextInput, useColorScheme } from 'react-native';
+import { View, Text, TouchableWithoutFeedback, TextInput, useColorScheme, Linking } from 'react-native';
 import { MotiImage, MotiView, MotiText, AnimatePresence } from 'moti';
 import styles from './styles';
 import Background from './Background/Background';
@@ -76,6 +76,19 @@ const LoginScreen = () => {
             bottomSheetRef.current.snapToIndex(0)
         }else{
             bottomSheetRef.current.close()
+        }
+    }
+
+    const handleResetPassword = async () => {
+        // logowanie w ramach apki
+        // setLoginStep(3)
+
+        // logowanie w ramach panelu admin
+        const url = "https://web-production-f464.up.railway.app/reset-password/"
+
+        const supported = await Linking.canOpenURL(url);
+        if (supported) {
+            await Linking.openURL(url);
         }
     }
 
@@ -174,7 +187,7 @@ const LoginScreen = () => {
                     </View>
                     <View style={styles.navContainer}>
                         <View style={styles.resetContainer}> 
-                            <TouchableWithoutFeedback onPress={() => setLoginStep(3)} >
+                            <TouchableWithoutFeedback onPress={handleResetPassword} >
                                 <MotiText style={styles.resetContainerTxt}
                                 from={{translateY: 20}} 
                                 animate={{translateY: loginStep === 2 ? 0 : 20}}> 

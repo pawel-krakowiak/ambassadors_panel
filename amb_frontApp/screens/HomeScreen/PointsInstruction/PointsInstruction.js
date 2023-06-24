@@ -28,10 +28,10 @@ const PointsInstruction = ({handleSwitchBottomSheet}) => {
             <View style={styles(isDarkMode).content}>
                 <View style={styles(isDarkMode).itemContainer}>
                     <View style={styles(isDarkMode).iconContainer}>
-                        <Icons.PencilIcon color="#34A3CF" size={24}/>
+                        <Icons.CurrencyDollarIcon color="#34A3CF" size={24}/>
                     </View>
                     <Text style={styles(isDarkMode).itemDesc}>
-                        Zgłaszasz sie do nas rejestrując się jako partner
+                        Za każdą wydaną złotówkę otrzymujesz 0.8 punkta
                     </Text>
                 </View>
                 <View style={styles(isDarkMode).itemContainer}>
@@ -39,7 +39,7 @@ const PointsInstruction = ({handleSwitchBottomSheet}) => {
                         <Icons.LinkIcon color="#34A3CF" size={24}/>
                     </View>
                     <Text style={styles(isDarkMode).itemDesc}>
-                        Polecasz nasz sklep swoim znajomym
+                        Za każde polecenie otrzymujesz 20 punktów
                     </Text>
                 </View>
                 <View style={styles(isDarkMode).itemContainer}>
@@ -47,7 +47,7 @@ const PointsInstruction = ({handleSwitchBottomSheet}) => {
                         <Icons.CurrencyDollarIcon color="#34A3CF" size={24}/>
                     </View>
                     <Text style={styles(isDarkMode).itemDesc}>
-                        Za każde wydane 10zł otrzymujesz 20 punktów
+                        Udostępniaj nasz sklep na swoich socjalach
                     </Text>
                 </View>
             </View>

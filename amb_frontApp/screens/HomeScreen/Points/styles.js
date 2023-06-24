@@ -42,7 +42,7 @@ export default styles = (isDarkMode) => StyleSheet.create({
           top: 0,
           backgroundColor: isDarkMode ? "#2e2e2e" : '#F1F1F1',
           borderRadius: 20,
-          overflow: 'hidden',
+          overflow: 'hidden', 
    },
 
    pointsAmount: {

@@ -8,3 +8,6 @@ export const getUserInfo = (accesToken) => API.get(`/users/get_user_info/`, {hea
 
 ///Products
 export const getProducts = (accesToken) => API.get(`/rewards/`, {headers: {'Authorization': `Bearer ${accesToken}` }})
+
+///Orders
+export const createOrder = (accesToken) => API.post(`/orders/save`, {headers: {'Authorization': `Bearer ${accesToken}` }})

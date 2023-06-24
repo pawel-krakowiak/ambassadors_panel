@@ -8,13 +8,14 @@ import userStore from '../../zustand/user';
 import optionsStore from '../../zustand/options';
 import AnimateNumber from 'react-native-countup'
 import GestureRecognizer from 'react-native-swipe-gestures';
-
+import historyStore from '../../zustand/history';
 
 const ProductScreen = ({navigation, route}) => {
 
     const item = route.params
     const user = userStore(state => state.user)
     const isDarkMode = optionsStore(state => state.isDarkMode)
+    const createOrder = historyStore(state => state.createOrder)
 
     React.useEffect(() => {
         navigation.setOptions({
@@ -27,8 +28,8 @@ const ProductScreen = ({navigation, route}) => {
     const handleBuy = () => {
         if(amount <= 9 && amount >= 1){
             if((amount * item.points_price) <= user?.points){
-             //buy product
-             console.log('buy')
+             createOrder(item, amount, navigation)
+            
             }
         }
     }

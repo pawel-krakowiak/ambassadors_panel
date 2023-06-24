@@ -30,7 +30,6 @@ const Produsts = () => {
         }
     }
 
-
     return (
         <View style={styles(isDarkMode).wrapper}>
             <InViewPort onChange={(isVisible) => isVisible && setIsInView(true)}>
@@ -80,7 +79,7 @@ const Produsts = () => {
                 })?.map((item, index) => {
                     if(index % 2 !== 0 ){
                         return(
-                            <TouchableWithoutFeedback key={`Product${item._id}`} onPress={() => handleOpenProductScreen(item)}>
+                            <TouchableWithoutFeedback key={`Product${item.img}-${item.name}`} onPress={() => handleOpenProductScreen(item)}>
                                 <MotiView from={{translateY: 20, translateX: 20, opacity: 0}}
                                 animate={{translateY: 0, translateX: 0, opacity: 1}}   transition={{
                                     type: 'timing',
@@ -106,7 +105,7 @@ const Produsts = () => {
                         )
                     }else{
                         return(
-                            <TouchableWithoutFeedback key={`Product${index}`} onPress={() => handleOpenProductScreen(item)}>
+                            <TouchableWithoutFeedback key={`Product${item.img}-${item.name}`} onPress={() => handleOpenProductScreen(item)}>
                                 <MotiView  from={{translateY: 20, translateX: 20, opacity: 0}}
                                 animate={{translateY: 0, translateX: 0, opacity: 1}}   transition={{
                                     type: 'timing',

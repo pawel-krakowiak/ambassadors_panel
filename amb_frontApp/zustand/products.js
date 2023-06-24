@@ -14,9 +14,11 @@ const store = (set, get) => ({
             // let data = initialData;
             let accesToken = await AsyncStorage.getItem('accessToken')
             let result = await api.getProducts(accesToken)
-            let data = result.data.filter(i => i.location_id === user.location_id)
-
+            
+            let data = result.data.filter(i => i.location_name === user.location_name)
             set((state) => ({allItems: [...data]}))
+
+            
 
             switch(get().currentFilter){
                 case 'all': 

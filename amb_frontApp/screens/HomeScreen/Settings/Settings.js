@@ -86,6 +86,7 @@ const Settings = () => {
                     value={isDarkMode}
                 />
             </MotiView>
+            {/* Wysyłanie wiadomości */}
             {/* <MotiView style={styles(isDarkMode).msgContainer} 
              from={{height: 60, translateY: 20, opacity: 0}} 
              animate={{translateY: isInView ? 0 : 20, opacity: isInView ? 1 : 0, 
