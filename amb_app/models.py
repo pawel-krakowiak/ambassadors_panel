@@ -175,6 +175,7 @@ class Order(models.Model):
     owner = models.ForeignKey(verbose_name="Zamawiający", to=User, on_delete=models.CASCADE, blank=False, null=False)
     reward = models.ForeignKey(verbose_name="Nagroda", to=Reward, on_delete=models.CASCADE, blank=False, null=False)
     status = models.CharField(max_length=100, choices=ORDER_STATUS_CHOICES)
+    amount = models.PositiveSmallIntegerField(verbose_name="Ilość", default=1, blank=False, null=False)
     qr_code = models.ImageField(verbose_name="Kod QR", upload_to="order_qr_codes", blank=True, null=True)
     is_completed = models.BooleanField(verbose_name="Zamówienie zakończone", default=False)
     is_qr_code_generated = models.BooleanField(verbose_name="Czy QR został utworzony", default=False)
