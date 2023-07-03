@@ -30,9 +30,10 @@ const Points = ({setPointsPosition, handleSwitchBottomSheet}) => {
                         <Barcode 
                             value={user.email}
                             format="CODE128"
-                            // text="test@gmail.com"
+                            text={user.email}
+                            textStyle={{color: isDarkMode ? "#fff" : '#000'}}
                             maxWidth={barCodeDimensions.width}
-                            height={barCodeDimensions.height}
+                            height={barCodeDimensions.height - 20}
                             onError={(error) => console.log(error)}
                             background={isDarkMode ? "#2e2e2e" : '#F1F1F1'}
                             lineColor={isDarkMode ? "#fff" : '#000'}
