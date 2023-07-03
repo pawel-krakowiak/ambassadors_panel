@@ -88,13 +88,13 @@ export default styles = (isDarkMode) => StyleSheet.create({
    },
    productItemBtn: {
         width: '20%',
-        aspectRatio: '1 / 1',
-        backgroundColor: '#34A3CF',
-        borderRadius: 5,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        textAlign: 'center',
+        aspectRatio: '1 / 1',
+        backgroundColor: '#34A3CF',
+        borderRadius: 5,
+
    },
    noItems: {
      color: '#8E8E8E',

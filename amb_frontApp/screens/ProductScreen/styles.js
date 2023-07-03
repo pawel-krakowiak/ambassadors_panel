@@ -33,10 +33,12 @@ export default styles = (isDarkMode) => StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 6,  
+        overflow: 'hidden',
     },
     img: {
-        width: '80%',
-        aspectRatio: '1 / 2',
+        width: '100%',
+        height: '100%',
+        // aspectRatio: '1 / 2',
     },
     bottomContainer: {
         width: '100%',

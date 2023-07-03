@@ -84,9 +84,7 @@ const ProductScreen = ({navigation, route}) => {
                         <MotiView  style={styles(isDarkMode).plusIcon}
                         from={{backgroundColor: "#34A3CF"}}
                         animate={{backgroundColor: amount < 9 ? "#34A3CF" : "#8E8E8E"}}>
-                            <Text >
-                                <Icons.PlusIcon color="white" size={30}/>
-                            </Text>
+                            <Icons.PlusIcon color="white" size={30}/>
                         </MotiView>
                     </TouchableWithoutFeedback> 
                 </MotiView>

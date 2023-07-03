@@ -9,7 +9,6 @@ export default styles = StyleSheet.create({
         left: 0,
         width: '100%',
         height: '100%',
-
     },
     contentContainer: {
         position: 'relative',
@@ -44,7 +43,7 @@ export default styles = StyleSheet.create({
         alignItems: 'flex-start',
         position: 'absolute',
         left: '10%',
-        bottom: '5%',
+        bottom: width < 650 ? '5%' : '10%',
     },
     loginBtn: {
         padding: 12,

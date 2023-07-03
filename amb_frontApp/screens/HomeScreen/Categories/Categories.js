@@ -69,7 +69,7 @@ const Categories = () => {
                     animate={{backgroundColor: currentFilter === "canBuy" ? "#34A3CF" : bgColor }} >
                         <Image style={styles(isDarkMode).categoriesItemImg}  
                         source={require('../../../assets/greenDollar.png')}/>
-                        <Text style={{fontSize: 16, color: currentFilter === "canBuy" ? "white" : txtColor}}>Can buy</Text>
+                        <Text style={{fontSize: 16, color: currentFilter === "canBuy" ? "white" : txtColor}}>Do {user.points} pkt.</Text>
                     </MotiView>
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback onPress={() => setFilter('cantBuy', user)}>
@@ -78,7 +78,7 @@ const Categories = () => {
                     animate={{backgroundColor: currentFilter === "cantBuy" ? "#34A3CF" : bgColor }} >
                         <Image style={styles(isDarkMode).categoriesItemImg}  
                         source={require('../../../assets/redDollar.png')}/>
-                        <Text style={{fontSize: 16, color: currentFilter === "cantBuy" ? "white" : txtColor}}>Can't buy</Text>
+                        <Text style={{fontSize: 16, color: currentFilter === "cantBuy" ? "white" : txtColor}}>Ponad {user.points} pkt.</Text>
                     </MotiView>
                 </TouchableWithoutFeedback>
                 

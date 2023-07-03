@@ -1,7 +1,7 @@
 import * as React from 'react';
 import 'react-native-reanimated'
 import { MotiView, MotiText } from 'moti'
-import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, Image, TouchableWithoutFeedback, Dimensions } from 'react-native';
 import styles from './styles';
 import productsStore from '../../../zustand/products';
 import userStore from '../../../zustand/user.js';
@@ -22,6 +22,7 @@ const Produsts = () => {
     const navigation = useNavigation()
     const setCurrentProduct = optionsStore(state => state.setCurrentProduct)
     const isDarkMode = optionsStore(state => state.isDarkMode)
+    const { height, width } = Dimensions.get('window');
     
     const handleOpenProductScreen = (item) => {
         if(item.points_price <= user?.points){
@@ -96,9 +97,9 @@ const Produsts = () => {
                                             color: item.points_price <= user?.points ? "#34A3CF" : "#8E8E8E"}}>{item.points_price}pkt.</Text>
                                             <Text style={styles(isDarkMode).productItemTitle}>{item.name}</Text>
                                         </View>
-                                        <Text style={{...styles(isDarkMode).productItemBtn, backgroundColor: item.points_price <= user?.points ? "#34A3CF" : "#8E8E8E"}}>
-                                            <Icons.PlusIcon height={30} color="white"/>
-                                        </Text>
+                                        <View style={{...styles(isDarkMode).productItemBtn, backgroundColor: item.points_price <= user?.points ? "#34A3CF" : "#8E8E8E"}}>
+                                            <Icons.PlusIcon width={width > 640 ? 60 : 30} color="white"/>
+                                        </View>
                                     </View>
                                 </MotiView>
                             </TouchableWithoutFeedback>
@@ -122,9 +123,9 @@ const Produsts = () => {
                                             color: item.points_price <= user?.points ? "#34A3CF" : "#8E8E8E"}}>{item.points_price}pkt.</Text>
                                             <Text style={styles(isDarkMode).productItemTitle}>{item.name}</Text>
                                         </View>
-                                        <Text style={{...styles(isDarkMode).productItemBtn, backgroundColor: item.points_price <= user?.points ? "#34A3CF" : "#8E8E8E"}}>
-                                            <Icons.PlusIcon height={30} color="white"/>
-                                        </Text>
+                                        <View style={{...styles(isDarkMode).productItemBtn, backgroundColor: item.points_price <= user?.points ? "#34A3CF" : "#8E8E8E"}}>
+                                            <Icons.PlusIcon width={width > 640 ? 60 : 30} color="white"/>
+                                        </View>
                                     </View>
                                 </MotiView>
                             </TouchableWithoutFeedback>

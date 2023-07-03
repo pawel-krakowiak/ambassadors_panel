@@ -1,7 +1,7 @@
 import * as React from 'react';
 import 'react-native-reanimated'
 import { useNavigation } from '@react-navigation/native';
-import { View, Text, TouchableWithoutFeedback, TextInput, useColorScheme, Linking } from 'react-native';
+import { View, Text, TouchableWithoutFeedback, TextInput, useColorScheme, Linking, Dimensions } from 'react-native';
 import { MotiImage, MotiView, MotiText, AnimatePresence } from 'moti';
 import styles from './styles';
 import Background from './Background/Background';
@@ -17,12 +17,22 @@ const LoginScreen = () => {
     const verifyUser = userStore(state => state.verifyUser)
     const checkDarkMode = optionsStore(state => state.checkDarkMode)
     const theme = useColorScheme();
+    const { height, width } = Dimensions.get('window');
+    const [responsiveMarginTop, setResponsiveMarginTop] = React.useState(0)
 
     React.useEffect(() => {
         navigation.setOptions({
             headerShown: false,
         })
         checkDarkMode(theme)
+
+        console.log('width', width)
+        if(width < 400){
+            setResponsiveMarginTop(10)
+        }else if(width > 400 && width < 600) {
+            setResponsiveMarginTop(20)
+        }
+
     }, [])
 
     const [loginStep, setLoginStep] = React.useState(1)
@@ -124,8 +134,8 @@ const LoginScreen = () => {
                     transition={{type: 'timing', duration: 700}}
                     source={require('../../assets/logoJV.png')} />
                     <MotiView style={styles.formContainer}
-                    from={{marginTop: '30%'}} transition={{type: 'timing', duration: 700}}
-                    animate={{marginTop: loginStep > 1 ? '0%' : '30%'}}>
+                    from={{marginTop: `${responsiveMarginTop}%`}} transition={{type: 'timing', duration: 700}}
+                    animate={{marginTop: loginStep > 1 ? '0%' : `${responsiveMarginTop}%`}}>
                         <Text style={styles.logInTitle}>Witaj Ambasadorze!{"\n"}program
                         <Text style={{fontWeight: 700}}> partnerski </Text>
                          {"\n"}justVAPE</Text>
@@ -135,8 +145,11 @@ const LoginScreen = () => {
                     animate={{opacity: 1, translateY: 0}}
                     transition={{ delay: 700}}>
                         <TextInput 
+                            textContentType='emailAddress'
+                            keyboardType='email-address'
+                            autoCapitalize='none'
+                            autoCompleteType='email'
                             placeholder='Wpisz swojego maila' 
-                            keyboardType='default'
                             style={styles.input}
                             placeholderTextColor="#b5b5b5"
                             value={inputValues.mail}
@@ -150,6 +163,7 @@ const LoginScreen = () => {
                         <TextInput 
                             placeholder={loginStep > 2 ? 'Wpisz nowe hasło' : 'Wpisz hasło' }
                             keyboardType='default'
+                            autoCapitalize="none"
                             style={styles.input}
                             placeholderTextColor="#b5b5b5"
                             secureTextEntry={!isPassViewable}

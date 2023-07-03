@@ -22,9 +22,9 @@ export default function App() {
         <Stack.Screen name="Purchase" component={PurchaseScreen} options={{
           animation: 'slide_from_right',
         }}/>
-        <Stack.Screen name="Terms" component={TermsScreen} options={{
+        {/* <Stack.Screen name="Terms" component={TermsScreen} options={{
           animation: 'slide_from_right',
-        }}/>
+        }}/> */}
         <Stack.Screen name="Update" component={UpdateScreen} />
       </Stack.Navigator>
 
