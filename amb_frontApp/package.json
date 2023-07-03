@@ -22,6 +22,7 @@
     "nativewind": "^2.0.11",
     "react": "18.2.0",
     "react-native": "0.71.8",
+    "react-native-confetti-cannon": "^1.5.2",
     "react-native-countup": "^0.0.2",
     "react-native-gesture-handler": "~2.9.0",
     "react-native-gradients": "^2.0.1",

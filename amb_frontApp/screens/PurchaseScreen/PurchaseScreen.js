@@ -1,17 +1,20 @@
 import * as React from 'react';
 import 'react-native-reanimated'
-import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, Image, TouchableWithoutFeedback, Dimensions } from 'react-native';
 import { MotiText, MotiView } from 'moti';
 import styles from './styles';
 import * as Icons from "react-native-heroicons/solid";
 import GestureRecognizer from 'react-native-swipe-gestures';
 import optionsStore from '../../zustand/options';
 import userStore from '../../zustand/user';
+import ConfettiCannon from 'react-native-confetti-cannon';
 
 const PurchaseScreen = ({navigation, route}) => {
 
     const isDarkMode = optionsStore(state => state.isDarkMode)
     const logOut = userStore(state => state.logOut)
+    const { height, width } = Dimensions.get('window');
+
     const handleSwipe = () => {
         navigation.navigate('Home')
     }
@@ -49,6 +52,7 @@ const PurchaseScreen = ({navigation, route}) => {
                     </View>
                 </TouchableWithoutFeedback>
             </View>
+            <ConfettiCannon count={300} origin={{x: -1, y: height + 20}} fallSpeed={2000} />
         </GestureRecognizer>
     )
 

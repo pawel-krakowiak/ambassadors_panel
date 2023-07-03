@@ -10,6 +10,7 @@ import AnimateNumber from 'react-native-countup'
 import GestureRecognizer from 'react-native-swipe-gestures';
 import historyStore from '../../zustand/history';
 
+
 const ProductScreen = ({navigation, route}) => {
 
     const item = route.params
