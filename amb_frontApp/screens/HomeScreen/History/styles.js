@@ -16,7 +16,12 @@ export default styles = (isDarkMode) => StyleSheet.create({
         color: isDarkMode ? "#fff" : "#000",
 
    },
+   historyItemsContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
 
+   },
    showMoreBtn: {
     marginHorizontal: '15%',
     marginTop: 40,
