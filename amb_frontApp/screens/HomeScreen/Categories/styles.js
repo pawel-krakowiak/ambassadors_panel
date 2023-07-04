@@ -1,4 +1,5 @@
-import {StyleSheet} from 'react-native'
+import {StyleSheet, Dimensions} from 'react-native'
+const { height, width } = Dimensions.get('window');
 
 export default styles = (isDarkMode) => StyleSheet.create({
     wrapper: {
@@ -18,21 +19,21 @@ export default styles = (isDarkMode) => StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         flexGrow: 1,
-        height: 40,
+        height: width > 700 ? 50 : 40,
     },
     categoriesItem: {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: "space-around",
-        paddingVertical: 6,
+        paddingVertical: width > 700 ? 10 : 6,
         paddingHorizontal: 10,
         borderRadius: 5,
         marginRight: 20,
     },
     categoriesItemImg: {
-        width: 20,
-        height: 20,
+        width: width > 700 ? 30 : 20,
+        height: width > 700 ? 30 : 20,
         marginRight: 20,
     },
 })

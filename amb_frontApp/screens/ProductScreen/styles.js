@@ -1,4 +1,5 @@
-import {StyleSheet} from 'react-native'
+import {StyleSheet, Dimensions} from 'react-native'
+const { height, width } = Dimensions.get('window');
 
 export default styles = (isDarkMode) => StyleSheet.create({
     wrapper: {
@@ -59,7 +60,7 @@ export default styles = (isDarkMode) => StyleSheet.create({
     },
     title: {
         fontWeight: 700,
-        fontSize: 24,
+        fontSize: width > 700 ? 28 : 24,
         color: isDarkMode ? "#fff" : "#000",
     },
     description: {

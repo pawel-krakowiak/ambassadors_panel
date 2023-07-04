@@ -1,5 +1,4 @@
-import {StyleSheet} from 'react-native'
-import {Dimensions} from 'react-native'; 
+import {StyleSheet, Dimensions} from 'react-native'
 const { height, width } = Dimensions.get('window');
 
 export default styles = StyleSheet.create({
@@ -22,8 +21,7 @@ export default styles = StyleSheet.create({
         alignItems: 'center',
     },
     logoImg: {
-        width: '80%',
-        marginTop: '30%',
+        marginTop: width > 600 ? '20%' : '30%',
     },
     formContainer: {
         width: '80%',
@@ -35,7 +33,7 @@ export default styles = StyleSheet.create({
     logInTitle: {
         color: 'white',
         textAlign: 'left',
-        fontSize: 28,
+        fontSize: width > 700 ? 45 : 28,
         fontWeight: 400,
     },
     navContainer: {

@@ -31,6 +31,8 @@ const LoginScreen = () => {
             setResponsiveMarginTop(10)
         }else if(width > 400 && width < 600) {
             setResponsiveMarginTop(20)
+        }else if(width > 600) {
+            setResponsiveMarginTop(10)
         }
 
     }, [])
@@ -137,7 +139,7 @@ const LoginScreen = () => {
                     from={{marginTop: `${responsiveMarginTop}%`}} transition={{type: 'timing', duration: 700}}
                     animate={{marginTop: loginStep > 1 ? '0%' : `${responsiveMarginTop}%`}}>
                         <Text style={styles.logInTitle}>Witaj Ambasadorze!{"\n"}program
-                        <Text style={{fontWeight: 700}}> partnerski </Text>
+                        <Text style={{ fontWeight: 700}}> partnerski </Text>
                          {"\n"}justVAPE</Text>
                     </MotiView>
                     {loginStep > 1 && <MotiView style={styles.inputContainer} 

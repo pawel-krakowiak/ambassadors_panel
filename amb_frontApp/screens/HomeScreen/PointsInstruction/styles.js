@@ -1,4 +1,6 @@
-import {StyleSheet} from 'react-native'
+import {StyleSheet, Dimensions} from 'react-native'
+const { height, width } = Dimensions.get('window');
+
 
 export default styles = (isDarkMode) => StyleSheet.create({
     wrapper: {
@@ -31,7 +33,7 @@ export default styles = (isDarkMode) => StyleSheet.create({
     },
     btnTxt: {
         color: '#8E8E8E',
-        fontSize: 14,
+        fontSize: width > 700 ? 18 : 14,
     },
     itemContainer: {
         width: '80%',
@@ -54,7 +56,7 @@ export default styles = (isDarkMode) => StyleSheet.create({
     itemDesc: {
         marginLeft: 15, 
         flexGrow: 1,
-        fontSize: 16,
+        fontSize: width > 700 ? 20 : 16,
         color: isDarkMode ? "#fff" : "#000",
     },
     itemIcon: {

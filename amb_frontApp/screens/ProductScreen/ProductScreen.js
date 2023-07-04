@@ -1,6 +1,6 @@
 import * as React from 'react';
 import 'react-native-reanimated'
-import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, Image, TouchableWithoutFeedback, Dimensions } from 'react-native';
 import { MotiText, MotiView } from 'moti';
 import styles from './styles';
 import * as Icons from "react-native-heroicons/solid";
@@ -12,7 +12,7 @@ import historyStore from '../../zustand/history';
 
 
 const ProductScreen = ({navigation, route}) => {
-
+    const { height, width } = Dimensions.get('window');
     const item = route.params
     const user = userStore(state => state.user)
     const isDarkMode = optionsStore(state => state.isDarkMode)
@@ -85,7 +85,7 @@ const ProductScreen = ({navigation, route}) => {
                         <MotiView  style={styles(isDarkMode).plusIcon}
                         from={{backgroundColor: "#34A3CF"}}
                         animate={{backgroundColor: amount < 9 ? "#34A3CF" : "#8E8E8E"}}>
-                            <Icons.PlusIcon color="white" size={30}/>
+                            <Icons.PlusIcon color="white" size={width > 700 ? 40 : 30}/>
                         </MotiView>
                     </TouchableWithoutFeedback> 
                 </MotiView>

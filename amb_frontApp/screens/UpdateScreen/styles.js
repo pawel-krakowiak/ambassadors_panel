@@ -1,4 +1,5 @@
-import {StyleSheet} from 'react-native'
+import {StyleSheet, Dimensions} from 'react-native'
+const { height, width } = Dimensions.get('window');
 
 export default styles = (isDarkMode) => StyleSheet.create({
     wrapper: {
@@ -31,14 +32,14 @@ export default styles = (isDarkMode) => StyleSheet.create({
         width: '90%',
         fontWeight: 700,
         marginVertical: 20,
-        fontSize: 24,
+        fontSize: width > 600 ? 36 : 24,
         textAlign: 'center',
         color: isDarkMode ? "#fff" : '#000',
     },
     desc:{
         width: '90%',
         textAlign: 'center',
-        fontSize: 14,
+        fontSize: width > 600 ? 18 : 14,
         color: isDarkMode ? "#fff" : '#000',
     },
     buttonsContainer: {
@@ -59,6 +60,7 @@ export default styles = (isDarkMode) => StyleSheet.create({
     updateBtnTxt: {
         color: '#fff',
         fontWeight: 700,
+        fontSize: width > 600 ? 18 : 14,
     },
     backBtn: {
         width: '60%',

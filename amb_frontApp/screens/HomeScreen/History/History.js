@@ -7,6 +7,8 @@ import * as Icons from "react-native-heroicons/solid";
 import historyStore from '../../../zustand/history';
 import optionsStore from '../../../zustand/options';
 import InViewPort from "@coffeebeanslabs/react-native-inviewport";
+import HistoryItem from '../../../components/HistoryItem/HistoryItem'
+import { useNavigation } from '@react-navigation/native';
 
 const History = () => {
 
@@ -14,57 +16,38 @@ const History = () => {
     const isDarkMode = optionsStore(state => state.isDarkMode)
     const [showAll, setShowAll] = React.useState(false)
     const [isInView, setIsInView] = React.useState(false)
+    const navigation = useNavigation()
 
+    const handleBtnClick = () => {
+        if(showAll){
+            navigation.navigate('History')
+        }else{
+            setShowAll(true)
+        }
+    }
 
-    
     return (
         <View style={styles(isDarkMode).wrapper}>
             <InViewPort onChange={(isVisible) => isVisible && setIsInView(true)}>
             <Text style={styles(isDarkMode).title}>Historia</Text>
             <View style={styles(isDarkMode).historyItemsContainer}>
                 {historyItems?.map((item, index) => {
-                    if(showAll){
+                    if(showAll && index < 6){
                         return(
-                            <MotiView from={{translateY: 20, opacity: 0}}
-                            animate={{translateY: isInView ? 0 : 20, opacity: isInView ? 1 : 0}}
-                            transition={{delay: index * 200}}
-                             style={styles(isDarkMode).historyItem} key={`HistoryItem${index}`}>
-                                <View style={styles(isDarkMode).historyItemImgContainer}>
-                                    <Image resizeMode="contain" style={styles(isDarkMode).historyItemImg}
-                                    source={{uri: item.img}}/>
-                                </View>
-                                <View style={styles(isDarkMode).historyItemDescriptionContainer}>
-                                    <Text style={styles(isDarkMode).historyItemTitle}>{item.name}</Text>
-                                    <Text style={styles(isDarkMode).historyItemCost}>{item.cost} pkt.</Text>
-                                    <Text style={styles(isDarkMode).historyItemDate}>{`${item.date.getDate()}/${item.date.getMonth() + 1}/${item.date.getFullYear()}`}</Text>
-                                </View>
-                            </MotiView>
+                            <HistoryItem item={item} index={index} isInView={isInView}/>
                         )
                     }else if(index < 3){
                         return(
-                            <MotiView from={{translateY: 20, opacity: 0}}
-                            animate={{translateY: isInView ? 0 : 20, opacity: isInView ? 1 : 0}}
-                            transition={{delay: index * 200}}
-                             style={styles(isDarkMode).historyItem} key={`HistoryItem${index}`}>
-                                <View style={styles(isDarkMode).historyItemImgContainer}>
-                                    <Image resizeMode="contain" style={styles(isDarkMode).historyItemImg}
-                                    source={{uri: item.img}}/>
-                                </View>
-                                <View style={styles(isDarkMode).historyItemDescriptionContainer}>
-                                    <Text style={styles(isDarkMode).historyItemTitle}>{item.name}</Text>
-                                    <Text style={styles(isDarkMode).historyItemCost}>{item.cost} pkt.</Text>
-                                    <Text style={styles(isDarkMode).historyItemDate}>{`${item.date.getDate()}/${item.date.getMonth() + 1}/${item.date.getFullYear()}`}</Text>
-                                </View>
-                            </MotiView>
+                            <HistoryItem item={item} index={index} isInView={isInView}/>
                         )
                     }
                 })}
             </View>
-            {!showAll && <TouchableWithoutFeedback onPress={() => setShowAll(true)}>
+           <TouchableWithoutFeedback onPress={handleBtnClick}>
                 <View style={styles(isDarkMode).showMoreBtn}>
                     <Text style={styles(isDarkMode).showMoreBtnText}>Wczytaj więcej</Text>
                 </View>
-            </TouchableWithoutFeedback>}
+            </TouchableWithoutFeedback>
             </InViewPort>
         </View>
     )
