@@ -11,7 +11,7 @@ import productsStore from '../../../zustand/products';
 import optionsStore from '../../../zustand/options';
 import { useNavigation } from '@react-navigation/native';
 
-const Settings = () => {  
+const Settings = ({isBottomInView, setIsBottomInView}) => {  
     const navigation = useNavigation()
     const logOut = userStore(state => state.logOut)
     const isDarkMode = optionsStore(state => state.isDarkMode)
@@ -20,7 +20,6 @@ const Settings = () => {
     const user = userStore(state => state.user)
     const getItems = productsStore(state => state.getItems)
 
-    const [isInView, setIsInView] = React.useState(false)
     const [isMsgEditing, setIsMsgEditing] = React.useState(false)
     const [isShowInfo, setIsShowInfo] = React.useState(false)
     const [isMsgSend, setIsMsgSend] = React.useState(false)
@@ -61,10 +60,10 @@ const Settings = () => {
 
     return (
         <View style={styles(isDarkMode).wrapper}>
-            <InViewPort onChange={(isVisible) => isVisible && setIsInView(true)}>
+            <InViewPort onChange={(isVisible) => isVisible && setIsBottomInView(true)}>
             <MotiView style={styles(isDarkMode).optionContainer}
             from={{translateY: 20, opacity: 0}} 
-            animate={{translateY: isInView ? 0 : 20, opacity: isInView ? 1 : 0}} >
+            animate={{translateY: isBottomInView ? 0 : 20, opacity: isBottomInView ? 1 : 0}} >
                 <Text style={styles(isDarkMode).optionTitle}>Oceń aplikacje</Text>
                 <TouchableWithoutFeedback onPress={handleRateApp}>
                     <View style={styles(isDarkMode).rateAppContainer}>
@@ -76,7 +75,7 @@ const Settings = () => {
             </MotiView>
             <MotiView style={styles(isDarkMode).optionContainer}
             from={{translateY: 20, opacity: 0}} 
-            animate={{translateY: isInView ? 0 : 20, opacity: isInView ? 1 : 0}} >
+            animate={{translateY: isBottomInView ? 0 : 20, opacity: isBottomInView ? 1 : 0}} >
                 <Text style={styles(isDarkMode).optionTitle}>Tryb nocny</Text>
                 <Switch
                     trackColor='#D9D9D9'
@@ -89,7 +88,7 @@ const Settings = () => {
             {/* Wysyłanie wiadomości */}
             {/* <MotiView style={styles(isDarkMode).msgContainer} 
              from={{height: 60, translateY: 20, opacity: 0}} 
-             animate={{translateY: isInView ? 0 : 20, opacity: isInView ? 1 : 0, 
+             animate={{translateY: isBottomInView ? 0 : 20, opacity: isBottomInView ? 1 : 0, 
              height: isMsgEditing ? 160 : 60}}>
                 <MotiView style={{...styles(isDarkMode).optionContainer, marginTop: 0}}>
                     <Text style={{fontSize: 16, fontWeight: 700}}>Zadaj pytanie</Text>
@@ -140,7 +139,7 @@ const Settings = () => {
             </MotiView> */}
             <MotiView style={{...styles(isDarkMode).optionContainer}}
             from={{translateY: 20, opacity: 0}} 
-            animate={{translateY: isInView ? 0 : 20, opacity: isInView ? 1 : 0}} >
+            animate={{translateY: isBottomInView ? 0 : 20, opacity: isBottomInView ? 1 : 0}} >
                 <Text style={styles(isDarkMode).optionTitle}>Odśwież dane</Text>
                 <TouchableWithoutFeedback  onPress={handleRefreshData}>
                     <View style={styles(isDarkMode).btnContainer}>
@@ -157,7 +156,7 @@ const Settings = () => {
             </MotiView>
             <MotiView style={styles(isDarkMode).infoContainer} 
              from={{height: 60, translateY: 20, opacity: 0}} 
-             animate={{translateY: isInView ? 0 : 20, opacity: isInView ? 1 : 0, 
+             animate={{translateY: isBottomInView ? 0 : 20, opacity: isBottomInView ? 1 : 0, 
              height: isShowInfo ? 200 : 60}}>
                 <MotiView style={{...styles(isDarkMode).optionContainer, marginTop: 0}}>
                     <Text style={styles(isDarkMode).optionTitle}>Więcej informacji</Text>
@@ -210,7 +209,7 @@ const Settings = () => {
             </MotiView>
             <MotiView style={{...styles(isDarkMode).optionContainer}}
             from={{translateY: 20, opacity: 0}} 
-            animate={{translateY: isInView ? 0 : 20, opacity: isInView ? 1 : 0}} >
+            animate={{translateY: isBottomInView ? 0 : 20, opacity: isBottomInView ? 1 : 0}} >
                 <Text style={styles(isDarkMode).optionTitle}>Wyloguj się</Text>
                 <TouchableWithoutFeedback onPress={() => logOut(navigation)}>
                     <View style={styles(isDarkMode).btnContainer}>

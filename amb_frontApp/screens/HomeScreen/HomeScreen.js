@@ -27,6 +27,7 @@ const HomeScreen = () => {
     const [pointsPosition, setPointsPosition] = React.useState(0)
     const [belowPoints, setBelowPoints] = React.useState(false)
     const [isPointsSheetOpen, setIsPoinsSheetOpen] = React.useState(false)
+    const [isBottomInView, setIsBottomInView] = React.useState(false)
 
     const animationConfigs = useBottomSheetTimingConfigs({
         duration: 500,
@@ -81,8 +82,8 @@ const HomeScreen = () => {
                     <Categories />
                     <GestureRecognizer style={styles(isDarkMode).content} onSwipeLeft={handleSwipe} config={{directionalOffsetThreshold: 150, velocityThreshold: 0.6}}>
                     <Produsts />
-                    {historyItems.length > 0 && <History />}
-                    <Settings />
+                    {historyItems.length > 0 && <History isBottomInView={isBottomInView} setIsBottomInView={setIsBottomInView} />}
+                    <Settings isBottomInView={isBottomInView} setIsBottomInView={setIsBottomInView} />
                     <Text style={styles(isDarkMode).copyRight}>&copy; 2023 Just Vape</Text>
                     </GestureRecognizer>
                 </View>

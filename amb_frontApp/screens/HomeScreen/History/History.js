@@ -10,12 +10,11 @@ import InViewPort from "@coffeebeanslabs/react-native-inviewport";
 import HistoryItem from '../../../components/HistoryItem/HistoryItem'
 import { useNavigation } from '@react-navigation/native';
 
-const History = () => {
+const History = ({isBottomInView, setIsBottomInView}) => {
 
     const historyItems = historyStore(state => state.historyItems)
     const isDarkMode = optionsStore(state => state.isDarkMode)
     const [showAll, setShowAll] = React.useState(false)
-    const [isInView, setIsInView] = React.useState(false)
     const navigation = useNavigation()
 
     const handleBtnClick = () => {
@@ -28,17 +27,17 @@ const History = () => {
 
     return (
         <View style={styles(isDarkMode).wrapper}>
-            <InViewPort onChange={(isVisible) => isVisible && setIsInView(true)}>
+            <InViewPort onChange={(isVisible) => isVisible && setIsBottomInView(true)}>
             <Text style={styles(isDarkMode).title}>Historia</Text>
             <View style={styles(isDarkMode).historyItemsContainer}>
                 {historyItems?.map((item, index) => {
                     if(showAll && index < 6){
                         return(
-                            <HistoryItem item={item} index={index} isInView={isInView}/>
+                            <HistoryItem item={item} index={index} isInView={isBottomInView}/>
                         )
                     }else if(index < 3){
                         return(
-                            <HistoryItem item={item} index={index} isInView={isInView}/>
+                            <HistoryItem item={item} index={index} isInView={isBottomInView}/>
                         )
                     }
                 })}
