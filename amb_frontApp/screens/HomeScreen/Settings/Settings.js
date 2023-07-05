@@ -42,6 +42,7 @@ const Settings = ({isBottomInView, setIsBottomInView}) => {
             }, 300)
         }
     }
+    
     const handleRateApp = async () => {
         const url = "https://www.youtube.com/watch?v=DsC8jQXRbQE"
 

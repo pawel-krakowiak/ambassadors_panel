@@ -9,22 +9,21 @@ import optionsStore from '../../zustand/options';
 import AnimateNumber from 'react-native-countup'
 import GestureRecognizer from 'react-native-swipe-gestures';
 import historyStore from '../../zustand/history';
-
+import BackHeader from '../../components/BackHeader/BackHeader';
 
 const ProductScreen = ({navigation, route}) => {
     const { height, width } = Dimensions.get('window');
-    const item = route.params
     const user = userStore(state => state.user)
     const isDarkMode = optionsStore(state => state.isDarkMode)
     const createOrder = historyStore(state => state.createOrder)
+    const item = route.params
+    const [amount, setAmount] = React.useState(1)
 
     React.useEffect(() => {
         navigation.setOptions({
             headerShown: false,
         })
     }, [])
-
-    const [amount, setAmount] = React.useState(1)
 
     const handleBuy = () => {
         if(amount <= 9 && amount >= 1){
@@ -35,22 +34,9 @@ const ProductScreen = ({navigation, route}) => {
         }
     }
 
-    const handleSwipe = () => {
-        navigation.goBack()
-    }
-
     return (
-        <GestureRecognizer style={styles(isDarkMode).wrapper} onSwipeRight={handleSwipe} config={{directionalOffsetThreshold: 150, velocityThreshold: 0.6}}>
-            <View style={styles(isDarkMode).backBtnContainer}>
-                <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
-                    <MotiView style={styles(isDarkMode).backBtn}
-                    from={{scale: 0.75, opacity: 0}}
-                    animate={{scale: 1, opacity: 1}}
-                    transition={{delay: 300}}>
-                        <Icons.ChevronLeftIcon size={25} color="#F1F1F1"/>
-                    </MotiView>
-                </TouchableWithoutFeedback>
-            </View>   
+        <GestureRecognizer style={styles(isDarkMode).wrapper} onSwipeRight={() => navigation.goBack()} config={{directionalOffsetThreshold: 150, velocityThreshold: 0.6}}>
+            <BackHeader product={true} />
             <View style={styles(isDarkMode).imgContainer}>
                 <Image resizeMode="contain" style={styles(isDarkMode).img} source={{uri: item.reward_img}}/>
             </View>

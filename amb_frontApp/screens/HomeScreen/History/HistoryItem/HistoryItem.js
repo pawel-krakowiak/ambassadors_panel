@@ -1,5 +1,5 @@
 import * as React from 'react';
-import optionsStore from '../../zustand/options';
+import optionsStore from '../../../../zustand/options';
 import { MotiView, MotiText } from 'moti'
 import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
 import styles from './styles';
@@ -8,10 +8,10 @@ const HistoryItem = ({item, index, isInView}) => {
     const isDarkMode = optionsStore(state => state.isDarkMode)
 
     return (
-        <MotiView from={{translateY: 20, opacity: 0}}
+        <MotiView  from={{translateY: 20, opacity: 0}}
             animate={{translateY: isInView ? 0 : 20, opacity: isInView ? 1 : 0}}
             transition={{delay: index * 200}}
-            style={styles(isDarkMode).historyItem} key={`HistoryItem${index}`}>
+            style={styles(isDarkMode).historyItem} >
             <View style={styles(isDarkMode).historyItemImgContainer}>
                 <Image resizeMode="contain" style={styles(isDarkMode).historyItemImg}
                 source={{uri: item.img}}/>

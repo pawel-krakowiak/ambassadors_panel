@@ -7,7 +7,7 @@ import * as Icons from "react-native-heroicons/solid";
 import historyStore from '../../../zustand/history';
 import optionsStore from '../../../zustand/options';
 import InViewPort from "@coffeebeanslabs/react-native-inviewport";
-import HistoryItem from '../../../components/HistoryItem/HistoryItem'
+import HistoryItem from './HistoryItem/HistoryItem'
 import { useNavigation } from '@react-navigation/native';
 
 const History = ({isBottomInView, setIsBottomInView}) => {
@@ -33,11 +33,11 @@ const History = ({isBottomInView, setIsBottomInView}) => {
                 {historyItems?.map((item, index) => {
                     if(showAll && index < 6){
                         return(
-                            <HistoryItem item={item} index={index} isInView={isBottomInView}/>
+                            <HistoryItem item={item} index={index} isInView={isBottomInView} key={`${index}, HistoryItem${item.name}`}/>
                         )
                     }else if(index < 3){
                         return(
-                            <HistoryItem item={item} index={index} isInView={isBottomInView}/>
+                            <HistoryItem item={item} index={index} isInView={isBottomInView} key={`${index}, HistoryItem${item.name}`}/>
                         )
                     }
                 })}

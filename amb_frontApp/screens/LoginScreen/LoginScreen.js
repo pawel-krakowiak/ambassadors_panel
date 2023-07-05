@@ -8,17 +8,34 @@ import Background from './Background/Background';
 import * as Icons from "react-native-heroicons/solid";
 import * as Icons2 from "react-native-heroicons/outline";
 import userStore from '../../zustand/user';
-import BottomSheet, { useBottomSheetTimingConfigs } from '@gorhom/bottom-sheet';
 import optionsStore from '../../zustand/options.js';
 
 const LoginScreen = () => {
+    const { height, width } = Dimensions.get('window');
     const navigation = useNavigation()
+    const theme = useColorScheme();
     const loginUser = userStore(state => state.loginUser)
     const verifyUser = userStore(state => state.verifyUser)
     const checkDarkMode = optionsStore(state => state.checkDarkMode)
-    const theme = useColorScheme();
-    const { height, width } = Dimensions.get('window');
     const [responsiveMarginTop, setResponsiveMarginTop] = React.useState(0)
+    const [loginStep, setLoginStep] = React.useState(1)
+    const [isPressing, setIsPressing] = React.useState(false)
+    const [isPressing2, setIsPressing2] = React.useState(false)
+    const [isPassViewable, setIsPassViewable] = React.useState(false)
+    const [errorMsg, setErrorMsg] = React.useState("")
+    const [inputValues, setInputValues] = React.useState({
+        mail: "",
+        password: "",
+        authCode: "",
+    })
+
+    React.useEffect(() => {
+        setInputValues({...inputValues, password: ""})
+    }, [loginStep])
+
+    React.useEffect(() => {
+        setErrorMsg("")
+    }, [inputValues])
 
     React.useEffect(() => {
         navigation.setOptions({
@@ -37,24 +54,6 @@ const LoginScreen = () => {
 
     }, [])
 
-    const [loginStep, setLoginStep] = React.useState(1)
-    const [isPressing, setIsPressing] = React.useState(false)
-    const [isPressing2, setIsPressing2] = React.useState(false)
-    const [isPassViewable, setIsPassViewable] = React.useState(false)
-    const [isBottomSheetOpen, setIsBottomSheetOpen] = React.useState(false)
-    const [errorMsg, setErrorMsg] = React.useState("")
-
-    const [inputValues, setInputValues] = React.useState({
-        mail: "",
-        password: "",
-        authCode: "",
-    })
-
-    const animationConfigs = useBottomSheetTimingConfigs({
-        duration: 500,
-      });
-
-    const bottomSheetRef = React.useRef()
 
     const handleFormAction = () => {
         if(loginStep === 1){
@@ -74,22 +73,6 @@ const LoginScreen = () => {
         }
     }
 
-    React.useEffect(() => {
-        setInputValues({...inputValues, password: ""})
-    }, [loginStep])
-
-    React.useEffect(() => {
-        setErrorMsg("")
-    }, [inputValues])
-
-    const handleSwitchBottomSheet = (value) => {
-        setIsBottomSheetOpen(value)
-        if(value){
-            bottomSheetRef.current.snapToIndex(0)
-        }else{
-            bottomSheetRef.current.close()
-        }
-    }
 
     const handleResetPassword = async () => {
         // logowanie w ramach apki
@@ -116,20 +99,6 @@ const LoginScreen = () => {
                             <Icons.ArrowUturnLeftIcon size={30} color="white" />
                         </MotiView>
                     </TouchableWithoutFeedback>
-                    {/* <TouchableWithoutFeedback onPress={() => handleSwitchBottomSheet(!isBottomSheetOpen)} >
-                        <MotiView style={styles.termsBtn} 
-                        from={{opacity: 0}} 
-                        animate={{opacity: isBottomSheetOpen ? 0 : 1}}>
-                            <Icons2.InformationCircleIcon size={35} color="white" />
-                        </MotiView>
-                    </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback onPress={() => handleSwitchBottomSheet(!isBottomSheetOpen)} >
-                        <MotiView style={styles.termsBtn} 
-                        from={{opacity: 0}} 
-                        animate={{opacity: isBottomSheetOpen ? 1 : 0}}>
-                            <Icons2.XMarkIcon size={35} color="white" />
-                        </MotiView>
-                    </TouchableWithoutFeedback> */}
                     <MotiImage resizeMode="contain" style={styles.logoImg}
                     from={{height: '20%'}} 
                     animate={{height: loginStep > 1 ? '0%' : '40%'}}
@@ -239,17 +208,6 @@ const LoginScreen = () => {
                     </View>
                 </View>
             </View>
-            {/* <BottomSheet
-            ref={bottomSheetRef}
-            index={-1}
-            snapPoints={['40%', '66%']}
-            enablePanDownToClose={true}
-            animationConfigs={animationConfigs}
-            >
-                <View>
-                    <Text>dfadgfas</Text>
-                </View>
-            </BottomSheet>       */}
         </View>
     )
 

@@ -61,22 +61,5 @@ export default styles = (isDarkMode) => StyleSheet.create({
         fontWeight: 700,
         fontSize: width > 600 ? 18 : 14,
     },
-     backBtnContainer: {
-        backgroundColor: isDarkMode ? "#3b3b3b" : '#FCFCFC',
-        width: '100%',
-        height: '10%',
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        alignItems: 'flex-end',
-        paddingRight: '5%',
 
-    },
-    backBtn: {
-        height: '50%',
-        aspectRatio: '1/1',
-        borderRadius: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor:  isDarkMode ? "#3b3b3b" : '#B4B4B4',
-    },
 })

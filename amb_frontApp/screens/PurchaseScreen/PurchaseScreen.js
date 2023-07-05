@@ -6,37 +6,23 @@ import styles from './styles';
 import * as Icons from "react-native-heroicons/solid";
 import GestureRecognizer from 'react-native-swipe-gestures';
 import optionsStore from '../../zustand/options';
-import userStore from '../../zustand/user';
 import ConfettiCannon from 'react-native-confetti-cannon';
+import BackHeader from '../../components/BackHeader/BackHeader';
 
 const PurchaseScreen = ({navigation, route}) => {
-
-    const isDarkMode = optionsStore(state => state.isDarkMode)
-    const logOut = userStore(state => state.logOut)
     const { height, width } = Dimensions.get('window');
-
-    const handleSwipe = () => {
-        navigation.navigate('Home')
-    }
-
+    const isDarkMode = optionsStore(state => state.isDarkMode)
+    
     React.useEffect(() => {
         navigation.setOptions({
             headerShown: false,
         })
     }, [])
 
+
     return (
-        <GestureRecognizer style={styles(isDarkMode).wrapper} onSwipeRight={handleSwipe} config={{directionalOffsetThreshold: 150, velocityThreshold: 0.6}}>
-            <View style={styles(isDarkMode).backBtnContainer}>
-                <TouchableWithoutFeedback onPress={handleSwipe}>
-                    <MotiView style={styles(isDarkMode).backBtn}
-                    from={{scale: 0.75, opacity: 0}}
-                    animate={{scale: 1, opacity: 1}}
-                    transition={{delay: 300}}>
-                        <Icons.XMarkIcon size={25} color="#F1F1F1"/>
-                    </MotiView>
-                </TouchableWithoutFeedback>
-            </View>  
+        <GestureRecognizer style={styles(isDarkMode).wrapper} onSwipeRight={() => navigation.navigate('Home')} config={{directionalOffsetThreshold: 150, velocityThreshold: 0.6}}>
+            <BackHeader home={true}/>
             <View style={styles(isDarkMode).imgContainer}>
                 <Image style={styles(isDarkMode).categoriesItemImg}  
                 source={require('../../assets/thankYou.png')}/>
@@ -46,7 +32,7 @@ const PurchaseScreen = ({navigation, route}) => {
                 <Text style={styles(isDarkMode).desc}>Przyjeliśmy twoje zamówienie, odbierz produkt w sklepie. Więcej informacji znajdziesz w historii</Text>
             </View>
             <View style={styles(isDarkMode).buttonsContainer}>
-                <TouchableWithoutFeedback onPress={handleSwipe}>
+                <TouchableWithoutFeedback onPress={() => navigation.navigate('Home')}>
                     <View style={styles(isDarkMode).updateBtn}>
                         <Text style={styles(isDarkMode).updateBtnTxt}>Wróć na stronę główną</Text>
                     </View>

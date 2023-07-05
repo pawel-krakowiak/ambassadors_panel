@@ -4,7 +4,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './screens/HomeScreen/HomeScreen';
 import LoginScreen from './screens/LoginScreen/LoginScreen'
 import ProductScreen from './screens/ProductScreen/ProductScreen';
-import TermsScreen from './screens/TermsScreen/TermsScreen';
 import HistoryScreen from './screens/HistoryScreen/HistoryScreen';
 import UpdateScreen from './screens/UpdateScreen/UpdateScreen';
 import PurchaseScreen from './screens/PurchaseScreen/PurchaseScreen';
@@ -26,9 +25,6 @@ export default function App() {
         <Stack.Screen name="History" component={HistoryScreen} options={{
           animation: 'slide_from_right',
         }}/>
-        {/* <Stack.Screen name="Terms" component={TermsScreen} options={{
-          animation: 'slide_from_right',
-        }}/> */}
         <Stack.Screen name="Update" component={UpdateScreen} />
       </Stack.Navigator>
 

@@ -21,19 +21,5 @@ export default styles = (isDarkMode) => StyleSheet.create({
         flexGrow: 1,
         height: width > 700 ? 50 : 40,
     },
-    categoriesItem: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: "space-around",
-        paddingVertical: width > 700 ? 10 : 6,
-        paddingHorizontal: 10,
-        borderRadius: 5,
-        marginRight: 20,
-    },
-    categoriesItemImg: {
-        width: width > 700 ? 30 : 20,
-        height: width > 700 ? 30 : 20,
-        marginRight: 20,
-    },
+    
 })
