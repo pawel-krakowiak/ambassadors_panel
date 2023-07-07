@@ -21,7 +21,7 @@ const HomeScreen = () => {
     const isDarkMode = optionsStore(state => state.isDarkMode)
     const scrollViewRef = React.useRef();
     const historyItems = historyStore(state => state.historyItems)
-    const getItems = historyStore(state => state.getItems)
+    const getHistoryItems = historyStore(state => state.getHistoryItems)
 
     const [isOnTop, setIsOnTop] = React.useState(true)
     const [pointsPosition, setPointsPosition] = React.useState(0)
@@ -37,7 +37,7 @@ const HomeScreen = () => {
         navigation.setOptions({
             headerShown: false,
         })
-        getItems()
+        getHistoryItems()
     }, [])
 
     const handleSwipe = () => {

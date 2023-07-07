@@ -10,6 +10,7 @@ import productsStore from '../../zustand/products.js';
 import optionsStore from '../../zustand/options.js';
 
 
+
 const Nav = ({scrollViewRef, isOnTop, belowPoints}) => {
     const [isSettingsClicked, setIsSettingsClicked] = React.useState(false)
     const getUser = userStore(state => state.getUser)

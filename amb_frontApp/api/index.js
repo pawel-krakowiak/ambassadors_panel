@@ -11,3 +11,6 @@ export const getProducts = (accesToken) => API.get(`/rewards/`, {headers: {'Auth
 
 ///Orders
 export const createOrder = (accesToken) => API.post(`/orders/save`, {headers: {'Authorization': `Bearer ${accesToken}` }})
+
+///Orders
+export const getHistory = (accesToken) => API.get(`/user-history`, {headers: {'Authorization': `Bearer ${accesToken}` }})

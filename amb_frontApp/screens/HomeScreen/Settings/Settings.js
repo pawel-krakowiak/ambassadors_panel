@@ -9,6 +9,7 @@ import InViewPort from "@coffeebeanslabs/react-native-inviewport";
 import userStore from '../../../zustand/user';
 import productsStore from '../../../zustand/products';
 import optionsStore from '../../../zustand/options';
+import historyStore from '../../../zustand/history';
 import { useNavigation } from '@react-navigation/native';
 
 const Settings = ({isBottomInView, setIsBottomInView}) => {  
@@ -19,6 +20,7 @@ const Settings = ({isBottomInView, setIsBottomInView}) => {
     const getUser = userStore(state => state.getUser)
     const user = userStore(state => state.user)
     const getItems = productsStore(state => state.getItems)
+    const getHistoryItems = historyStore(state => state.getHistoryItems)
 
     const [isMsgEditing, setIsMsgEditing] = React.useState(false)
     const [isShowInfo, setIsShowInfo] = React.useState(false)
@@ -56,6 +58,7 @@ const Settings = ({isBottomInView, setIsBottomInView}) => {
         getUser(navigation)
         getItems(user)
         setIsRefreshClicked(true)
+        getHistoryItems()
         setTimeout(() => {setIsRefreshClicked(false)}, 250)
     }
 

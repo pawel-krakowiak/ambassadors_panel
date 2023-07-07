@@ -6,7 +6,7 @@ import * as Icons from "react-native-heroicons/solid";
 import GestureRecognizer from 'react-native-swipe-gestures';
 import optionsStore from '../../zustand/options';
 import historyStore from '../../zustand/history';
-import HistoryItem from '../../components/HistoryItem/HistoryItem';
+import HistoryItem from '../HomeScreen/History/HistoryItem/HistoryItem';
 import BackHeader from '../../components/BackHeader/BackHeader';
 
 const HistoryScreen = ({navigation, route}) => {

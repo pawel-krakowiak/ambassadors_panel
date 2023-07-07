@@ -5,14 +5,29 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const store = (set, get) => ({
     historyItems: [],
-    getItems: async () => {
-        let data = initialData;
+    getHistoryItems: async () => {
+        try{
+            let accesToken = await AsyncStorage.getItem('accessToken')
+            let result = await api.getHistory(accesToken)
 
-        data.sort(function(a, b) {
-            return b.date - a.date;
-          })
-        set((state) => ({historyItems: [...data]}))
+            // console.log('history', result.data)
 
+            let data = initialData;
+        
+
+            data.sort(function(a, b) {
+                return b.date - a.date;
+              })
+            set((state) => ({historyItems: [...data]}))
+        }catch(err){
+            console.log('historyErrir', err)
+
+            // await AsyncStorage.removeItem('accessToken')
+            // await AsyncStorage.removeItem('refreshToken')
+
+            // set((state) => ({user: {}}))
+            // navigation.replace('Login')
+        }
         
     },
     createOrder: async (item, amount, navigation) => {
