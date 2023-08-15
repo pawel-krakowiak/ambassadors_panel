@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "amb_frontApp",
-    "slug": "amb_frontApp",
+    "name": "JustVape",
+    "slug": "JustVape",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logoJV.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -18,6 +18,8 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "justvape.pl",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -25,6 +27,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "3f92ae10-a4a7-4113-8875-d96f4459a34d"
+      }
     }
   }
 }
